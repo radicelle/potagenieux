@@ -3,20 +3,32 @@ import 'package:flutter/material.dart';
 import 'globals.dart' as globals;
 
 class MainImageChangeNotifier extends ChangeNotifier {
-  late Widget _image;
   late int _selectedIndex;
+  late final List<Image> _images = [
+    ...globals.imagesNamesMap.values.map((name) => Image.asset(
+          name.getAsset(),
+          fit: BoxFit.cover,
+          key: ValueKey(name),
+        ))
+  ];
+  final List<Image> _miniatures = [
+    ...globals.imagesNamesMap.values.map((name) => Image.asset(
+          name.getMiniAsset(),
+          fit: BoxFit.fill,
+        ))
+  ];
 
   MainImageChangeNotifier.fromIndex(int index) {
-    _image = globals.miniImages[index];
     _selectedIndex = index;
   }
-  Widget get image => _image;
+  Widget get selectedImage => _images[_selectedIndex];
   int get selected => _selectedIndex;
 
-  setImage(int index) {
+  set selectedIndex(int index) {
     if (index == _selectedIndex) return;
-    _image = globals.miniImages[index];
     _selectedIndex = index;
     notifyListeners();
   }
+
+  miniature(int index) => _miniatures[index];
 }

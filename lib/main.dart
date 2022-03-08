@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/gestures/events.dart';
-import 'package:potagenieux/main_image_change_notifier.dart';
-import 'package:provider/provider.dart';
 
-import 'globals.dart' as globals;
+import 'home_list_view.dart';
+import 'menu/menu_background.dart';
+import 'menu/menu_header.dart';
+import 'menu/menu_items.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,64 +40,32 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     var panelHeight = MediaQuery.of(context).size.height;
-    var rightContainerHeight = panelHeight * 5 / 6;
     var panelWidth = MediaQuery.of(context).size.width;
-    var rightContainerWidth = panelWidth * 4 / 5;
-    var menuWidth = panelWidth - rightContainerWidth;
+    var menuWidth = 250.0;
+    var rightContainerWidth = panelWidth - menuWidth;
     const menuPadding = 1.0;
     var finalMenuWidth = menuWidth - menuPadding;
-    var miniImagesHeight = rightContainerHeight / 4;
+    var rightContainerHeight = panelHeight * 5 / 6;
+    var miniImagesHeight = rightContainerHeight / 8;
     return Stack(
       children: [
         Positioned(
-          child: Container(
-            color: const Color(0xff7b8c3b),
-            width: finalMenuWidth,
-            height: panelHeight,
-          ),
+          child: MenuBackground(
+              finalMenuWidth: finalMenuWidth, panelHeight: panelHeight),
           top: 0,
           left: 0,
         ),
         Positioned(
-          child: SizedBox(
-            width: menuWidth,
-            height: panelHeight - rightContainerHeight,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                "Potagenieux",
-                style: globals.headerTextStyle(context),
-              ),
-            ),
-          ),
+          child: MenuHeader(
+              menuWidth: menuWidth,
+              panelHeight: panelHeight,
+              rightContainerHeight: rightContainerHeight),
           top: 0,
           left: 0,
         ),
         Positioned(
-          child: Column(
-            children: [
-              MenuButton(
-                height: panelHeight / 10,
-                width: finalMenuWidth,
-                text: "HOME",
-              ),
-              MenuButton(
-                height: panelHeight / 10,
-                width: finalMenuWidth,
-                text: "PRODUITS",
-              ),
-              MenuButton(
-                height: panelHeight / 10,
-                text: "FORMATIONS",
-                width: finalMenuWidth,
-              ),
-              MenuButton(
-                height: panelHeight / 10,
-                text: "CONTACT",
-                width: finalMenuWidth,
-              ),
-            ],
-          ),
+          child: MenuItems(
+              panelHeight: panelHeight, finalMenuWidth: finalMenuWidth),
           left: 0,
           top: panelHeight / 3,
         ),
@@ -106,134 +74,12 @@ class _MyHomePageState extends State<MyHomePage>
           right: 0,
           left: menuWidth,
           bottom: panelHeight - rightContainerHeight,
-          child: ListView(
-            children: [
-              ChangeNotifierProvider(
-                create: (_) => MainImageChangeNotifier.fromIndex(0),
-                child: Stack(children: [
-                  Positioned(
-                    child: Consumer<MainImageChangeNotifier>(
-                      builder: (_, imgCons, __) {
-                        return AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 100),
-                          transitionBuilder:
-                              (Widget child, Animation<double> animation) =>
-                                  FadeTransition(
-                            opacity: animation,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: SizedBox(
-                                  width: rightContainerWidth,
-                                  height: rightContainerHeight,
-                                  child: child),
-                            ),
-                          ),
-                          child: imgCons.image,
-                        );
-                      },
-                    ),
-                  ),
-                  Positioned(
-                      top: rightContainerHeight - miniImagesHeight,
-                      right: 0,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                            maxHeight: miniImagesHeight,
-                            minWidth: rightContainerWidth),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [/*...globals.miniImages*/],
-                        ),
-                      ))
-                ]),
-              ),
-              Container(
-                width: rightContainerWidth,
-                height: rightContainerHeight,
-              )
-            ],
-            itemExtent: rightContainerHeight,
-          ),
+          child: HomeListView(
+              width: rightContainerWidth,
+              height: rightContainerHeight,
+              miniImagesHeight: miniImagesHeight),
         ),
       ],
     );
-  }
-}
-
-class MenuButton extends StatefulWidget {
-  final String text;
-  final double height;
-  final double width;
-
-  const MenuButton({
-    required this.text,
-    required this.height,
-    required this.width,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<MenuButton> createState() => _MenuButtonState();
-}
-
-class _MenuButtonState extends State<MenuButton> {
-  late double itemOpacity;
-
-  @override
-  void initState() {
-    itemOpacity = globals.defaultOpacity;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: _tapMenuItem,
-      child: MouseRegion(
-        onEnter: _enterMenuItem,
-        onExit: _exitMenuItem,
-        child: Opacity(
-          opacity: itemOpacity,
-          child: SizedBox(
-            height: widget.height,
-            width: widget.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.arrow_right,
-                  color: globals.menuColor,
-                ),
-                Text(
-                  widget.text,
-                  style: globals.menuTextStyle(context),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _tapMenuItem() {
-    setState(() {
-      itemOpacity = 1;
-    });
-  }
-
-  void _enterMenuItem(PointerEnterEvent event) {
-    setState(() {
-      itemOpacity = 1;
-    });
-  }
-
-  void _exitMenuItem(PointerExitEvent event) {
-    setState(() {
-      itemOpacity = globals.defaultOpacity;
-    });
   }
 }
