@@ -21,19 +21,20 @@ class ImageSwitcher extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(children: [
       Positioned(
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 500),
-          transitionBuilder: (Widget child, Animation<double> animation) =>
-              FadeTransition(
-            opacity: animation,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: SizedBox(width: width, height: height, child: child),
+        child: Consumer<MainImageChangeNotifier>(builder: (_, imgCons, __) {
+          return AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            transitionBuilder: (Widget child, Animation<double> animation) =>
+                FadeTransition(
+              opacity: animation,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: SizedBox(width: width, height: height, child: child),
+              ),
             ),
-          ),
-          child: Consumer<MainImageChangeNotifier>(
-              builder: (_, imgCons, __) => imgCons.selectedImage),
-        ),
+            child: imgCons.selectedImage,
+          );
+        }),
       ),
       Positioned(
           top: height - miniImagesHeight,
