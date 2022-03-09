@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:potagenieux/menu/login/fire_loggin.dart';
 
 import 'menu/menu_background.dart';
 import 'menu/menu_header.dart';
@@ -46,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage>
     const menuPadding = 1.0;
     var finalMenuWidth = menuWidth - menuPadding;
     var rightContainerHeight = panelHeight * 5 / 6;
+    var headerHeight = panelHeight / 8;
     var miniImagesHeight = rightContainerHeight / 8;
     return Stack(
       children: [
@@ -57,11 +59,18 @@ class _MyHomePageState extends State<MyHomePage>
         ),
         Positioned(
           child: MenuHeader(
-              menuWidth: menuWidth,
-              panelHeight: panelHeight,
+              width: menuWidth,
+              height: headerHeight,
               rightContainerHeight: rightContainerHeight),
           top: 0,
           left: 0,
+        ),
+        Positioned(
+          child: FireLogin(
+            width: menuWidth,
+            height: panelHeight,
+          ),
+          top: headerHeight,
         ),
         Positioned(
           child: MenuItems(
