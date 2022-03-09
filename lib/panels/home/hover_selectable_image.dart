@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/gestures/events.dart';
 import 'package:provider/provider.dart';
 
-import 'globals.dart' as globals;
-import 'main_image_change_notifier.dart';
+import '../../globals.dart' as globals;
+import '../../providers/main_image_change_notifier.dart';
 
 class HoverSelectableImage extends StatefulWidget {
   const HoverSelectableImage({required this.index, Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'home_list_view.dart';
 import 'menu/menu_background.dart';
 import 'menu/menu_header.dart';
 import 'menu/menu_items.dart';
+import 'panels/home/home_list_view.dart';
 
 void main() {
   runApp(const MyApp());

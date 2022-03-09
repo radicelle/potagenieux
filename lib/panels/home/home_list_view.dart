@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:potagenieux/image_switcher.dart';
+import 'package:potagenieux/panels/home/image_switcher.dart';
 import 'package:provider/provider.dart';
 
-import 'main_image_change_notifier.dart';
+import '../../providers/main_image_change_notifier.dart';
 
 class HomeListView extends StatelessWidget {
   const HomeListView({

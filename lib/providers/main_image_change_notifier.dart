@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'globals.dart' as globals;
+import '../globals.dart' as globals;
 
 class MainImageChangeNotifier extends ChangeNotifier {
   late int _selectedIndex;

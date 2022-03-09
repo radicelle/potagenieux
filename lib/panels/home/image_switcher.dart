@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import 'globals.dart' as globals;
+import '../../globals.dart' as globals;
+import '../../providers/main_image_change_notifier.dart';
 import 'hover_selectable_image.dart';
-import 'main_image_change_notifier.dart';
 
 class ImageSwitcher extends StatelessWidget {
   const ImageSwitcher({
