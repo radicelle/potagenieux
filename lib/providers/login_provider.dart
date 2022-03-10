@@ -5,14 +5,20 @@ import 'package:potagenieux/providers/enlightable.dart';
 class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
   ///map of possible states
   late Map<Item, double> _opacities;
-  late LoginState state;
+  late LoginState _state;
 
   LoginProvider() {
     _opacities = {for (var i in Item.values) i: globals.defaultOpacity};
-    state = LoginState.disconnected;
+    _state = LoginState.disconnected;
   }
 
   double opacity(Item item) => _opacities[item]!;
+  LoginState get state => _state;
+
+  set state(LoginState state) {
+    _state = state;
+    notifyListeners();
+  }
 
   @override
   void illuminate(event, Item? item) {
@@ -31,4 +37,4 @@ class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
 enum Item { connection, connect }
 
 /// Possible states when login
-enum LoginState { disconnected, connecting, logging, registering }
+enum LoginState { disconnected, email, password, connecting, registering }

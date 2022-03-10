@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 extension GlobalStringExtensions on String {
-  String getAsset() => 'images/MSV/$this.jpg';
-  String getMiniAsset() => 'images/MSV/${this}_mini.jpg';
+  String getAsset() => 'assets/images/$this.jpg';
+  String getMiniAsset() => 'assets/images/${this}_mini.jpg';
 }
 
 const defaultOpacity = 0.7;

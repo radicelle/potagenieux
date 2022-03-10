@@ -13,11 +13,14 @@ class ConnectionButton extends LoginItem {
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 100),
       opacity: stateProvider.opacity(Item.connection),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20.0),
-        child: Text(
-          "Se connecter",
-          style: globals.loginTextStyle(context),
+      child: GestureDetector(
+        onTap: () => stateProvider.state = LoginState.email,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: Text(
+            "Se connecter",
+            style: globals.loginTextStyle(context),
+          ),
         ),
       ),
     );

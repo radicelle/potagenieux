@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/login_provider.dart';
 import 'connection_button.dart';
+import 'email_text_field.dart';
 
 class FireLogin extends StatefulWidget {
   const FireLogin({required this.width, required this.height, Key? key})
@@ -45,11 +46,15 @@ class _FireLoginState extends State<FireLogin>
             onEnter: (event) =>
                 loginProvider.illuminate(event, Item.connection),
             onExit: (event) => loginProvider.shade(event, Item.connection),
-            child: GestureDetector(
-              onTap: () => loginProvider.state = LoginState.logging,
-              child: ConnectionButton(
-                loginProvider: loginProvider,
-              ),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              child: (() {
+                if (loginProvider.state == LoginState.disconnected) {
+                  return ConnectionButton(loginProvider: loginProvider);
+                } else if (loginProvider.state == LoginState.email) {
+                  return EmailTextField(loginProvider: loginProvider);
+                }
+              }()),
             ),
           );
         }),
