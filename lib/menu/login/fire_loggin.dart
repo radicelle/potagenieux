@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/login_provider.dart';
+import 'connection_button.dart';
 
 class FireLogin extends StatefulWidget {
   const FireLogin({required this.width, required this.height, Key? key})
@@ -34,7 +38,22 @@ class _FireLoginState extends State<FireLogin>
         maxWidth: widget.width,
         maxHeight: widget.height,
       ),
-      child: const Text("Login"),
+      child: ChangeNotifierProvider(
+        create: (BuildContext context) => LoginProvider(),
+        child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
+          return MouseRegion(
+            onEnter: (event) =>
+                loginProvider.illuminate(event, Item.connection),
+            onExit: (event) => loginProvider.shade(event, Item.connection),
+            child: GestureDetector(
+              onTap: () => loginProvider.state = LoginState.logging,
+              child: ConnectionButton(
+                loginProvider: loginProvider,
+              ),
+            ),
+          );
+        }),
+      ),
     );
   }
 }

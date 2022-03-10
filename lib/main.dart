@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage>
     const menuPadding = 1.0;
     var finalMenuWidth = menuWidth - menuPadding;
     var rightContainerHeight = panelHeight * 5 / 6;
-    var headerHeight = panelHeight / 8;
+    var headerHeight = panelHeight / 7;
     var miniImagesHeight = rightContainerHeight / 8;
     return Stack(
       children: [

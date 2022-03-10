@@ -19,6 +19,11 @@ headerTextStyle(context) {
       textStyle: Theme.of(context).textTheme.headline4, color: headerColor);
 }
 
+loginTextStyle(context) {
+  return GoogleFonts.aBeeZee(
+      textStyle: Theme.of(context).textTheme.bodyLarge, color: headerColor);
+}
+
 menuTextStyle(context) {
   return GoogleFonts.aBeeZee(
       textStyle: Theme.of(context).textTheme.headline5, color: menuColor);

@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:potagenieux/panels/home/image_switcher.dart';
+import 'package:potagenieux/providers/image_panel_change_notifier.dart';
 import 'package:provider/provider.dart';
-
-import '../../providers/main_image_change_notifier.dart';
 
 class HomeListView extends StatelessWidget {
   const HomeListView({
@@ -19,7 +18,7 @@ class HomeListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => MainImageChangeNotifier.fromIndex(0),
+      create: (_) => ImagePanelChangeNotifier.fromIndex(0),
       child: ListView(
         children: [
           ImageSwitcher(

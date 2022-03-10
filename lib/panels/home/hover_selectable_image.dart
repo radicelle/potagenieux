@@ -3,7 +3,7 @@ import 'package:flutter/src/gestures/events.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals.dart' as globals;
-import '../../providers/main_image_change_notifier.dart';
+import '../../providers/image_panel_change_notifier.dart';
 
 class HoverSelectableImage extends StatefulWidget {
   const HoverSelectableImage({required this.index, Key? key}) : super(key: key);
@@ -28,7 +28,7 @@ class _HoverSelectableImageState extends State<HoverSelectableImage>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MainImageChangeNotifier>(
+    return Consumer<ImagePanelChangeNotifier>(
       builder: (_, imgCons, __) {
         var isSelected = imgCons.selected == widget.index;
         return Padding(
@@ -45,8 +45,8 @@ class _HoverSelectableImageState extends State<HoverSelectableImage>
             child: GestureDetector(
               onTap: () => imgCons.selectedIndex = widget.index,
               child: MouseRegion(
-                onEnter: _enlight,
-                onExit: _darken,
+                onEnter: _illuminate,
+                onExit: _shade,
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 100),
                   opacity: _globalOpacity,
@@ -63,13 +63,13 @@ class _HoverSelectableImageState extends State<HoverSelectableImage>
     );
   }
 
-  void _enlight(PointerEnterEvent event) {
+  void _illuminate(PointerEnterEvent event) {
     setState(() {
       _globalOpacity = 1;
     });
   }
 
-  void _darken(PointerExitEvent event) {
+  void _shade(PointerExitEvent event) {
     setState(() {
       _globalOpacity = globals.defaultOpacity;
     });

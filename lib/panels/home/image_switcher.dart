@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:potagenieux/providers/image_panel_change_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals.dart' as globals;
-import '../../providers/main_image_change_notifier.dart';
 import 'hover_selectable_image.dart';
 
 class ImageSwitcher extends StatelessWidget {
@@ -21,7 +21,7 @@ class ImageSwitcher extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(children: [
       Positioned(
-        child: Consumer<MainImageChangeNotifier>(builder: (_, imgCons, __) {
+        child: Consumer<ImagePanelChangeNotifier>(builder: (_, imgCons, __) {
           return AnimatedSwitcher(
             duration: const Duration(milliseconds: 500),
             transitionBuilder: (Widget child, Animation<double> animation) =>

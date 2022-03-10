@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../globals.dart' as globals;
 
-class MainImageChangeNotifier extends ChangeNotifier {
+class ImagePanelChangeNotifier extends ChangeNotifier {
   late int _selectedIndex;
   late final List<Image> _images = [
     ...globals.imagesNamesMap.values.map((name) => Image.asset(
@@ -18,7 +18,7 @@ class MainImageChangeNotifier extends ChangeNotifier {
         ))
   ];
 
-  MainImageChangeNotifier.fromIndex(int index) {
+  ImagePanelChangeNotifier.fromIndex(int index) {
     _selectedIndex = index;
   }
   Widget get selectedImage => _images[_selectedIndex];
