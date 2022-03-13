@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:potagenieux/menu/login/disconnection_button.dart';
+import 'package:potagenieux/menu/login/unknown_account_login_form.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/login_provider.dart';
 import 'connection_button.dart';
 import 'email_text_field.dart';
+import 'known_account_login_form.dart';
 
 class FireLogin extends StatefulWidget {
   const FireLogin({required this.width, required this.height, Key? key})
@@ -44,21 +47,44 @@ class _FireLoginState extends State<FireLogin> {
             child: (() {
               if (loginProvider.state == LoginState.disconnected) {
                 return ConnectionButton(
-                  loginProvider: loginProvider,
                   width: widget.width,
                   height: widget.height,
                 );
               } else if (loginProvider.state == LoginState.email) {
                 return EmailTextField(
-                  loginProvider: loginProvider,
-                  callback: (email) => loginProvider.verifyEmail(email,
-                      (e) => _showErrorDialog(context, 'Invalid email', e)),
+                  callback: (email) => loginProvider.verifyEmail(
+                      email,
+                      (e) =>
+                          _showErrorDialog(context, 'Erreur de connexion', e)),
                   width: widget.width,
                   height: widget.height,
                 );
               } else if (loginProvider.state == LoginState.register) {
-                return Container(
-                  color: Colors.red,
+                return UnknownAccountLoginForm(
+                    width: widget.width,
+                    height: widget.height,
+                    callback: (lastname, firstname, password) =>
+                        loginProvider.registerAccount(
+                            loginProvider.email!,
+                            lastname,
+                            firstname,
+                            password,
+                            (e) => _showErrorDialog(
+                                context, 'Erreur de connexion', e)));
+              } else if (loginProvider.state == LoginState.password) {
+                return KnownAccountLoginForm(
+                    width: widget.width,
+                    height: widget.height,
+                    callback: (password) =>
+                        loginProvider.signInWithEmailAndPassword(
+                            loginProvider.email!,
+                            password,
+                            (e) => _showErrorDialog(
+                                context, 'Erreur de connexion', e)));
+              } else if (loginProvider.state == LoginState.connected) {
+                return DisconnectionButton(
+                  width: widget.width,
+                  height: widget.height,
                 );
               }
             }()),

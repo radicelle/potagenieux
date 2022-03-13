@@ -105,13 +105,14 @@ class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
 
   Future<void> registerAccount(
       String email,
-      String displayName,
+      String lastname,
+      String firstname,
       String password,
       void Function(FirebaseAuthException e) errorCallback) async {
     try {
       var credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      await credential.user!.updateDisplayName(displayName);
+      await credential.user!.updateDisplayName("$firstname $lastname");
     } on FirebaseAuthException catch (e) {
       errorCallback(e);
     }
@@ -119,6 +120,11 @@ class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
 
   void signOut() {
     FirebaseAuth.instance.signOut();
+  }
+
+  returnToEmail() {
+    _state = LoginState.email;
+    notifyListeners();
   }
 }
 

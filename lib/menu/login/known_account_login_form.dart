@@ -1,28 +1,27 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:potagenieux/globals.dart' as globals;
 import 'package:potagenieux/providers/login_provider.dart';
 import 'package:provider/provider.dart';
 
-class EmailTextField extends StatefulWidget {
-  const EmailTextField({
+class KnownAccountLoginForm extends StatefulWidget {
+  const KnownAccountLoginForm({
     Key? key,
     required this.width,
     required this.height,
     required this.callback,
   }) : super(key: key);
 
-  final void Function(String email) callback;
+  final void Function(String password) callback;
   final double width;
   final double height;
 
   @override
-  State<EmailTextField> createState() => _EmailTextFieldState();
+  State<KnownAccountLoginForm> createState() => _KnownAccountLoginFormState();
 }
 
-class _EmailTextFieldState extends State<EmailTextField> {
+class _KnownAccountLoginFormState extends State<KnownAccountLoginForm> {
   final _formKey = GlobalKey<FormState>();
-  final _controller = TextEditingController();
+  final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var paddingLeft = 20.0;
@@ -33,7 +32,6 @@ class _EmailTextFieldState extends State<EmailTextField> {
           height: widget.height,
           alignment: Alignment.centerLeft,
           child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
-            _controller.text = loginProvider.email ?? '';
             return Form(
                 key: _formKey,
                 autovalidateMode: AutovalidateMode.always,
@@ -42,38 +40,38 @@ class _EmailTextFieldState extends State<EmailTextField> {
                     Row(children: [
                       Expanded(
                         child: TextFormField(
-                          controller: _controller,
+                          controller: _passwordController,
                           textAlign: TextAlign.left,
                           decoration: const InputDecoration(
                             icon: Icon(Icons.email),
-                            hintText: 'abc@quelquechose.xyz',
-                            labelText: 'email',
+                            hintText: 'mot de passe',
+                            labelText: 'mot de passe',
                           ),
-                          validator: emailValidator,
+                          obscureText: true,
+                          validator: passwordValidator,
                         ),
                       ),
                       IconButton(
                           splashRadius: 15,
                           color: globals.menuColor,
-                          onPressed: () => loginProvider.cancelRegistration(),
+                          onPressed: () => loginProvider.returnToEmail(),
                           icon: const Icon(Icons.arrow_left)),
                     ]),
                     TextButton(
                         onPressed: () async {
-                          widget.callback(_controller.text);
+                          widget.callback(_passwordController.text);
                         },
-                        child: const Text("suivant"))
+                        child: const Text("se connected"))
                   ],
                 ));
           }),
         ));
   }
 
-  String? emailValidator(value) {
-    if (EmailValidator.validate(value ?? "")) {
-      return null;
-    } else {
-      return "Saisissez un email valide";
+  String? passwordValidator(value) {
+    if (value!.isEmpty) {
+      return 'Enter your password';
     }
+    return null;
   }
 }
