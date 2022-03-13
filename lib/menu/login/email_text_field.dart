@@ -10,8 +10,10 @@ class EmailTextField extends StatefulWidget {
     required this.width,
     required this.height,
     required this.callback,
+    this.knownEmail,
   }) : super(key: key);
 
+  final String? knownEmail;
   final void Function(String email) callback;
   final double width;
   final double height;
@@ -22,7 +24,14 @@ class EmailTextField extends StatefulWidget {
 
 class _EmailTextFieldState extends State<EmailTextField> {
   final _formKey = GlobalKey<FormState>();
-  final _controller = TextEditingController();
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    _controller = TextEditingController(text: widget.knownEmail);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var paddingLeft = 20.0;
@@ -33,7 +42,6 @@ class _EmailTextFieldState extends State<EmailTextField> {
           height: widget.height,
           alignment: Alignment.centerLeft,
           child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
-            _controller.text = loginProvider.email ?? '';
             return Form(
                 key: _formKey,
                 autovalidateMode: AutovalidateMode.always,
