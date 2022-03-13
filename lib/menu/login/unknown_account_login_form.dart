@@ -54,6 +54,12 @@ class _UnknownAccountLoginFormState extends State<UnknownAccountLoginForm> {
                           ),
                           obscureText: true,
                           validator: passwordValidator,
+                          onFieldSubmitted: (value) async {
+                            widget.callback(
+                                _lastnameController.text,
+                                _firstnameController.text,
+                                _passwordController.text);
+                          },
                         ),
                       ),
                       IconButton(

@@ -49,6 +49,9 @@ class _KnownAccountLoginFormState extends State<KnownAccountLoginForm> {
                           ),
                           obscureText: true,
                           validator: passwordValidator,
+                          onFieldSubmitted: (value) async {
+                            widget.callback(_passwordController.text);
+                          },
                         ),
                       ),
                       IconButton(

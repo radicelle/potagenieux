@@ -52,6 +52,7 @@ class _FireLoginState extends State<FireLogin> {
                 );
               } else if (loginProvider.state == LoginState.email) {
                 return EmailTextField(
+                  knownEmail: loginProvider.email,
                   callback: (email) => loginProvider.verifyEmail(
                       email,
                       (e) =>

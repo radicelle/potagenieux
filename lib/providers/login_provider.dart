@@ -70,7 +70,6 @@ class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
     try {
       var methods =
           await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-      print(methods);
       if (methods.contains('password')) {
         _state = LoginState.password;
       } else {

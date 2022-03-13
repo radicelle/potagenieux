@@ -58,6 +58,9 @@ class _EmailTextFieldState extends State<EmailTextField> {
                             labelText: 'email',
                           ),
                           validator: emailValidator,
+                          onFieldSubmitted: (value) async {
+                            widget.callback(value);
+                          },
                         ),
                       ),
                       IconButton(
