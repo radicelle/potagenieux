@@ -28,7 +28,7 @@ class ImageSwitcher extends StatelessWidget {
                 FadeTransition(
               opacity: animation,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(50),
                 child: SizedBox(width: width, height: height, child: child),
               ),
             ),

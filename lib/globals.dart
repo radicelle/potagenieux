@@ -10,18 +10,40 @@ extension GlobalStringExtensions on String {
 
 const defaultOpacity = 0.7;
 const menuBackgroundColor = 0xff9AA644;
+const appBarHeight = 30.0;
 
-final headerColor = Colors.white.withOpacity(0.6);
+Map<int, Color> menuBackgroundColorMap = {
+  50: const Color.fromRGBO(0, 120, 120, .1),
+  100: const Color.fromRGBO(0, 120, 120, .2),
+  200: const Color.fromRGBO(0, 120, 120, .3),
+  300: const Color.fromRGBO(0, 120, 120, .4),
+  400: const Color.fromRGBO(0, 120, 120, .5),
+  500: const Color.fromRGBO(0, 120, 120, .6),
+  600: const Color.fromRGBO(0, 120, 120, .7),
+  700: const Color.fromRGBO(0, 120, 120, .8),
+  800: const Color.fromRGBO(0, 120, 120, .9),
+  900: const Color.fromRGBO(0, 120, 120, 1),
+};
+
+final materialMenuBackgroundColor =
+    MaterialColor(0xFF007878, menuBackgroundColorMap); // opposite : 0xFFF05900
+bodyTextTheme(context) {
+  return GoogleFonts.aBeeZeeTextTheme(
+    Theme.of(context).textTheme,
+  );
+}
+
+final headerTextColor = Colors.white.withOpacity(0.6);
 final menuColor = Colors.white.withOpacity(0.7);
 
 headerTextStyle(context) {
   return GoogleFonts.aBeeZee(
-      textStyle: Theme.of(context).textTheme.headline4, color: headerColor);
+      textStyle: Theme.of(context).textTheme.headline4, color: headerTextColor);
 }
 
 loginTextStyle(context) {
   return GoogleFonts.aBeeZee(
-      textStyle: Theme.of(context).textTheme.bodyLarge, color: headerColor);
+      textStyle: Theme.of(context).textTheme.headline6, color: headerTextColor);
 }
 
 menuTextStyle(context) {
