@@ -44,8 +44,7 @@ class _KnownAccountLoginFormState extends State<KnownAccountLoginForm> {
                           textAlign: TextAlign.left,
                           decoration: const InputDecoration(
                             icon: Icon(Icons.email),
-                            hintText: 'mot de passe',
-                            labelText: 'mot de passe',
+                            hintText: 'Mot de passe',
                           ),
                           obscureText: true,
                           validator: passwordValidator,
@@ -64,7 +63,7 @@ class _KnownAccountLoginFormState extends State<KnownAccountLoginForm> {
                         onPressed: () async {
                           widget.callback(_passwordController.text);
                         },
-                        child: const Text("se connected"))
+                        child: const Text("Se connected"))
                   ],
                 ));
           }),

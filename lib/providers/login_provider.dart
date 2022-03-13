@@ -17,11 +17,18 @@ class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
   }
 
   double get menuWidth {
-    if (_state == LoginState.disconnected ||
-        _state == LoginState.disconnected) {
+    if (_state == LoginState.disconnected || _state == LoginState.connected) {
       return 300;
     } else {
       return 500;
+    }
+  }
+
+  double menuItemsStart(double panelHeight) {
+    if (_state == LoginState.register) {
+      return panelHeight / 3;
+    } else {
+      return panelHeight / 5;
     }
   }
 

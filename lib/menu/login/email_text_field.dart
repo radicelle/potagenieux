@@ -73,7 +73,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
                         onPressed: () async {
                           widget.callback(_controller.text);
                         },
-                        child: const Text("suivant"))
+                        child: const Text("Suivant"))
                   ],
                 ));
           }),

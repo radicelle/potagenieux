@@ -42,32 +42,40 @@ class _UnknownAccountLoginFormState extends State<UnknownAccountLoginForm> {
                 autovalidateMode: AutovalidateMode.always,
                 child: Column(
                   children: [
-                    Row(children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _passwordController,
-                          textAlign: TextAlign.left,
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.email),
-                            hintText: 'mot de passe',
-                            labelText: 'mot de passe',
-                          ),
-                          obscureText: true,
-                          validator: passwordValidator,
-                          onFieldSubmitted: (value) async {
-                            widget.callback(
-                                _lastnameController.text,
-                                _firstnameController.text,
-                                _passwordController.text);
-                          },
+                    Expanded(
+                      child: TextFormField(
+                        controller: _passwordController,
+                        validator: passwordValidator,
+                        textAlign: TextAlign.left,
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.email),
+                          hintText: 'Mot de passe',
                         ),
+                        obscureText: true,
                       ),
-                      IconButton(
-                          splashRadius: 15,
-                          color: globals.menuColor,
-                          onPressed: () => loginProvider.returnToEmail(),
-                          icon: const Icon(Icons.arrow_left)),
-                    ]),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: _lastnameController,
+                        textAlign: TextAlign.left,
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.email),
+                          hintText: 'Nom',
+                        ),
+                        obscureText: true,
+                      ),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: _firstnameController,
+                        textAlign: TextAlign.left,
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.email),
+                          hintText: 'Prénom',
+                        ),
+                        obscureText: true,
+                      ),
+                    ),
                     TextButton(
                         onPressed: () async {
                           widget.callback(
@@ -75,17 +83,27 @@ class _UnknownAccountLoginFormState extends State<UnknownAccountLoginForm> {
                               _firstnameController.text,
                               _passwordController.text);
                         },
-                        child: const Text("se connected"))
+                        child: const Text("S'enregistrer")),
+                    IconButton(
+                        splashRadius: 15,
+                        color: globals.menuColor,
+                        onPressed: () => loginProvider.cancelRegistration(),
+                        icon: const Icon(Icons.arrow_left))
                   ],
                 ));
           }),
         ));
   }
 
-  String? passwordValidator(value) {
-    if (value!.isEmpty) {
-      return 'Enter your password';
+  String? passwordValidator(String? value) {
+    if (value?.isEmpty ?? true) return "Ne peut être vide";
+    String pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = RegExp(pattern);
+    if (regExp.hasMatch(value!)) {
+      return null;
+    } else {
+      return "8 car. : 1 Maj, 1 min, 1 chiffre, 1 car. special ";
     }
-    return null;
   }
 }

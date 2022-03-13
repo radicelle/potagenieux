@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage>
           var rightContainerHeight = panelHeight * 5 / 6;
           //var headerHeight = panelHeight / 7;
           var miniImagesHeight = rightContainerHeight / 8;
-          var menuItemStart = panelHeight / 5;
+          var menuItemStart = loginProvider.menuItemsStart(panelHeight);
           return Stack(
             children: [
               Positioned(

@@ -1,3 +1,4 @@
+import 'package:firebase_auth_platform_interface/src/firebase_auth_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:potagenieux/menu/login/disconnection_button.dart';
 import 'package:potagenieux/menu/login/unknown_account_login_form.dart';
@@ -55,8 +56,8 @@ class _FireLoginState extends State<FireLogin> {
                   knownEmail: loginProvider.email,
                   callback: (email) => loginProvider.verifyEmail(
                       email,
-                      (e) =>
-                          _showErrorDialog(context, 'Erreur de connexion', e)),
+                      (e) => _errorCallback(
+                          context, e, "Une erreur s'est produite.")),
                   width: widget.width,
                   height: widget.height,
                 );
@@ -70,8 +71,8 @@ class _FireLoginState extends State<FireLogin> {
                             lastname,
                             firstname,
                             password,
-                            (e) => _showErrorDialog(
-                                context, 'Erreur de connexion', e)));
+                            (e) => _errorCallback(context, e,
+                                "Erreur lors de l'enregistrement.")));
               } else if (loginProvider.state == LoginState.password) {
                 return KnownAccountLoginForm(
                     width: widget.width,
@@ -80,8 +81,8 @@ class _FireLoginState extends State<FireLogin> {
                         loginProvider.signInWithEmailAndPassword(
                             loginProvider.email!,
                             password,
-                            (e) => _showErrorDialog(
-                                context, 'Erreur de connexion', e)));
+                            (e) => _errorCallback(
+                                context, e, "Mot de passe invalide.")));
               } else if (loginProvider.state == LoginState.connected) {
                 return DisconnectionButton(
                   width: widget.width,
@@ -93,6 +94,12 @@ class _FireLoginState extends State<FireLogin> {
         );
       }),
     );
+  }
+
+  void _errorCallback(
+      BuildContext context, FirebaseAuthException e, String message) {
+    return _showErrorDialog(context, 'Erreur de connexion',
+        FirebaseAuthException(code: 'e.code', message: message));
   }
 
   static Widget fadeOverLayoutBuilder(
