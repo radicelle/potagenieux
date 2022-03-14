@@ -126,10 +126,13 @@ class _MyHomePageState extends State<MyHomePage>
                 right: 0,
                 left: menuWidth,
                 bottom: 0,
-                child: HomeListView(
-                    width: rightContainerWidth,
-                    height: rightContainerHeight,
-                    miniImagesHeight: miniImagesHeight),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: HomeListView(
+                      width: rightContainerWidth,
+                      height: rightContainerHeight,
+                      miniImagesHeight: miniImagesHeight),
+                ),
               ),
             ],
           );

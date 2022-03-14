@@ -30,6 +30,7 @@ class HomeListViewTexts extends StatelessWidget {
         Expanded(
           child: FourDividedTexts(
             height: height,
+            uppercase: true,
             texts: const [
               "Des notions complexes réalisées simplement",
               "Des idées novatrices",
@@ -42,10 +43,10 @@ class HomeListViewTexts extends StatelessWidget {
           child: FourDividedTexts(
             height: height,
             texts: const [
-              "Maraîchage sur sol vivant\ntoto",
-              "Des idées novatrices",
-              "Des pratiques exemplaires",
-              "Des prix contenus"
+              "Maraîchage sur sol vivant\n\nAutomatisation\n\nBioclimatisme\n\nMicro-biologie",
+              "Maraîchage syntropique\n\nCompostage Johnson-Su\n\nThé de composte",
+              "Maraîche bio\n\nTrès peu d'intrants\n\nPas de traitements",
+              "Toutes ces pratiques garantissent un rendement idéal et des légumes en bonne santé qui restent abordables par leur positionnement adapté au marché"
             ],
           ),
         ),

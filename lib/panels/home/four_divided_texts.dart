@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:potagenieux/globals.dart' as globals;
 
 class FourDividedTexts extends StatelessWidget {
-  const FourDividedTexts({Key? key, required this.height, required this.texts})
+  const FourDividedTexts(
+      {Key? key,
+      this.uppercase = false,
+      required this.height,
+      required this.texts})
       : assert(texts.length == 4),
         super(key: key);
 
   final double height;
+  final bool uppercase;
   final List<String> texts;
 
   @override
@@ -20,7 +25,7 @@ class FourDividedTexts extends StatelessWidget {
             child: Container(
                 alignment: Alignment.center,
                 child: Text(
-                  texts[0].toUpperCase(),
+                  uppercase ? texts[0].toUpperCase() : texts[0],
                   style: globals.bodyTextStyle(context),
                   textAlign: TextAlign.center,
                 )),
@@ -33,7 +38,7 @@ class FourDividedTexts extends StatelessWidget {
             child: Container(
                 alignment: Alignment.center,
                 child: Text(
-                  texts[1].toUpperCase(),
+                  uppercase ? texts[1].toUpperCase() : texts[1],
                   style: globals.bodyTextStyle(context),
                   textAlign: TextAlign.center,
                 )),
@@ -46,7 +51,7 @@ class FourDividedTexts extends StatelessWidget {
             child: Container(
                 alignment: Alignment.center,
                 child: Text(
-                  texts[2].toUpperCase(),
+                  uppercase ? texts[2].toUpperCase() : texts[2],
                   style: globals.bodyTextStyle(context),
                   textAlign: TextAlign.center,
                 )),
@@ -59,7 +64,7 @@ class FourDividedTexts extends StatelessWidget {
             child: Container(
                 alignment: Alignment.center,
                 child: Text(
-                  texts[3].toUpperCase(),
+                  uppercase ? texts[3].toUpperCase() : texts[3],
                   style: globals.bodyTextStyle(context),
                   textAlign: TextAlign.center,
                 )),
