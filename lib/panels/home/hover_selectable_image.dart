@@ -31,29 +31,25 @@ class _HoverSelectableImageState extends State<HoverSelectableImage>
     return Consumer<ImagePanelChangeNotifier>(
       builder: (_, imgCons, __) {
         var isSelected = imgCons.selected == widget.index;
-        return Padding(
-          padding: const EdgeInsets.only(right: 10.0, left: 10.0, bottom: 10),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              border: Border.all(
-                  color:
-                      isSelected ? Colors.white : Colors.black.withOpacity(1),
-                  width: 3),
-              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-              shape: BoxShape.rectangle,
-            ),
-            child: GestureDetector(
-              onTap: () => imgCons.selectedIndex = widget.index,
-              child: MouseRegion(
-                onEnter: _illuminate,
-                onExit: _shade,
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 100),
-                  opacity: _globalOpacity,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: imgCons.miniature(widget.index),
-                  ),
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border.all(
+                color: isSelected ? Colors.white : Colors.black.withOpacity(1),
+                width: 3),
+            borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+            shape: BoxShape.rectangle,
+          ),
+          child: GestureDetector(
+            onTap: () => imgCons.selectedIndex = widget.index,
+            child: MouseRegion(
+              onEnter: _illuminate,
+              onExit: _shade,
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 100),
+                opacity: _globalOpacity,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: imgCons.miniature(widget.index),
                 ),
               ),
             ),
