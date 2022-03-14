@@ -33,6 +33,13 @@ bodyTextTheme(context) {
   );
 }
 
+bodyTextStyle(context) {
+  return GoogleFonts.aBeeZee(
+    textStyle: Theme.of(context).textTheme.bodyMedium,
+    color: headerTextColor,
+  );
+}
+
 final headerTextColor = Colors.white.withOpacity(0.6);
 final menuColor = Colors.white.withOpacity(0.7);
 

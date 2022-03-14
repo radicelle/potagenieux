@@ -125,8 +125,7 @@ class _MyHomePageState extends State<MyHomePage>
                 top: 0,
                 right: 0,
                 left: menuWidth,
-                bottom:
-                    panelHeight - rightContainerHeight - globals.appBarHeight,
+                bottom: 0,
                 child: HomeListView(
                     width: rightContainerWidth,
                     height: rightContainerHeight,
