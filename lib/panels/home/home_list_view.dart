@@ -29,7 +29,7 @@ class HomeListView extends StatelessWidget {
             width: width,
             height: height,
           ),
-          Container(
+          SizedBox(
             width: width,
             height: height,
           )

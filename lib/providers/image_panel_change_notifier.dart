@@ -9,13 +9,13 @@ class ImagePanelChangeNotifier extends ChangeNotifier {
   late int _selectedIndex;
   late final List<FutureBuilder<dynamic>> _images = [
     ...globals.imagesNamesMap.values.map((name) => FutureBuilder<dynamic>(
+          key: ValueKey(name),
           future:
               FirebaseStorage.instance.ref(name.getAsset()).getDownloadURL(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState != ConnectionState.waiting) {
               return Image(
                 fit: BoxFit.cover,
-                key: ValueKey(name),
                 image: CachedNetworkImageProvider(
                   snapshot.data.toString(),
                 ),
@@ -31,6 +31,7 @@ class ImagePanelChangeNotifier extends ChangeNotifier {
   ];
   final List<FutureBuilder<dynamic>> _miniatures = [
     ...globals.imagesNamesMap.values.map((name) => FutureBuilder<dynamic>(
+          key: ValueKey(name),
           future: FirebaseStorage.instance
               .ref(name.getMiniAsset())
               .getDownloadURL(),
@@ -38,7 +39,6 @@ class ImagePanelChangeNotifier extends ChangeNotifier {
             if (snapshot.connectionState != ConnectionState.waiting) {
               return Image(
                 fit: BoxFit.fill,
-                key: ValueKey(name),
                 image: CachedNetworkImageProvider(
                   snapshot.data.toString(),
                 ),
