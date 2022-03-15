@@ -1,20 +1,55 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animations/loading_animations.dart';
 
 import '../globals.dart' as globals;
 
 class ImagePanelChangeNotifier extends ChangeNotifier {
   late int _selectedIndex;
-  late final List<Image> _images = [
-    ...globals.imagesNamesMap.values.map((name) => Image.asset(
-          name.getAsset(),
-          fit: BoxFit.cover,
-          key: ValueKey(name),
+  late final List<FutureBuilder<dynamic>> _images = [
+    ...globals.imagesNamesMap.values.map((name) => FutureBuilder<dynamic>(
+          future:
+              FirebaseStorage.instance.ref(name.getAsset()).getDownloadURL(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState != ConnectionState.waiting) {
+              return Image(
+                fit: BoxFit.cover,
+                key: ValueKey(name),
+                image: CachedNetworkImageProvider(
+                  snapshot.data.toString(),
+                ),
+              );
+            } else {
+              return LoadingJumpingLine.circle(
+                backgroundColor: globals.menuColor,
+                borderColor: Colors.grey,
+              );
+            }
+          },
         ))
   ];
-  final List<Image> _miniatures = [
-    ...globals.imagesNamesMap.values.map((name) => Image.asset(
-          name.getMiniAsset(),
-          fit: BoxFit.fill,
+  final List<FutureBuilder<dynamic>> _miniatures = [
+    ...globals.imagesNamesMap.values.map((name) => FutureBuilder<dynamic>(
+          future: FirebaseStorage.instance
+              .ref(name.getMiniAsset())
+              .getDownloadURL(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState != ConnectionState.waiting) {
+              return Image(
+                fit: BoxFit.fill,
+                key: ValueKey(name),
+                image: CachedNetworkImageProvider(
+                  snapshot.data.toString(),
+                ),
+              );
+            } else {
+              return LoadingJumpingLine.circle(
+                backgroundColor: globals.menuColor,
+                borderColor: Colors.grey,
+              );
+            }
+          },
         ))
   ];
 

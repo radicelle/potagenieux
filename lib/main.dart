@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:potagenieux/menu/login/fire_loggin.dart';
@@ -9,36 +10,12 @@ import 'globals.dart' as globals;
 import 'menu/menu_items.dart';
 import 'panels/home/home_list_view.dart';
 
-/***
- * Firebase config
- * // Import the functions you need from the SDKs you need
-    import { initializeApp } from "firebase/app";
-    import { getAnalytics } from "firebase/analytics";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-    apiKey: "AIzaSyChrC3jddhYjoqRLpXUcgdlooI3DlAZBRE",
-    authDomain: "potagenieux.firebaseapp.com",
-    projectId: "potagenieux",
-    storageBucket: "potagenieux.appspot.com",
-    messagingSenderId: "917904956605",
-    appId: "1:917904956605:web:ffd769069713120d13abd4",
-    measurementId: "G-QNCVGC9HX3"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
- */
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseAuth.instance.signInAnonymously();
   runApp(const MyApp());
 }
 
