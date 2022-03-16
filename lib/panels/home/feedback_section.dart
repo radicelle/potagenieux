@@ -121,12 +121,14 @@ class _FeedbackSectionState extends State<FeedbackSection> {
                                   setState(() {
                                     _sent = true;
                                   });
-                                  Future.delayed(
-                                      const Duration(seconds: 4),
-                                      () => setState(() {
-                                            initState();
-                                            _sent = false;
-                                          }));
+
+                                  await Future.delayed(
+                                      const Duration(seconds: 4), () => {});
+                                  setState(() {
+                                    _messageController.clear();
+                                    _subjectController.clear();
+                                    _sent = false;
+                                  });
                                 }
                               : null,
                           child: const Text("Envoyer")),
