@@ -69,15 +69,6 @@ class ImageSwitcher extends StatelessWidget {
     ]);
   }
 }
-/*
-MultiChildSc(
-              crossAxisCount: globals.imagesNamesMap.length,
-              children: [
-                ...globals.imagesNamesMap.keys
-                    .map((index) => HoverSelectableImage(index: index))
-              ],
-            )
- */
 
 class BackgroundClipper extends CustomClipper<Path> {
   const BackgroundClipper(
@@ -122,6 +113,6 @@ class BackgroundClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return true;
+    return false;
   }
 }
