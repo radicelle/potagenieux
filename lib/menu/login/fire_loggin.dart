@@ -1,5 +1,6 @@
 import 'package:firebase_auth_platform_interface/src/firebase_auth_exception.dart';
 import 'package:flutter/material.dart';
+import 'package:potagenieux/globals.dart' as globals;
 import 'package:potagenieux/menu/login/disconnection_button.dart';
 import 'package:potagenieux/menu/login/unknown_account_login_form.dart';
 import 'package:provider/provider.dart';
@@ -98,7 +99,7 @@ class _FireLoginState extends State<FireLogin> {
 
   void _errorCallback(
       BuildContext context, FirebaseAuthException e, String message) {
-    return _showErrorDialog(context, 'Erreur de connexion',
+    return globals.showErrorDialog(context, 'Erreur de connexion',
         FirebaseAuthException(code: 'e.code', message: message));
   }
 
@@ -113,41 +114,6 @@ class _FireLoginState extends State<FireLogin> {
             )),
         if (currentChild != null) currentChild,
       ],
-    );
-  }
-
-  void _showErrorDialog(BuildContext context, String title, Exception e) {
-    showDialog<void>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-            title,
-            style: const TextStyle(fontSize: 24),
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(
-                  '${(e as dynamic).message}',
-                  style: const TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                'OK',
-                style: TextStyle(color: Colors.deepPurple),
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 }

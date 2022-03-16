@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:potagenieux/panels/home/feedback_section.dart';
 import 'package:potagenieux/panels/home/home_list_view_texts.dart';
 import 'package:potagenieux/panels/home/image_switcher.dart';
 import 'package:potagenieux/providers/image_panel_change_notifier.dart';
@@ -29,9 +30,9 @@ class HomeListView extends StatelessWidget {
             width: width,
             height: height,
           ),
+          FeedbackSection(width: width, height: height),
           SizedBox(
-            width: width,
-            height: height,
+            height: height / 6,
           )
         ],
         itemExtent: height,
