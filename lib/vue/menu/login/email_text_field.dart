@@ -1,4 +1,3 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:potagenieux/globals.dart' as globals;
 import 'package:potagenieux/providers/login_provider.dart';
@@ -44,7 +43,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
           child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
             return Form(
                 key: _formKey,
-                autovalidateMode: AutovalidateMode.always,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   children: [
                     Row(children: [
@@ -57,7 +56,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
                             hintText: 'abc@quelquechose.xyz',
                             labelText: 'email',
                           ),
-                          validator: emailValidator,
+                          validator: globals.emailValidator,
                           onFieldSubmitted: (value) async {
                             widget.callback(value);
                           },
@@ -78,13 +77,5 @@ class _EmailTextFieldState extends State<EmailTextField> {
                 ));
           }),
         ));
-  }
-
-  String? emailValidator(value) {
-    if (EmailValidator.validate(value ?? "")) {
-      return null;
-    } else {
-      return "Saisissez un email valide";
-    }
   }
 }

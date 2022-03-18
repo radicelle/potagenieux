@@ -1,5 +1,6 @@
 library potagenieux.globals;
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -105,3 +106,19 @@ void showErrorDialog(BuildContext context, String title, Exception e) {
 }
 
 enum CloudFunctions { sendMail }
+
+String? emailValidator(String? value) {
+  if (EmailValidator.validate(value ?? "")) {
+    return null;
+  } else {
+    return "Saisissez un email valide";
+  }
+}
+
+String? notEmptyValidator(String? value) {
+  if (value?.isNotEmpty == true) {
+    return null;
+  } else {
+    return "Saississez quelque chose";
+  }
+}

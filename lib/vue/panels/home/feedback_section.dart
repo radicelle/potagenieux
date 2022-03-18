@@ -1,12 +1,9 @@
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:potagenieux/globals.dart' as globals;
 
 class FeedbackSection extends StatefulWidget {
-  FeedbackSection({
+  const FeedbackSection({
     Key? key,
     required this.width,
     required this.height,
@@ -54,8 +51,9 @@ class _FeedbackSectionState extends State<FeedbackSection> {
 
   @override
   Widget build(BuildContext context) {
-    var emailFunction = FirebaseFunctions.instance.httpsCallable(
-      globals.CloudFunctions.sendMail.toString(),
+    var emailFunction =
+        FirebaseFunctions.instanceFor(region: 'europe-west1').httpsCallable(
+      globals.CloudFunctions.sendMail.name,
       options: HttpsCallableOptions(
         timeout: const Duration(seconds: 4),
       ),
@@ -80,6 +78,7 @@ class _FeedbackSectionState extends State<FeedbackSection> {
                       child: FeedbackSectionTextFormField(
                         controller: _emailController,
                         name: "Courriel",
+                        validator: globals.emailValidator,
                       ),
                       width: widget.width / 2,
                     ),
@@ -105,22 +104,13 @@ class _FeedbackSectionState extends State<FeedbackSection> {
                                   setState(() {
                                     _canSend = false;
                                   });
-                                  final Email email = Email(
-                                    body: _messageController.text,
-                                    subject: "[Potagenieux]:" +
-                                        _subjectController.text,
-                                    recipients: [
-                                      "emmanuelbretonbelz@gmail.com",
-                                      _emailController.text
-                                    ],
-                                    isHTML: false,
-                                  );
 
                                   try {
                                     await emailFunction.call(<String, dynamic>{
-                                      'email': email.recipients[1],
-                                      'subject': email.subject,
-                                      'message': email.body,
+                                      'email': _emailController.text,
+                                      'subject': "[Potagenieux]: " +
+                                          _subjectController.text,
+                                      'message': _messageController.text,
                                     });
                                     setState(() {
                                       _sent = true;
@@ -137,6 +127,7 @@ class _FeedbackSectionState extends State<FeedbackSection> {
                                         "Erreur lors de l'envoie du courriel",
                                         Exception(
                                             "Le message n'a pas pu être envoyé."));
+                                    return;
                                   }
                                   await Future.delayed(
                                       const Duration(seconds: 4), () => {});
@@ -167,11 +158,13 @@ class FeedbackSectionTextFormField extends StatelessWidget {
     required this.controller,
     this.name = "",
     this.maxLines,
+    this.validator,
   }) : super(key: key);
 
   final TextEditingController controller;
   final String? name;
   final int? maxLines;
+  final FormFieldValidator<String>? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +174,9 @@ class FeedbackSectionTextFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: controller,
+        validator: validator ?? globals.notEmptyValidator,
         decoration: InputDecoration(
           border: InputBorder.none,
           fillColor: Colors.grey[300],
