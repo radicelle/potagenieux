@@ -47,7 +47,7 @@ class _FireLoginState extends State<FireLogin> {
             layoutBuilder: fadeOverLayoutBuilder,
             duration: const Duration(milliseconds: 600),
             child: (() {
-              if (loginProvider.state == LoginState.disconnected) {
+              if (loginProvider.state == LoginState.disconnected || ) {
                 return ConnectionButton(
                   width: widget.width,
                   height: widget.height,

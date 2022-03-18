@@ -1,6 +1,7 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:potagenieux/providers/login_provider.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseAuth.instance.signInAnonymously();
-  FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5000);
+  if (kDebugMode) {
+    FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5000);
+  }
   runApp(const MyApp());
 }
 
