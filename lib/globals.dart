@@ -103,3 +103,5 @@ void showErrorDialog(BuildContext context, String title, Exception e) {
     },
   );
 }
+
+enum CloudFunctions { sendMail }

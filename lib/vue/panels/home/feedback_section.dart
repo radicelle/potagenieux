@@ -1,4 +1,6 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:potagenieux/globals.dart' as globals;
@@ -52,6 +54,12 @@ class _FeedbackSectionState extends State<FeedbackSection> {
 
   @override
   Widget build(BuildContext context) {
+    var emailFunction = FirebaseFunctions.instance.httpsCallable(
+      globals.CloudFunctions.sendMail.toString(),
+      options: HttpsCallableOptions(
+        timeout: const Duration(seconds: 4),
+      ),
+    );
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
       child: Form(
@@ -107,21 +115,29 @@ class _FeedbackSectionState extends State<FeedbackSection> {
                                     ],
                                     isHTML: false,
                                   );
-                                  await FlutterEmailSender.send(email)
-                                      .onError((error, stackTrace) => () {
-                                            setState(() {
-                                              _canSend = true;
-                                            });
-                                            globals.showErrorDialog(
-                                                context,
-                                                "Erreur lors de l'envoie du courriel",
-                                                Exception(
-                                                    "Le message n'a pas pu être envoyé."));
-                                          });
-                                  setState(() {
-                                    _sent = true;
-                                  });
 
+                                  try {
+                                    await emailFunction.call(<String, dynamic>{
+                                      'email': email.recipients[1],
+                                      'subject': email.subject,
+                                      'message': email.body,
+                                    });
+                                    setState(() {
+                                      _sent = true;
+                                    });
+                                  } catch (e) {
+                                    print(e);
+
+                                    setState(() {
+                                      _canSend = true;
+                                    });
+                                    (e);
+                                    globals.showErrorDialog(
+                                        context,
+                                        "Erreur lors de l'envoie du courriel",
+                                        Exception(
+                                            "Le message n'a pas pu être envoyé."));
+                                  }
                                   await Future.delayed(
                                       const Duration(seconds: 4), () => {});
                                   setState(() {

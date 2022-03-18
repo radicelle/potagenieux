@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../globals.dart' as globals;
+import '../../globals.dart' as globals;
 
 class MenuHeader extends StatelessWidget {
   const MenuHeader({

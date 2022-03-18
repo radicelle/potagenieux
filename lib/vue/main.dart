@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:potagenieux/menu/login/fire_loggin.dart';
 import 'package:potagenieux/providers/login_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'firebase_options.dart';
-import 'globals.dart' as globals;
+import '../firebase_options.dart';
+import '../globals.dart' as globals;
+import 'menu/login/fire_loggin.dart';
 import 'menu/menu_items.dart';
 import 'panels/home/home_list_view.dart';
 

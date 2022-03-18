@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../globals.dart' as globals;
+import '../../globals.dart' as globals;
 
 class MenuButton extends StatefulWidget {
   final String text;

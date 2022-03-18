@@ -1,11 +1,11 @@
 import 'package:firebase_auth_platform_interface/src/firebase_auth_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:potagenieux/globals.dart' as globals;
-import 'package:potagenieux/menu/login/disconnection_button.dart';
-import 'package:potagenieux/menu/login/unknown_account_login_form.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/login_provider.dart';
+import '../../../providers/login_provider.dart';
+import '../../menu/login/disconnection_button.dart';
+import '../../menu/login/unknown_account_login_form.dart';
 import 'connection_button.dart';
 import 'email_text_field.dart';
 import 'known_account_login_form.dart';

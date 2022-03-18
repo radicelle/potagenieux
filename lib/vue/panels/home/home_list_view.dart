@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:potagenieux/panels/home/feedback_section.dart';
-import 'package:potagenieux/panels/home/home_list_view_texts.dart';
-import 'package:potagenieux/panels/home/image_switcher.dart';
 import 'package:potagenieux/providers/image_panel_change_notifier.dart';
 import 'package:provider/provider.dart';
+
+import 'feedback_section.dart';
+import 'home_list_view_texts.dart';
+import 'image_switcher.dart';
 
 class HomeListView extends StatelessWidget {
   const HomeListView({

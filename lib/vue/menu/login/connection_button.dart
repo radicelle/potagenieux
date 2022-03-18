@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:potagenieux/globals.dart' as globals;
 import 'package:provider/provider.dart';
 
-import '../../providers/login_provider.dart';
+import '../../../providers/login_provider.dart';
 
 class ConnectionButton extends StatelessWidget {
   const ConnectionButton({Key? key, required this.width, required this.height})
