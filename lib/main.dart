@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:potagenieux/providers/login_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../firebase_options.dart';
-import '../globals.dart' as globals;
-import 'menu/login/fire_loggin.dart';
-import 'menu/menu_items.dart';
-import 'panels/home/home_list_view.dart';
+import 'firebase_options.dart';
+import 'globals.dart' as globals;
+import 'vue/menu/login/fire_loggin.dart';
+import 'vue/menu/menu_items.dart';
+import 'vue/panels/home/home_list_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
