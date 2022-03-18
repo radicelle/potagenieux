@@ -56,7 +56,7 @@ class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
   Future<void> init() async {
     await Firebase.initializeApp();
     FirebaseAuth.instance.userChanges().listen((user) {
-      if (user != null) {
+      if (user != null ? user.isAnonymous : false) {
         _state = LoginState.connected;
       } else {
         _state = LoginState.disconnected;
