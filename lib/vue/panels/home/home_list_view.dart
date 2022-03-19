@@ -55,6 +55,7 @@ class _HomeListViewState extends State<HomeListView>
         children: [
           Expanded(
             child: ListView(
+              itemExtent: widget.height,
               physics: const BouncingScrollPhysics(),
               controller: _scrollController,
               children: [
@@ -68,7 +69,6 @@ class _HomeListViewState extends State<HomeListView>
                 ),
                 FeedbackSection(width: widget.width, height: widget.height),
               ],
-              itemExtent: widget.height,
             ),
           ),
           _isTermsDisplayed

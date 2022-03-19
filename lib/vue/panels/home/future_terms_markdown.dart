@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:markdown/markdown.dart' as md;
 
 class FutureTermsMarkdown extends StatelessWidget {
   const FutureTermsMarkdown({
@@ -9,21 +10,33 @@ class FutureTermsMarkdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
-      child: FutureBuilder(
-        future: DefaultAssetBundle.of(context).loadString("terms/TERMS.md"),
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-          if (snapshot.hasData) {
-            return Markdown(
-              data: snapshot.data ?? "",
+    return LayoutBuilder(builder: (context, constraints) {
+      return GestureDetector(
+        onTap: () => Navigator.of(context).pop(),
+        child: FutureBuilder(
+          future: DefaultAssetBundle.of(context).loadString("terms/TERMS.md"),
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.hasData) {
+              return Markdown(
+                  data: snapshot.data ?? "",
+                  styleSheet: MarkdownStyleSheet(
+                      h1Align: WrapAlignment.center,
+                      textAlign: WrapAlignment.spaceBetween,
+                      textScaleFactor: 1.2),
+                  extensionSet: md.ExtensionSet(
+                    md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                    [
+                      md.EmojiSyntax(),
+                      ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
+                    ],
+                  ));
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
-    );
+          },
+        ),
+      );
+    });
   }
 }
