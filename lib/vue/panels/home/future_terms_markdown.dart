@@ -17,10 +17,19 @@ class FutureTermsMarkdown extends StatelessWidget {
           future: DefaultAssetBundle.of(context).loadString("terms/TERMS.md"),
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
             if (snapshot.hasData) {
+              var horizontalPadding = 0.1 * constraints.maxWidth;
+              var verticalPadding = 0.1 * constraints.maxHeight;
               return Markdown(
+                  padding: EdgeInsets.only(
+                      left: horizontalPadding,
+                      right: horizontalPadding,
+                      top: verticalPadding,
+                      bottom: verticalPadding),
                   data: snapshot.data ?? "",
                   styleSheet: MarkdownStyleSheet(
                       h1Align: WrapAlignment.center,
+                      h2Padding:
+                          EdgeInsets.only(top: constraints.maxHeight / 15),
                       textAlign: WrapAlignment.spaceBetween,
                       textScaleFactor: 1.2),
                   extensionSet: md.ExtensionSet(
