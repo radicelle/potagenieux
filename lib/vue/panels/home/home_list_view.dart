@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:potagenieux/globals.dart' as globals;
 import 'package:potagenieux/providers/image_panel_change_notifier.dart';
+import 'package:potagenieux/vue/panels/home/info_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import 'feedback_section.dart';
-import 'future_terms_markdown.dart';
 import 'home_list_view_texts.dart';
 import 'image_switcher.dart';
 
@@ -72,40 +71,11 @@ class _HomeListViewState extends State<HomeListView>
             ),
           ),
           _isTermsDisplayed
-              ? BottomSheet(
-                  animationController: _sheetController,
-                  backgroundColor: Colors.transparent,
-                  elevation: widget.height / 8,
-                  onClosing: () {},
-                  builder: (BuildContext context) => Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Divider(
-                              height: 1,
-                              thickness: 2,
-                              endIndent: widget.width / 5,
-                              indent: widget.width / 5,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                    barrierColor: Colors.white,
-                                    context: context,
-                                    builder: (context) =>
-                                        const FutureTermsMarkdown());
-                              },
-                              child: Text(
-                                "Termes & conditions",
-                                style: globals.bodyTextStyle(context),
-                              ),
-                            ),
-                          )
-                        ],
-                      ))
+              ? InfoBottomSheet(
+                  sheetController: _sheetController,
+                  width: widget.width,
+                  height: widget.height,
+                )
               : Container()
         ],
       ),
