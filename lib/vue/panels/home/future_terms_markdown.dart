@@ -14,7 +14,7 @@ class FutureTermsMarkdown extends StatelessWidget {
       return GestureDetector(
         onTap: () => Navigator.of(context).pop(),
         child: FutureBuilder(
-          future: DefaultAssetBundle.of(context).loadString("terms/TERMS.md"),
+          future: DefaultAssetBundle.of(context).loadString("/terms/TERMS.md"),
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
             if (snapshot.hasData) {
               var horizontalPadding = 0.1 * constraints.maxWidth;

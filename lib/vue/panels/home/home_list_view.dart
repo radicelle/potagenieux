@@ -76,7 +76,7 @@ class _HomeListViewState extends State<HomeListView>
                   width: widget.width,
                   height: widget.height,
                 )
-              : Container()
+              : const SizedBox()
         ],
       ),
     );
