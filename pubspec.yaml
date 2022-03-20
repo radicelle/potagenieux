@@ -25,6 +25,7 @@ dependencies:
   loading_animations: ^2.2.0
   cloud_functions: ^3.2.10
   flutter_markdown: ^0.6.9
+  convert: ^3.0.1
 
 dev_dependencies:
   flutter_test:
