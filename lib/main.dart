@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:potagenieux/providers/gdpr_provider.dart';
 import 'package:potagenieux/providers/login_provider.dart';
+import 'package:potagenieux/vue/menu/menu_text.dart';
 import 'package:potagenieux/vue/panels/home/home_list_view.dart';
 import 'package:provider/provider.dart';
 
@@ -103,6 +104,24 @@ class _MyHomePageState extends State<MyHomePage>
                     panelHeight: panelHeight, finalMenuWidth: finalMenuWidth),
                 left: 0,
                 top: menuItemStart,
+              ),
+              Positioned(
+                left: 0,
+                bottom: 0,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15, bottom: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: const [
+                      MenuText("Vente à la ferme :"),
+                      MenuText("Tous les jeudi soirs, 18h30"),
+                      MenuText("2 impasse des roquerets"),
+                      MenuText("14500 Vire Normandie"),
+                      MenuText("contact: 0679122243")
+                    ],
+                  ),
+                ),
               ),
               Positioned(
                 top: 0,
