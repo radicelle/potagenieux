@@ -132,6 +132,8 @@ class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
     _state = LoginState.email;
     notifyListeners();
   }
+
+  bool isConnected() => _state == LoginState.connected;
 }
 
 /// Items that can be illuminated by hoover
