@@ -25,33 +25,17 @@ class InfoBottomSheet extends StatelessWidget {
       onClosing: () {},
       builder: (BuildContext context) {
         var dividerSideIndent = width / 5;
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Divider(
-                height: 1,
-                thickness: 2,
-                endIndent: dividerSideIndent,
-                indent: dividerSideIndent,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                      barrierColor: Colors.white,
-                      context: context,
-                      builder: (context) => const FutureTermsMarkdown());
-                },
-                child: Text(
-                  "Termes & conditions",
-                  style: globals.bodyTextStyle(context),
-                ),
-              ),
-            )
-          ],
+        return ElevatedButton(
+          onPressed: () {
+            showDialog(
+                barrierColor: Colors.white,
+                context: context,
+                builder: (context) => const FutureTermsMarkdown());
+          },
+          child: Text(
+            "Termes & conditions",
+            style: globals.bodyTextStyle(context),
+          ),
         );
       },
     );

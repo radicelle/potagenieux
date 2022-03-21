@@ -42,6 +42,20 @@ bodyTextStyle(context) {
   );
 }
 
+modalHeaderTextStyle(context) {
+  return GoogleFonts.roboto(
+    textStyle: Theme.of(context).textTheme.headline5,
+    color: Colors.black,
+  );
+}
+
+modalBodyTextStyle(context) {
+  return GoogleFonts.roboto(
+    textStyle: Theme.of(context).textTheme.bodyMedium,
+    color: Colors.black,
+  );
+}
+
 final headerTextColor = Colors.white.withOpacity(0.6);
 final menuColor = Colors.white.withOpacity(0.7);
 

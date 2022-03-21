@@ -3,14 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:potagenieux/providers/gdpr_provider.dart';
 import 'package:potagenieux/providers/login_provider.dart';
+import 'package:potagenieux/vue/panels/home/home_list_view.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 import 'globals.dart' as globals;
 import 'vue/menu/login/fire_loggin.dart';
 import 'vue/menu/menu_items.dart';
-import 'vue/panels/home/home_list_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -110,10 +111,12 @@ class _MyHomePageState extends State<MyHomePage>
                 bottom: 0,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: HomeListView(
-                      width: rightContainerWidth,
-                      height: rightContainerHeight,
-                      miniImagesHeight: miniImagesHeight),
+                  child: ChangeNotifierProvider(
+                      create: (_) => GDPRProvider(),
+                      child: HomeListView(
+                          width: rightContainerWidth,
+                          height: rightContainerHeight,
+                          miniImagesHeight: miniImagesHeight)),
                 ),
               ),
             ],
