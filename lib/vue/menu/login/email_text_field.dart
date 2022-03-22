@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/globals.dart' as globals;
 import 'package:potagenieux/providers/login_provider.dart';
 import 'package:provider/provider.dart';
@@ -48,14 +49,17 @@ class _EmailTextFieldState extends State<EmailTextField> {
                   children: [
                     Row(children: [
                       Expanded(
-                        child: TextFormField(
+                        child: PlatformTextFormField(
                           controller: _controller,
                           textAlign: TextAlign.left,
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.email),
-                            hintText: 'abc@quelquechose.xyz',
-                            labelText: 'email',
+                          material: (_, __) => MaterialTextFormFieldData(
+                            decoration: const InputDecoration(
+                              icon: Icon(Icons.email),
+                              hintText: 'abc@quelquechose.xyz',
+                              labelText: 'email',
+                            ),
                           ),
+                          cupertino: (_, __) => CupertinoTextFormFieldData(),
                           validator: globals.emailValidator,
                           onFieldSubmitted: (value) async {
                             widget.callback(value);
@@ -68,11 +72,11 @@ class _EmailTextFieldState extends State<EmailTextField> {
                           onPressed: () => loginProvider.cancelRegistration(),
                           icon: const Icon(Icons.arrow_left)),
                     ]),
-                    TextButton(
+                    PlatformTextButton(
                         onPressed: () async {
                           widget.callback(_controller.text);
                         },
-                        child: const Text("Suivant"))
+                        child: PlatformText("Suivant"))
                   ],
                 ));
           }),

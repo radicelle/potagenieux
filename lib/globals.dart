@@ -2,6 +2,7 @@ library potagenieux.globals;
 
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 extension GlobalStringExtensions on String {
@@ -27,8 +28,10 @@ Map<int, Color> menuBackgroundColorMap = {
   900: const Color.fromRGBO(0, 120, 120, 1),
 };
 
-final materialMenuBackgroundColor =
-    MaterialColor(0xFF007878, menuBackgroundColorMap); // opposite : 0xFFF05900
+const backgroundColorNumber = 0xFF007878;
+const backgroundColor = Color(0xFF007878);
+final materialMenuBackgroundColor = MaterialColor(
+    backgroundColorNumber, menuBackgroundColorMap); // opposite : 0xFFF05900
 bodyTextTheme(context) {
   return GoogleFonts.aBeeZeeTextTheme(
     Theme.of(context).textTheme,
@@ -86,18 +89,18 @@ const imagesNamesMap = {
 };
 
 void showErrorDialog(BuildContext context, String title, Exception e) {
-  showDialog<void>(
+  showPlatformDialog<void>(
     context: context,
     builder: (context) {
-      return AlertDialog(
-        title: Text(
+      return PlatformAlertDialog(
+        title: PlatformText(
           title,
           style: const TextStyle(fontSize: 24),
         ),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text(
+              PlatformText(
                 '${(e as dynamic).message}',
                 style: const TextStyle(fontSize: 18),
               ),
@@ -105,11 +108,11 @@ void showErrorDialog(BuildContext context, String title, Exception e) {
           ),
         ),
         actions: <Widget>[
-          TextButton(
+          PlatformTextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text(
+            child: PlatformText(
               'OK',
               style: TextStyle(color: Colors.deepPurple),
             ),

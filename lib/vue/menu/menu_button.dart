@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../globals.dart' as globals;
 
@@ -50,7 +51,7 @@ class _MenuButtonState extends State<MenuButton> {
                   Icons.arrow_right,
                   color: globals.menuColor,
                 ),
-                Text(
+                PlatformText(
                   widget.text,
                   style: globals.menuTextStyle(context),
                 )

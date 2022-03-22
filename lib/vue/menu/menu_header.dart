@@ -21,7 +21,7 @@ class MenuHeader extends StatelessWidget {
       height: height,
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Text(
+        child: PlatformText(
           "Potagenieux",
           style: globals.headerTextStyle(context),
         ),

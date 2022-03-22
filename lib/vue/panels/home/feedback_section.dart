@@ -1,5 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/globals.dart' as globals;
 
 class FeedbackSection extends StatefulWidget {
@@ -70,7 +71,7 @@ class _FeedbackSectionState extends State<FeedbackSection> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: !_sent
                 ? [
-                    Text(
+                    PlatformText(
                       "Contactez le Potagénieux",
                       style: globals.menuTextStyle(context),
                     ),
@@ -98,7 +99,7 @@ class _FeedbackSectionState extends State<FeedbackSection> {
                         )),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: ElevatedButton(
+                      child: PlatformElevatedButton(
                           onPressed: _canSend
                               ? () async {
                                   setState(() {
@@ -138,11 +139,11 @@ class _FeedbackSectionState extends State<FeedbackSection> {
                                   });
                                 }
                               : null,
-                          child: const Text("Envoyer")),
+                          child: PlatformText("Envoyer")),
                     )
                   ]
                 : [
-                    Text("Votre message à bien été envoyé.",
+                    PlatformText("Votre message à bien été envoyé.",
                         style: globals.menuTextStyle(context))
                   ],
           ),
@@ -173,19 +174,27 @@ class FeedbackSectionTextFormField extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 10),
-      child: TextFormField(
+      child: PlatformTextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: controller,
         validator: validator ?? globals.notEmptyValidator,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          fillColor: Colors.grey[300],
-          filled: true,
-          labelText: name,
-          focusedErrorBorder: border,
-          focusedBorder: border,
-          enabledBorder: border,
-          errorBorder: border,
+        material: (_, __) => MaterialTextFormFieldData(
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            fillColor: Colors.grey[300],
+            filled: true,
+            labelText: name,
+            focusedErrorBorder: border,
+            focusedBorder: border,
+            enabledBorder: border,
+            errorBorder: border,
+          ),
+        ),
+        cupertino: (_, __) => CupertinoTextFormFieldData(
+          decoration: BoxDecoration(
+            border: Border.all(width: 0),
+            color: Colors.grey[300],
+          ),
         ),
         maxLines: maxLines,
       ),

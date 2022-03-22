@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/globals.dart' as globals;
 
 import 'four_divided_texts.dart';
@@ -21,7 +22,7 @@ class HomeListViewTexts extends StatelessWidget {
         Expanded(
           child: Container(
             alignment: Alignment.center,
-            child: Text(
+            child: PlatformText(
               "L'esprit de la ferme",
               style: globals.headerTextStyle(context),
             ),

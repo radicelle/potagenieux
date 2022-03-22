@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/globals.dart' as globals;
 import 'package:potagenieux/providers/login_provider.dart';
 import 'package:provider/provider.dart';
@@ -39,13 +40,16 @@ class _KnownAccountLoginFormState extends State<KnownAccountLoginForm> {
                   children: [
                     Row(children: [
                       Expanded(
-                        child: TextFormField(
+                        child: PlatformTextFormField(
                           controller: _passwordController,
                           textAlign: TextAlign.left,
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.email),
-                            hintText: 'Mot de passe',
+                          material: (_, __) => MaterialTextFormFieldData(
+                            decoration: const InputDecoration(
+                              icon: Icon(Icons.email),
+                              hintText: 'Mot de passe',
+                            ),
                           ),
+                          cupertino: (_, __) => CupertinoTextFormFieldData(),
                           obscureText: true,
                           validator: passwordValidator,
                           onFieldSubmitted: (value) async {
@@ -53,17 +57,19 @@ class _KnownAccountLoginFormState extends State<KnownAccountLoginForm> {
                           },
                         ),
                       ),
-                      IconButton(
-                          splashRadius: 15,
+                      PlatformIconButton(
+                          material: (_, __) =>
+                              MaterialIconButtonData(splashRadius: 15),
+                          cupertino: (_, __) => CupertinoIconButtonData(),
                           color: globals.menuColor,
                           onPressed: () => loginProvider.returnToEmail(),
                           icon: const Icon(Icons.arrow_left)),
                     ]),
-                    TextButton(
+                    PlatformTextButton(
                         onPressed: () async {
                           widget.callback(_passwordController.text);
                         },
-                        child: const Text("Se connected"))
+                        child: PlatformText("Se connected"))
                   ],
                 ));
           }),

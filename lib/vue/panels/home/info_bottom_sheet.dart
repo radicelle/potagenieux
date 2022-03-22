@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/globals.dart' as globals;
 
 import 'future_terms_markdown.dart';
@@ -25,7 +26,7 @@ class InfoBottomSheet extends StatelessWidget {
       onClosing: () {},
       builder: (BuildContext context) {
         var dividerSideIndent = width / 5;
-        return ElevatedButton(
+        return PlatformElevatedButton(
           onPressed: () {
             showDialog(
                 barrierColor: Colors.white,
