@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/globals.dart' as globals;
 
 class GDPRProvider extends ChangeNotifier {
@@ -17,9 +18,9 @@ class GDPRProvider extends ChangeNotifier {
   }
 
   void askForConsent(BuildContext context) {
-    showGeneralDialog(
+    showPlatformDialog(
         context: context,
-        pageBuilder: (context, _, __) {
+        builder: (context) {
           var width = MediaQuery.of(context).size.width;
           var height = MediaQuery.of(context).size.height;
           var portrait = height / width > 1;
@@ -105,34 +106,29 @@ class GDPRProvider extends ChangeNotifier {
                     Positioned(
                       bottom: acceptBtnBottomPos,
                       left: acceptBtnLeftPos,
-                      child: ElevatedButton(
+                      child: PlatformElevatedButton(
                         onPressed: () {
                           cookiesConsent = CookiesConsent.all;
                           Navigator.of(context).pop();
                         },
                         child: const Text("Accepter tout"),
-                        style: ButtonStyle(
-                          fixedSize: MaterialStateProperty.all(
-                              Size(buttonWidth, buttonHeight)),
-                        ),
                       ),
                     ),
                     Positioned(
                       bottom: acceptBtnBottomPos,
                       left: acceptBtnLeftPos + buttonWidth + 10,
-                      child: ElevatedButton(
+                      child: PlatformElevatedButton(
                         onPressed: () {
                           cookiesConsent = CookiesConsent.none;
                           Navigator.of(context).pop();
                         },
                         child: const Text("Refuser tout"),
-                        style: ButtonStyle(
-                            fixedSize: MaterialStateProperty.all(
-                                Size(buttonWidth, buttonHeight)),
-                            textStyle: MaterialStateProperty.all(
-                                const TextStyle(color: Colors.white)),
-                            backgroundColor: MaterialStateProperty.all(
-                                const Color(0xFF8FB8D6))),
+                        material: (_, __) => MaterialElevatedButtonData(
+                            style: ButtonStyle(
+                                textStyle: MaterialStateProperty.all(
+                                    const TextStyle(color: Colors.white)),
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color(0xFF8FB8D6)))),
                       ),
                     ),
                   ],

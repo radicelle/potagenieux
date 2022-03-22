@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/globals.dart' as globals;
 import 'package:potagenieux/providers/login_provider.dart';
 import 'package:provider/provider.dart';
@@ -43,47 +44,56 @@ class _UnknownAccountLoginFormState extends State<UnknownAccountLoginForm> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: TextFormField(
+                      child: PlatformTextFormField(
                         controller: _passwordController,
                         validator: passwordValidator,
                         textAlign: TextAlign.left,
-                        decoration: const InputDecoration(
-                          icon: Icon(Icons.email),
-                          hintText: 'Mot de passe',
+                        material: (_, __) => MaterialTextFormFieldData(
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.email),
+                            hintText: 'Mot de passe',
+                          ),
                         ),
+                        cupertino: (_, __) => CupertinoTextFormFieldData(),
                         obscureText: true,
                       ),
                     ),
                     Expanded(
-                      child: TextFormField(
+                      child: PlatformTextFormField(
                         controller: _lastnameController,
                         textAlign: TextAlign.left,
-                        decoration: const InputDecoration(
-                          icon: Icon(Icons.email),
-                          hintText: 'Nom',
+                        material: (_, __) => MaterialTextFormFieldData(
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.person),
+                            hintText: 'Nom',
+                          ),
                         ),
+                        cupertino: (_, __) => CupertinoTextFormFieldData(),
                         obscureText: true,
                       ),
                     ),
                     Expanded(
-                      child: TextFormField(
+                      child: PlatformTextFormField(
                         controller: _firstnameController,
                         textAlign: TextAlign.left,
-                        decoration: const InputDecoration(
-                          icon: Icon(Icons.email),
-                          hintText: 'Prénom',
+                        material: (_, __) => MaterialTextFormFieldData(
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.person),
+                            hintText: 'Prénom',
+                          ),
                         ),
+                        cupertino: (_, __) => CupertinoTextFormFieldData(),
                         obscureText: true,
                       ),
                     ),
-                    TextButton(
+                    PlatformTextButton(
                         onPressed: () async {
                           widget.callback(
                               _lastnameController.text,
                               _firstnameController.text,
                               _passwordController.text);
                         },
-                        child: const Text("S'enregistrer")),
+                        child: PlatformText("S'enregistrer")),
                     IconButton(
                         splashRadius: 15,
                         color: globals.menuColor,
