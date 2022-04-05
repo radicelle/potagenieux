@@ -26,6 +26,8 @@ dependencies:
   cloud_functions: ^3.2.10
   flutter_markdown: ^0.6.9
   flutter_platform_widgets: ^1.20.0
+  responsive_framework: ^0.1.7
+  responsive_grid: ^2.0.0
 
 dev_dependencies:
   flutter_test:

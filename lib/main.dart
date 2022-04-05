@@ -5,14 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:potagenieux/providers/gdpr_provider.dart';
 import 'package:potagenieux/providers/image_panel_change_notifier.dart';
 import 'package:potagenieux/providers/login_provider.dart';
-import 'package:potagenieux/vue/menu/login/fire_loggin.dart';
-import 'package:potagenieux/vue/menu/menu_items.dart';
-import 'package:potagenieux/vue/menu/menu_text.dart';
-import 'package:potagenieux/vue/panels/home/home_list_view.dart';
+import 'package:potagenieux/vue/panels/home/feedback_section.dart';
+import 'package:potagenieux/vue/panels/home/home_list_view_texts.dart';
+import 'package:potagenieux/vue/panels/home/image_switcher.dart';
+import 'package:potagenieux/vue/panels/home/info_bottom_sheet.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 
 import 'firebase_options.dart';
 import 'globals.dart' as globals;
@@ -48,22 +49,34 @@ class MyApp extends StatelessWidget {
           theme:
               const CupertinoThemeData(primaryColor: globals.backgroundColor)),
       title: 'Potagenieux',
-      builder: (context, _) => Navigator(
-        onGenerateRoute: (_) => platformPageRoute(
-            context: context,
-            builder: (context) {
-              return PlatformScaffold(
-                  backgroundColor: const Color(globals.menuBackgroundColor),
-                  appBar: PlatformAppBar(
-                    title: PlatformText(
-                      'Potagenieux',
-                      style: const TextStyle(
-                          color: Color(globals.menuBackgroundColor)),
-                    ),
-                  ),
-                  body: const MyHomePage());
-            }),
-      ),
+      home: PlatformScaffold(
+          backgroundColor: const Color(globals.menuBackgroundColor),
+          appBar: PlatformAppBar(
+            title: PlatformText(
+              'Potagenieux',
+              style: const TextStyle(color: Color(globals.menuBackgroundColor)),
+            ),
+          ),
+          body: const MyHomePage()),
+      debugShowCheckedModeBanner: false,
+      builder: (context, widget) {
+        return ResponsiveWrapper.builder(
+          ClampingScrollWrapper.builder(context, widget!),
+          maxWidth: 1800,
+          minWidth: 480,
+          backgroundColor: globals.backgroundColor,
+          defaultScale: true,
+          breakpoints: [
+            const ResponsiveBreakpoint.resize(350, name: MOBILE),
+            const ResponsiveBreakpoint.autoScale(600,
+                name: globals.largeMobile),
+            const ResponsiveBreakpoint.resize(800, name: TABLET),
+            const ResponsiveBreakpoint.autoScale(1000,
+                name: globals.smallDesktop),
+            const ResponsiveBreakpoint.resize(1700, name: DESKTOP),
+          ],
+        );
+      },
     );
   }
 }
@@ -77,9 +90,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
+  late AnimationController _sheetController;
+
   @override
   void initState() {
     super.initState();
+    _sheetController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
   }
 
   @override
@@ -90,64 +107,16 @@ class _MyHomePageState extends State<MyHomePage>
         child: ChangeNotifierProvider(
           create: (BuildContext context) => LoginProvider(),
           child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
-            var panelHeight = MediaQuery.of(context).size.height;
-            var panelWidth = MediaQuery.of(context).size.width;
-            var menuWidth = loginProvider.menuWidth;
-            var rightContainerWidth = panelWidth - menuWidth;
-            const menuPadding = 1.0;
-            var finalMenuWidth = menuWidth - menuPadding;
-            var rightContainerHeight = panelHeight * 5 / 6;
-            //var headerHeight = panelHeight / 7;
-            var miniImagesHeight = rightContainerHeight / 8;
-            var menuItemStart = loginProvider.menuItemsStart(panelHeight);
-            return Stack(
+            var itemExtent = 0.8 * MediaQuery.of(context).size.height;
+            return ListView(
+              itemExtent: itemExtent,
               children: [
-                Positioned(
-                  child: FireLogin(
-                    width: menuWidth,
-                    height: menuItemStart, // - headerHeight,
-                  ),
-                  top: 10, //headerHeight,
-                ),
-                Positioned(
-                  child: MenuItems(
-                      panelHeight: panelHeight, finalMenuWidth: finalMenuWidth),
-                  left: 0,
-                  top: menuItemStart,
-                ),
-                Positioned(
-                  left: 0,
-                  bottom: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15, bottom: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        MenuText("Vente à la ferme :"),
-                        MenuText("Tous les jeudi soirs, 18h30"),
-                        MenuText("2 impasse des roquerets"),
-                        MenuText("14500 Vire Normandie"),
-                        MenuText("contact: 0679122243")
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  left: menuWidth,
-                  bottom: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: ChangeNotifierProvider(
-                        create: (_) => GDPRProvider(),
-                        child: HomeListView(
-                            width: rightContainerWidth,
-                            height: rightContainerHeight,
-                            miniImagesHeight: miniImagesHeight)),
-                  ),
-                ),
+                const ImageSwitcher(),
+                HomeListViewTexts(height: itemExtent),
+                FeedbackSection(height: itemExtent),
+                InfoBottomSheet(
+                    sheetController: _sheetController,
+                    height: MediaQuery.of(context).size.height / 20)
               ],
             );
           }),

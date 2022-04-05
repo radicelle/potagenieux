@@ -28,15 +28,15 @@ class _HoverSelectableImageState extends State<HoverSelectableImage>
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Consumer<ImagePanelChangeNotifier>(
       builder: (_, imgCons, __) {
         var isSelected = imgCons.selected == widget.index;
         return DecoratedBox(
           decoration: BoxDecoration(
             border: Border.all(
-                color: isSelected ? Colors.white : Colors.black.withOpacity(1),
-                width: 3),
-            borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                color: isSelected ? Colors.white : Colors.black, width: 2),
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             shape: BoxShape.rectangle,
           ),
           child: GestureDetector(
@@ -48,7 +48,7 @@ class _HoverSelectableImageState extends State<HoverSelectableImage>
                 duration: const Duration(milliseconds: 100),
                 opacity: _globalOpacity,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(10),
                   child: imgCons.miniature(widget.index),
                 ),
               ),

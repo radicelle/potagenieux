@@ -9,11 +9,9 @@ class InfoBottomSheet extends StatelessWidget {
   const InfoBottomSheet({
     Key? key,
     required AnimationController sheetController,
-    required this.width,
     required this.height,
   })  : _sheetController = sheetController,
         super(key: key);
-  final double width;
   final double height;
   final AnimationController _sheetController;
 
@@ -25,7 +23,6 @@ class InfoBottomSheet extends StatelessWidget {
       elevation: height / 8,
       onClosing: () {},
       builder: (BuildContext context) {
-        var dividerSideIndent = width / 5;
         return PlatformElevatedButton(
           onPressed: () {
             showDialog(

@@ -14,6 +14,8 @@ extension GlobalStringExtensions on String {
 const defaultOpacity = 0.7;
 const menuBackgroundColor = 0xff9AA644;
 const appBarHeight = 30.0;
+const largeMobile = "LARGE_MOBILE";
+const smallDesktop = "SMALL_DESKTOR";
 
 Map<int, Color> menuBackgroundColorMap = {
   50: const Color.fromRGBO(0, 120, 120, .1),

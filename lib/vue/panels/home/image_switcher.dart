@@ -3,70 +3,75 @@ import 'package:flutter/material.dart';
 import 'package:potagenieux/globals.dart' as globals;
 import 'package:potagenieux/providers/image_panel_change_notifier.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 
 import 'hover_selectable_image.dart';
 
 class ImageSwitcher extends StatelessWidget {
   const ImageSwitcher({
     Key? key,
-    required this.width,
-    required this.height,
-    required this.miniImagesHeight,
   }) : super(key: key);
-
-  final double width;
-  final double height;
-  final double miniImagesHeight;
 
   @override
   Widget build(BuildContext context) {
-    var bottomShiftHorizontal = width / 10;
-    var bottomShiftUp = bottomShiftHorizontal / 5;
-
-    var miniImagesHeight2 = height / 8;
-    return Stack(children: [
-      Positioned(
-        child: Consumer<ImagePanelChangeNotifier>(builder: (_, imgCons, __) {
-          return AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              return FadeTransition(
-                opacity: animation,
-                child: ClipPath(
-                  clipper: BackgroundClipper(
-                      bottomHeight: height / 10 - bottomShiftUp / 2,
-                      bottomWidth: bottomShiftHorizontal),
-                  child: SizedBox(
-                      width: width,
-                      height: height - bottomShiftUp,
-                      child: child),
+    return LayoutBuilder(builder: (context, constraints) {
+      double width = constraints.maxWidth;
+      double height = constraints.maxHeight;
+      var bottomShiftHorizontal = width / 10;
+      var bottomShiftUp = bottomShiftHorizontal / 5;
+      return Stack(children: [
+        Positioned(
+          child: Consumer<ImagePanelChangeNotifier>(builder: (_, imgCons, __) {
+            return AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: ClipPath(
+                    clipper: BackgroundClipper(
+                        bottomHeight: ResponsiveWrapper.of(context)
+                                .isLargerThan(globals.largeMobile)
+                            ? height / 8
+                            : height / 6,
+                        bottomWidth: bottomShiftHorizontal),
+                    child: SizedBox(
+                        width: width,
+                        height: height - bottomShiftUp,
+                        child: child),
+                  ),
+                );
+              },
+              child: imgCons.selectedImage,
+            );
+          }),
+        ),
+        Positioned(
+            bottom: 0,
+            left: 0,
+            child: SizedBox(
+              width: width,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    right: bottomShiftHorizontal, left: bottomShiftHorizontal),
+                child: ResponsiveGridList(
+                  scroll: false,
+                  desiredItemWidth: ResponsiveWrapper.of(context)
+                          .isLargerThan(globals.largeMobile)
+                      ? width / 11
+                      : width / 6,
+                  minSpacing: 2,
+                  rowMainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ...globals.imagesNamesMap.keys.map(
+                      (index) => HoverSelectableImage(index: index),
+                    )
+                  ],
                 ),
-              );
-            },
-            child: imgCons.selectedImage,
-          );
-        }),
-      ),
-      Positioned(
-          top: height - miniImagesHeight2,
-          right: bottomShiftHorizontal,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-                maxHeight: miniImagesHeight2 * 2,
-                maxWidth: width - bottomShiftHorizontal * 2),
-            child: GridView(
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: globals.imagesNamesMap.length,
-                  childAspectRatio: width / height * 0.7,
-                  crossAxisSpacing: width / 60),
-              children: [
-                ...globals.imagesNamesMap.keys
-                    .map((index) => HoverSelectableImage(index: index))
-              ],
-            ),
-          ))
-    ]);
+              ),
+            ))
+      ]);
+    });
   }
 }
 

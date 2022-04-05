@@ -2,15 +2,14 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/globals.dart' as globals;
+import 'package:responsive_framework/responsive_framework.dart';
 
 class FeedbackSection extends StatefulWidget {
   const FeedbackSection({
     Key? key,
-    required this.width,
     required this.height,
   }) : super(key: key);
 
-  final double width;
   final double height;
 
   @override
@@ -59,13 +58,12 @@ class _FeedbackSectionState extends State<FeedbackSection> {
         timeout: const Duration(seconds: 4),
       ),
     );
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: Form(
-        key: _formKey,
-        child: LimitedBox(
-          maxHeight: widget.height,
-          maxWidth: widget.width,
+    return LayoutBuilder(builder: (context, constraints) {
+      return FractionallySizedBox(
+        widthFactor:
+            ResponsiveWrapper.of(context).isLargerThan(TABLET) ? 0.7 : 0.9,
+        child: Form(
+          key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,28 +73,20 @@ class _FeedbackSectionState extends State<FeedbackSection> {
                       "Contactez le Potagénieux",
                       style: globals.menuTextStyle(context),
                     ),
-                    SizedBox(
-                      child: FeedbackSectionTextFormField(
-                        controller: _emailController,
-                        name: "Courriel",
-                        validator: globals.emailValidator,
-                      ),
-                      width: widget.width / 2,
+                    FeedbackSectionTextFormField(
+                      controller: _emailController,
+                      name: "Courriel",
+                      validator: globals.emailValidator,
                     ),
-                    SizedBox(
-                      child: FeedbackSectionTextFormField(
-                        controller: _subjectController,
-                        name: "Sujet",
-                      ),
-                      width: widget.width / 2,
+                    FeedbackSectionTextFormField(
+                      controller: _subjectController,
+                      name: "Sujet",
                     ),
-                    SizedBox(
-                        width: widget.width / 2,
-                        child: FeedbackSectionTextFormField(
-                          controller: _messageController,
-                          maxLines: 7,
-                          name: "Message",
-                        )),
+                    FeedbackSectionTextFormField(
+                      controller: _messageController,
+                      maxLines: 7,
+                      name: "Message",
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: PlatformElevatedButton(
@@ -117,8 +107,6 @@ class _FeedbackSectionState extends State<FeedbackSection> {
                                       _sent = true;
                                     });
                                   } catch (e) {
-                                    print(e);
-
                                     setState(() {
                                       _canSend = true;
                                     });
@@ -148,8 +136,8 @@ class _FeedbackSectionState extends State<FeedbackSection> {
                   ],
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 

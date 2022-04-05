@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 
 import 'feedback_section.dart';
 import 'home_list_view_texts.dart';
-import 'image_switcher.dart';
 
 class HomeListView extends StatefulWidget {
   const HomeListView({
@@ -60,15 +59,14 @@ class _HomeListViewState extends State<HomeListView>
               physics: const BouncingScrollPhysics(),
               controller: _scrollController,
               children: [
-                ImageSwitcher(
+                /*ImageSwitcher(
                     width: widget.width,
                     height: widget.height,
-                    miniImagesHeight: widget.miniImagesHeight),
+                    miniImagesHeight: widget.miniImagesHeight),*/
                 HomeListViewTexts(
-                  width: widget.width,
                   height: widget.height,
                 ),
-                FeedbackSection(width: widget.width, height: widget.height),
+                FeedbackSection(height: widget.height),
               ],
             ),
           ),
@@ -84,7 +82,6 @@ class _HomeListViewState extends State<HomeListView>
                       ),
                       InfoBottomSheet(
                         sheetController: _sheetController,
-                        width: widget.width,
                         height: widget.height,
                       ),
                       const VerticalDivider(),

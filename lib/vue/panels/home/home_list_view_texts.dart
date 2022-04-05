@@ -8,11 +8,9 @@ import 'four_divided_texts.dart';
 class HomeListViewTexts extends StatelessWidget {
   const HomeListViewTexts({
     Key? key,
-    required this.width,
     required this.height,
   }) : super(key: key);
 
-  final double width;
   final double height;
 
   @override
@@ -52,9 +50,7 @@ class HomeListViewTexts extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: Container(
-            width: width,
-          ),
+          child: Container(),
         )
       ],
     );
