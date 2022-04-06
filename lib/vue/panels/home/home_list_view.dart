@@ -8,18 +8,14 @@ import 'package:provider/provider.dart';
 
 import 'feedback_section.dart';
 import 'home_list_view_texts.dart';
+import 'image_switcher.dart';
 
 class HomeListView extends StatefulWidget {
   const HomeListView({
     Key? key,
-    required this.width,
-    required this.height,
-    required this.miniImagesHeight,
+    required this.itemExtend,
   }) : super(key: key);
-
-  final double width;
-  final double height;
-  final double miniImagesHeight;
+  final double itemExtend;
 
   @override
   State<HomeListView> createState() => _HomeListViewState();
@@ -38,7 +34,8 @@ class _HomeListViewState extends State<HomeListView>
     _scrollController.addListener(() {
       var position = _scrollController.position;
       setState(() {
-        if (position.pixels >= position.maxScrollExtent - widget.height / 7) {
+        if (position.pixels >=
+            position.maxScrollExtent - widget.itemExtend / 4) {
           _isTermsDisplayed = true;
         } else {
           _isTermsDisplayed = false;
@@ -54,21 +51,21 @@ class _HomeListViewState extends State<HomeListView>
       child: Column(
         children: [
           Expanded(
-            child: ListView(
-              itemExtent: widget.height,
-              physics: const BouncingScrollPhysics(),
-              controller: _scrollController,
-              children: [
-                /*ImageSwitcher(
-                    width: widget.width,
-                    height: widget.height,
-                    miniImagesHeight: widget.miniImagesHeight),*/
-                HomeListViewTexts(
-                  height: widget.height,
-                ),
-                FeedbackSection(height: widget.height),
-              ],
-            ),
+            child: LayoutBuilder(builder: (context, constraints) {
+              var itemExtent = 0.8 * constraints.maxHeight;
+
+              return ListView(
+                itemExtent: itemExtent,
+                children: [
+                  const ImageSwitcher(),
+                  HomeListViewTexts(height: itemExtent),
+                  FeedbackSection(height: itemExtent),
+                  SizedBox(
+                    height: constraints.maxHeight / 4,
+                  )
+                ],
+              );
+            }),
           ),
           _isTermsDisplayed
               ? Padding(
@@ -82,7 +79,7 @@ class _HomeListViewState extends State<HomeListView>
                       ),
                       InfoBottomSheet(
                         sheetController: _sheetController,
-                        height: widget.height,
+                        height: 200,
                       ),
                       const VerticalDivider(),
                       Consumer<GDPRProvider>(builder: (_, gdpr, __) {

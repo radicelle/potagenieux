@@ -7,10 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/providers/image_panel_change_notifier.dart';
 import 'package:potagenieux/providers/login_provider.dart';
-import 'package:potagenieux/vue/panels/home/feedback_section.dart';
-import 'package:potagenieux/vue/panels/home/home_list_view_texts.dart';
-import 'package:potagenieux/vue/panels/home/image_switcher.dart';
-import 'package:potagenieux/vue/panels/home/info_bottom_sheet.dart';
+import 'package:potagenieux/vue/panels/home/home_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
@@ -108,17 +105,7 @@ class _MyHomePageState extends State<MyHomePage>
           create: (BuildContext context) => LoginProvider(),
           child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
             var itemExtent = 0.8 * MediaQuery.of(context).size.height;
-            return ListView(
-              itemExtent: itemExtent,
-              children: [
-                const ImageSwitcher(),
-                HomeListViewTexts(height: itemExtent),
-                FeedbackSection(height: itemExtent),
-                InfoBottomSheet(
-                    sheetController: _sheetController,
-                    height: MediaQuery.of(context).size.height / 20)
-              ],
-            );
+            return HomeListView(itemExtend: itemExtent);
           }),
         ),
       ),

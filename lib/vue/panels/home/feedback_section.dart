@@ -60,6 +60,7 @@ class _FeedbackSectionState extends State<FeedbackSection> {
     );
     return LayoutBuilder(builder: (context, constraints) {
       return FractionallySizedBox(
+        heightFactor: 1.2,
         widthFactor:
             ResponsiveWrapper.of(context).isLargerThan(TABLET) ? 0.7 : 0.9,
         child: Form(
