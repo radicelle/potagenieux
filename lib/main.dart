@@ -68,9 +68,8 @@ class MyApp extends StatelessWidget {
             const ResponsiveBreakpoint.autoScale(600,
                 name: globals.largeMobile),
             const ResponsiveBreakpoint.resize(800, name: TABLET),
-            const ResponsiveBreakpoint.autoScale(1000,
-                name: globals.smallDesktop),
-            const ResponsiveBreakpoint.resize(1700, name: DESKTOP),
+            const ResponsiveBreakpoint.resize(1250, name: globals.smallDesktop),
+            const ResponsiveBreakpoint.autoScale(1700, name: DESKTOP),
           ],
         );
       },
@@ -104,8 +103,7 @@ class _MyHomePageState extends State<MyHomePage>
         child: ChangeNotifierProvider(
           create: (BuildContext context) => LoginProvider(),
           child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
-            var itemExtent = 0.8 * MediaQuery.of(context).size.height;
-            return HomeListView(itemExtend: itemExtent);
+            return const HomeListView();
           }),
         ),
       ),

@@ -13,9 +13,7 @@ import 'image_switcher.dart';
 class HomeListView extends StatefulWidget {
   const HomeListView({
     Key? key,
-    required this.itemExtend,
   }) : super(key: key);
-  final double itemExtend;
 
   @override
   State<HomeListView> createState() => _HomeListViewState();
@@ -35,7 +33,7 @@ class _HomeListViewState extends State<HomeListView>
       var position = _scrollController.position;
       setState(() {
         if (position.pixels >=
-            position.maxScrollExtent - widget.itemExtend / 4) {
+            position.maxScrollExtent - MediaQuery.of(context).size.width / 10) {
           _isTermsDisplayed = true;
         } else {
           _isTermsDisplayed = false;
@@ -52,18 +50,17 @@ class _HomeListViewState extends State<HomeListView>
         children: [
           Expanded(
             child: LayoutBuilder(builder: (context, constraints) {
-              var itemExtent = 0.8 * constraints.maxHeight;
-
-              return ListView(
-                itemExtent: itemExtent,
-                children: [
-                  const ImageSwitcher(),
-                  HomeListViewTexts(height: itemExtent),
-                  FeedbackSection(height: itemExtent),
-                  SizedBox(
-                    height: constraints.maxHeight / 4,
-                  )
-                ],
+              var widgets = [
+                const ImageSwitcher(),
+                const HomeListViewTexts(start: 0, numberToDisplay: 4),
+                const FeedbackSection(),
+              ];
+              return ListView.builder(
+                itemExtent: 0.8 * MediaQuery.of(context).size.height,
+                itemCount: widgets.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return widgets[index];
+                },
               );
             }),
           ),

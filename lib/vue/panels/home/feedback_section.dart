@@ -7,10 +7,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 class FeedbackSection extends StatefulWidget {
   const FeedbackSection({
     Key? key,
-    required this.height,
   }) : super(key: key);
-
-  final double height;
 
   @override
   State<FeedbackSection> createState() => _FeedbackSectionState();
@@ -60,7 +57,7 @@ class _FeedbackSectionState extends State<FeedbackSection> {
     );
     return LayoutBuilder(builder: (context, constraints) {
       return FractionallySizedBox(
-        heightFactor: 1.2,
+        heightFactor: 1.0,
         widthFactor:
             ResponsiveWrapper.of(context).isLargerThan(TABLET) ? 0.7 : 0.9,
         child: Form(

@@ -7,6 +7,7 @@ import '../globals.dart' as globals;
 
 class ImagePanelChangeNotifier extends ChangeNotifier {
   late int _selectedIndex;
+
   late final List<FutureBuilder<dynamic>> _images = [
     ...globals.imagesNamesMap.values.map((name) => FutureBuilder<dynamic>(
           key: ValueKey(name),
