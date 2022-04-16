@@ -93,7 +93,23 @@ class MyHomePage extends StatelessWidget {
         child: ChangeNotifierProvider(
           create: (BuildContext context) => LoginProvider(),
           child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
-            return const HomeListView();
+            return Row(
+              children: [
+                ResponsiveVisibility(
+                  visible: ResponsiveWrapper.of(context)
+                      .isLargerThan(globals.largeMobile),
+                  child: Flexible(
+                      flex: 2,
+                      child: Container(
+                        color: Colors.blue,
+                      )),
+                ),
+                const Flexible(
+                  flex: 10,
+                  child: HomeListView(),
+                ),
+              ],
+            );
           }),
         ),
       ),

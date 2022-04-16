@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -35,48 +37,55 @@ class HomeListViewTexts extends StatelessWidget {
         "Toutes ces pratiques garantissent un rendement idéal et des légumes en bonne santé qui restent abordables par leur positionnement adapté au marché"
       ]
     ].sublist(start, numberToDisplay + start);
-    var boxHeight = MediaQuery.of(context).size.height;
 
-    return Wrap(
-      children: [
-        Padding(
-          padding: EdgeInsets.all(boxHeight / 20),
-          child: Center(
-            child: PlatformText(
-              "L'esprit de la ferme",
-              textAlign: TextAlign.center,
-              style: globals.headerTextStyle(context),
-            ),
-          ),
-        ),
-        ...texts.map(
-          (t) {
-            var nbTextOnRow = 2;
-            var boxWidth = MediaQuery.of(context).size.width / nbTextOnRow;
-            var indent = boxWidth / 6;
-            return SizedBox(
-              width: boxWidth,
-              height: boxHeight / (6 / nbTextOnRow),
-              child: Center(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    children: [
-                      Flexible(
-                          flex: 1,
-                          child: Text(
-                            t[0],
-                            style: globals.bodyTextStyle(context),
-                            textAlign: TextAlign.center,
-                          )),
-                      Divider(
-                        color: globals.headerTextColor,
-                        thickness: 2,
-                        indent: indent,
-                        endIndent: indent,
-                      ),
-                      Flexible(
-                          flex: 2,
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: LayoutBuilder(builder: (context, constraints) {
+          return Wrap(
+            alignment: WrapAlignment.center,
+            children: [
+              Center(
+                child: PlatformText(
+                  "L'esprit de la ferme",
+                  textAlign: TextAlign.center,
+                  style: globals.headerTextStyle(context),
+                ),
+              ),
+              Divider(
+                height: constraints.maxHeight / 10,
+                thickness: 2,
+                color: globals.headerTextColor,
+                indent: constraints.maxWidth / 10,
+                endIndent: constraints.maxWidth / 10,
+              ),
+              ...texts.map(
+                (t) {
+                  var textsByRow = 2;
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height *
+                        0.6 /
+                        (4 / textsByRow),
+                    width: constraints.maxWidth / textsByRow,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Flexible(
+                            flex: 1,
+                            child: Text(
+                              t[0],
+                              style: globals.bodyTextStyle(context),
+                              textAlign: TextAlign.center,
+                            )),
+                        Divider(
+                          color: globals.headerTextColor,
+                          thickness: 2,
+                          indent: constraints.maxWidth / 10,
+                          endIndent: constraints.maxWidth / 10,
+                        ),
+                        Flexible(
+                          flex: 4,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
@@ -86,15 +95,17 @@ class HomeListViewTexts extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                          )),
-                    ],
-                  ),
-                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
-      ],
+            ],
+          );
+        }),
+      ),
     );
   }
 }
