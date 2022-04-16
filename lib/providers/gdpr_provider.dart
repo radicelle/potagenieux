@@ -25,16 +25,26 @@ class GDPRProvider extends ChangeNotifier {
           var height = MediaQuery.of(context).size.height;
           var portrait = height / width > 1;
           var topStart = 0.25 * height;
-          var leftStart = (portrait ? 0.15 : 0.35) * width;
-          var modalStackWidth = portrait ? width * 0.7 : width * 0.3;
+          var leftStart = (portrait ? 0.15 : 0.2) * width;
+          var modalStackWidth = portrait ? width * 0.7 : width * 0.6;
           var modalStackHeight = height * 0.5;
           const double closeIconSize = 12;
           var modalTextPadding = modalStackWidth / 20;
 
           return Material(
-            child: MaterialApp(
-              theme: ThemeData(
-                  visualDensity: VisualDensity.adaptivePlatformDensity),
+            child: PlatformApp(
+              material: (_, __) => MaterialAppData(
+                  theme: ThemeData(
+                      buttonTheme: Theme.of(context).buttonTheme.copyWith(
+                            highlightColor: globals.materialMenuBackgroundColor,
+                          ),
+                      primarySwatch: globals.materialMenuBackgroundColor,
+                      textTheme: globals.bodyTextTheme(context),
+                      backgroundColor: globals.backgroundColor.withOpacity(0.4),
+                      visualDensity: VisualDensity.adaptivePlatformDensity)),
+              cupertino: (_, __) => CupertinoAppData(
+                  theme: const CupertinoThemeData(
+                      primaryColor: globals.backgroundColor)),
               builder: (context, _) {
                 var buttonWidth = modalStackWidth / (portrait ? 3 : 4.5);
                 var buttonHeight = modalStackHeight / 13;

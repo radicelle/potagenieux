@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
       builder: (context, widget) {
         return ResponsiveWrapper.builder(
           ClampingScrollWrapper.builder(context, widget!),
-          maxWidth: 1800,
+          maxWidth: 1920,
           minWidth: 480,
           backgroundColor: globals.backgroundColor,
           defaultScale: true,
