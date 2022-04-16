@@ -21,25 +21,35 @@ class HomeListView extends StatefulWidget {
 
 class _HomeListViewState extends State<HomeListView>
     with TickerProviderStateMixin {
-  final ScrollController _scrollController = ScrollController();
+  late ScrollController _scrollController;
   bool _isTermsDisplayed = false;
+  bool _delayListen = false;
   late AnimationController _sheetController;
   @override
   void initState() {
-    super.initState();
     _sheetController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
+    _scrollController = ScrollController();
     _scrollController.addListener(() {
-      var position = _scrollController.position;
-      setState(() {
-        if (position.pixels >=
-            position.maxScrollExtent - MediaQuery.of(context).size.width / 10) {
-          _isTermsDisplayed = true;
-        } else {
-          _isTermsDisplayed = false;
-        }
-      });
+      if (!_delayListen) {
+        var position = _scrollController.position;
+        setState(() {
+          if (position.pixels >=
+              position.maxScrollExtent -
+                  MediaQuery.of(context).size.width / 10) {
+            _isTermsDisplayed = true;
+            _delayListen = true;
+            Future.delayed(
+                const Duration(milliseconds: 500),
+                () => _delayListen =
+                    false); // TODO: find a fix for this regardless the platform
+          } else {
+            _isTermsDisplayed = false;
+          }
+        });
+      }
     });
+    super.initState();
   }
 
   @override
@@ -56,6 +66,7 @@ class _HomeListViewState extends State<HomeListView>
                 const FeedbackSection(),
               ];
               return ListView.builder(
+                controller: _scrollController,
                 itemExtent: 0.8 * MediaQuery.of(context).size.height,
                 itemCount: widgets.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -65,36 +76,36 @@ class _HomeListViewState extends State<HomeListView>
             }),
           ),
           _isTermsDisplayed
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Expanded(
-                        child: SizedBox(),
-                      ),
-                      InfoBottomSheet(
-                        sheetController: _sheetController,
-                        height: 200,
-                      ),
-                      const VerticalDivider(),
-                      Consumer<GDPRProvider>(builder: (_, gdpr, __) {
-                        return IconButton(
+              ? Consumer<GDPRProvider>(builder: (_, gdpr, __) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Expanded(
+                          child: SizedBox(),
+                        ),
+                        InfoBottomSheet(
+                          sheetController: _sheetController,
+                          height: 200,
+                        ),
+                        const VerticalDivider(),
+                        IconButton(
                           tooltip: "politique des cookies et données",
                           icon: Icon(
                             Icons.cookie,
                             color: globals.headerTextColor,
                           ),
                           onPressed: () => gdpr.askForConsent(context),
-                        );
-                      }),
-                      const Expanded(
-                        child: SizedBox(),
-                      ),
-                    ],
-                  ),
-                )
+                        ),
+                        const Expanded(
+                          child: SizedBox(),
+                        ),
+                      ],
+                    ),
+                  );
+                })
               : const SizedBox()
         ],
       ),

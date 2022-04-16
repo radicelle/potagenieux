@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:potagenieux/providers/gdpr_provider.dart';
 import 'package:potagenieux/providers/image_panel_change_notifier.dart';
 import 'package:potagenieux/providers/login_provider.dart';
 import 'package:potagenieux/vue/panels/home/home_list_view.dart';
@@ -98,8 +99,13 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: ChangeNotifierProvider(
-        create: (BuildContext context) => ImagePanelChangeNotifier.fromIndex(0),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+              create: (_) => ImagePanelChangeNotifier.fromIndex(0)),
+          ChangeNotifierProvider(create: (_) => LoginProvider()),
+          ChangeNotifierProvider(create: (_) => GDPRProvider()),
+        ],
         child: ChangeNotifierProvider(
           create: (BuildContext context) => LoginProvider(),
           child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
