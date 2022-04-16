@@ -40,6 +40,7 @@ class ImagePanelChangeNotifier extends ChangeNotifier {
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState != ConnectionState.waiting) {
               return Image(
+                height: 70,
                 fit: BoxFit.fill,
                 image: CachedNetworkImageProvider(
                   snapshot.data.toString(),
