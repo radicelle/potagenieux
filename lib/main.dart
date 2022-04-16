@@ -11,7 +11,6 @@ import 'package:potagenieux/providers/login_provider.dart';
 import 'package:potagenieux/vue/panels/home/home_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
 
 import 'firebase_options.dart';
 import 'globals.dart' as globals;
@@ -78,23 +77,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _sheetController;
-
-  @override
-  void initState() {
-    super.initState();
-    _sheetController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
-  }
 
   @override
   Widget build(BuildContext context) {
