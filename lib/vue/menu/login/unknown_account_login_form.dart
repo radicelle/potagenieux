@@ -7,15 +7,11 @@ import 'package:provider/provider.dart';
 class UnknownAccountLoginForm extends StatefulWidget {
   const UnknownAccountLoginForm({
     Key? key,
-    required this.width,
-    required this.height,
     required this.callback,
   }) : super(key: key);
 
   final void Function(String lastname, String firstname, String password)
       callback;
-  final double width;
-  final double height;
 
   @override
   State<UnknownAccountLoginForm> createState() =>
@@ -30,79 +26,69 @@ class _UnknownAccountLoginFormState extends State<UnknownAccountLoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    var paddingLeft = 20.0;
-    return Padding(
-        padding: EdgeInsets.only(left: paddingLeft),
-        child: Container(
-          width: widget.width - 100,
-          height: widget.height,
-          alignment: Alignment.centerLeft,
-          child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
-            return Form(
-                key: _formKey,
-                autovalidateMode: AutovalidateMode.always,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: PlatformTextFormField(
-                        controller: _passwordController,
-                        validator: passwordValidator,
-                        textAlign: TextAlign.left,
-                        material: (_, __) => MaterialTextFormFieldData(
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.email),
-                            hintText: 'Mot de passe',
-                          ),
-                        ),
-                        cupertino: (_, __) => CupertinoTextFormFieldData(),
-                        obscureText: true,
-                      ),
+    return Consumer<LoginProvider>(builder: (_, loginProvider, __) {
+      return Form(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.always,
+          child: Column(
+            children: [
+              Expanded(
+                child: PlatformTextFormField(
+                  controller: _passwordController,
+                  validator: passwordValidator,
+                  textAlign: TextAlign.left,
+                  material: (_, __) => MaterialTextFormFieldData(
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.email),
+                      hintText: 'Mot de passe',
                     ),
-                    Expanded(
-                      child: PlatformTextFormField(
-                        controller: _lastnameController,
-                        textAlign: TextAlign.left,
-                        material: (_, __) => MaterialTextFormFieldData(
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.person),
-                            hintText: 'Nom',
-                          ),
-                        ),
-                        cupertino: (_, __) => CupertinoTextFormFieldData(),
-                        obscureText: true,
-                      ),
+                  ),
+                  cupertino: (_, __) => CupertinoTextFormFieldData(),
+                  obscureText: true,
+                ),
+              ),
+              Expanded(
+                child: PlatformTextFormField(
+                  controller: _lastnameController,
+                  textAlign: TextAlign.left,
+                  material: (_, __) => MaterialTextFormFieldData(
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.person),
+                      hintText: 'Nom',
                     ),
-                    Expanded(
-                      child: PlatformTextFormField(
-                        controller: _firstnameController,
-                        textAlign: TextAlign.left,
-                        material: (_, __) => MaterialTextFormFieldData(
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.person),
-                            hintText: 'Prénom',
-                          ),
-                        ),
-                        cupertino: (_, __) => CupertinoTextFormFieldData(),
-                        obscureText: true,
-                      ),
+                  ),
+                  cupertino: (_, __) => CupertinoTextFormFieldData(),
+                  obscureText: true,
+                ),
+              ),
+              Expanded(
+                child: PlatformTextFormField(
+                  controller: _firstnameController,
+                  textAlign: TextAlign.left,
+                  material: (_, __) => MaterialTextFormFieldData(
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.person),
+                      hintText: 'Prénom',
                     ),
-                    PlatformTextButton(
-                        onPressed: () async {
-                          widget.callback(
-                              _lastnameController.text,
-                              _firstnameController.text,
-                              _passwordController.text);
-                        },
-                        child: PlatformText("S'enregistrer")),
-                    IconButton(
-                        splashRadius: 15,
-                        color: globals.menuColor,
-                        onPressed: () => loginProvider.cancelRegistration(),
-                        icon: const Icon(Icons.arrow_left))
-                  ],
-                ));
-          }),
-        ));
+                  ),
+                  cupertino: (_, __) => CupertinoTextFormFieldData(),
+                  obscureText: true,
+                ),
+              ),
+              PlatformTextButton(
+                  onPressed: () async {
+                    widget.callback(_lastnameController.text,
+                        _firstnameController.text, _passwordController.text);
+                  },
+                  child: PlatformText("S'enregistrer")),
+              IconButton(
+                  splashRadius: 15,
+                  color: globals.menuColor,
+                  onPressed: () => loginProvider.cancelRegistration(),
+                  icon: const Icon(Icons.arrow_left))
+            ],
+          ));
+    });
   }
 
   String? passwordValidator(String? value) {

@@ -6,32 +6,31 @@ import 'package:provider/provider.dart';
 import '../../../providers/login_provider.dart';
 
 class ConnectionButton extends StatelessWidget {
-  const ConnectionButton({Key? key, required this.width, required this.height})
-      : super(key: key);
-  final double width;
-  final double height;
+  const ConnectionButton({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      height: height,
-      child: Consumer<LoginProvider>(builder: (_, stateProvider, __) {
-        return AnimatedOpacity(
-          duration: const Duration(milliseconds: 100),
-          opacity: stateProvider.opacity(Item.connection),
-          child: GestureDetector(
-            onTap: () => stateProvider.state = LoginState.email,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: PlatformText(
-                "Se connecter",
-                style: globals.loginTextStyle(context),
+    return Consumer<LoginProvider>(builder: (_, stateProvider, __) {
+      return AnimatedOpacity(
+        duration: const Duration(milliseconds: 100),
+        opacity: stateProvider.opacity(Item.connection),
+        child: GestureDetector(
+          onTap: () => stateProvider.state = LoginState.email,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PlatformText(
+                    "Se connecter",
+                    style: globals.loginTextStyle(context),
+                  ),
+                ],
               ),
-            ),
+            ],
           ),
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }
 

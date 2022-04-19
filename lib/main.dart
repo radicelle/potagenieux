@@ -8,6 +8,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/providers/gdpr_provider.dart';
 import 'package:potagenieux/providers/image_panel_change_notifier.dart';
 import 'package:potagenieux/providers/login_provider.dart';
+import 'package:potagenieux/vue/menu/login/fire_loggin.dart';
 import 'package:potagenieux/vue/panels/home/home_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -90,28 +91,32 @@ class MyHomePage extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => LoginProvider()),
           ChangeNotifierProvider(create: (_) => GDPRProvider()),
         ],
-        child: ChangeNotifierProvider(
-          create: (BuildContext context) => LoginProvider(),
-          child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
-            return Row(
-              children: [
-                ResponsiveVisibility(
-                  visible: ResponsiveWrapper.of(context)
-                      .isLargerThan(globals.largeMobile),
-                  child: Flexible(
-                      flex: 2,
-                      child: Container(
-                        color: Colors.blue,
-                      )),
+        child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ResponsiveVisibility(
+                visible: ResponsiveWrapper.of(context)
+                    .isLargerThan(globals.largeMobile),
+                child: Flexible(
+                  flex: loginProvider.needsLargeMenu() ? 4 : 2,
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    return SizedBox(
+                        width: constraints.maxWidth,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: const FireLogin(),
+                        ));
+                  }),
                 ),
-                const Flexible(
-                  flex: 10,
-                  child: HomeListView(),
-                ),
-              ],
-            );
-          }),
-        ),
+              ),
+              const Flexible(
+                flex: 10,
+                child: HomeListView(),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

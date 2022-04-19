@@ -134,6 +134,14 @@ class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
   }
 
   bool isConnected() => _state == LoginState.connected;
+
+  bool needsLargeMenu() {
+    print(
+        "needs large menu ? ${_state == LoginState.email || _state == LoginState.password}");
+    return _state == LoginState.email ||
+        _state == LoginState.password ||
+        _state == LoginState.register;
+  }
 }
 
 /// Items that can be illuminated by hoover
