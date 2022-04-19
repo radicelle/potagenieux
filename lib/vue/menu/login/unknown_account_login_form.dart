@@ -80,7 +80,10 @@ class _UnknownAccountLoginFormState extends State<UnknownAccountLoginForm> {
                     widget.callback(_lastnameController.text,
                         _firstnameController.text, _passwordController.text);
                   },
-                  child: PlatformText("S'enregistrer")),
+                  child: Text(
+                    "S'enregistrer",
+                    style: globals.loginTextStyle(context),
+                  )),
               IconButton(
                   splashRadius: 15,
                   color: globals.menuColor,

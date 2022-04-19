@@ -58,7 +58,10 @@ class _KnownAccountLoginFormState extends State<KnownAccountLoginForm> {
                   onPressed: () async {
                     widget.callback(_passwordController.text);
                   },
-                  child: PlatformText("Se connected"))
+                  child: Text(
+                    "Se connected",
+                    style: globals.loginTextStyle(context),
+                  ))
             ],
           ));
     });

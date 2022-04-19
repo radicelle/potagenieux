@@ -65,7 +65,10 @@ class _EmailTextFieldState extends State<EmailTextField> {
                   onPressed: () async {
                     widget.callback(_controller.text);
                   },
-                  child: PlatformText("Suivant"))
+                  child: Text(
+                    "Suivant",
+                    style: globals.loginTextStyle(context),
+                  ))
             ],
           ));
     });

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/globals.dart' as globals;
 import 'package:provider/provider.dart';
 
@@ -20,7 +19,7 @@ class ConnectionButton extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  PlatformText(
+                  Text(
                     "Se connecter",
                     style: globals.loginTextStyle(context),
                   ),

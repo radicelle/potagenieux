@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/globals.dart' as globals;
 import 'package:provider/provider.dart';
 
@@ -24,7 +23,7 @@ class DisconnectionButton extends StatelessWidget {
             onTap: () => stateProvider.signOut(),
             child: Padding(
               padding: const EdgeInsets.only(left: 20.0),
-              child: PlatformText(
+              child: Text(
                 "Se déconnecter",
                 style: globals.loginTextStyle(context),
               ),
