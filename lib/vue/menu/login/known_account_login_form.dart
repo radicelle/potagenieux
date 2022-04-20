@@ -20,9 +20,16 @@ class _KnownAccountLoginFormState extends State<KnownAccountLoginForm> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   @override
+  void dispose() {
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Consumer<LoginProvider>(builder: (_, loginProvider, __) {
-      return Form(
+    return Consumer<LoginProvider>(
+      builder: (_, loginProvider, __) {
+        return Form(
           key: _formKey,
           autovalidateMode: AutovalidateMode.always,
           child: Column(
@@ -55,16 +62,19 @@ class _KnownAccountLoginFormState extends State<KnownAccountLoginForm> {
                     icon: const Icon(Icons.arrow_left)),
               ]),
               PlatformTextButton(
-                  onPressed: () async {
-                    widget.callback(_passwordController.text);
-                  },
-                  child: Text(
-                    "Se connected",
-                    style: globals.loginTextStyle(context),
-                  ))
+                onPressed: () async {
+                  widget.callback(_passwordController.text);
+                },
+                child: Text(
+                  "Se connected",
+                  style: globals.loginTextStyle(context),
+                ),
+              ),
             ],
-          ));
-    });
+          ),
+        );
+      },
+    );
   }
 
   String? passwordValidator(value) {

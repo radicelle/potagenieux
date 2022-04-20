@@ -24,6 +24,14 @@ class _HomeListViewState extends State<HomeListView>
   bool _isTermsDisplayed = false;
   bool _delayListen = false;
   late AnimationController _sheetController;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _sheetController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     _sheetController = AnimationController(

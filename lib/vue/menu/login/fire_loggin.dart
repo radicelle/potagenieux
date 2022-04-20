@@ -32,52 +32,42 @@ class _FireLoginState extends State<FireLogin> {
   Widget build(BuildContext context) {
     return Consumer<LoginProvider>(builder: (_, loginProvider, __) {
       return LayoutBuilder(builder: (context, constraints) {
-        return MouseRegion(
-          onEnter: (event) => loginProvider.illuminate(event, Item.connection),
-          onExit: (event) => loginProvider.shade(event, Item.connection),
-          child: AnimatedSwitcher(
-            //layoutBuilder: fadeOverLayoutBuilder,
-            duration: const Duration(milliseconds: 600),
-            child: FractionallySizedBox(
-              heightFactor: 1 / 3,
-              child: (() {
-                if (loginProvider.state == LoginState.disconnected) {
-                  return const ConnectionButton();
-                } else if (loginProvider.state == LoginState.email) {
-                  return EmailTextField(
-                    knownEmail: loginProvider.email,
-                    callback: (email) => loginProvider.verifyEmail(
-                        email,
-                        (e) => _errorCallback(
-                            context, e, "Une erreur s'est produite.")),
-                  );
-                } else if (loginProvider.state == LoginState.register) {
-                  return UnknownAccountLoginForm(
-                      callback: (lastname, firstname, password) =>
-                          loginProvider.registerAccount(
-                              loginProvider.email!,
-                              lastname,
-                              firstname,
-                              password,
-                              (e) => _errorCallback(context, e,
-                                  "Erreur lors de l'enregistrement.")));
-                } else if (loginProvider.state == LoginState.password) {
-                  return KnownAccountLoginForm(
-                      callback: (password) =>
-                          loginProvider.signInWithEmailAndPassword(
-                              loginProvider.email!,
-                              password,
-                              (e) => _errorCallback(
-                                  context, e, "Mot de passe invalide.")));
-                } else if (loginProvider.state == LoginState.connected) {
-                  return DisconnectionButton(
-                    width: constraints.maxWidth,
-                    height: 20,
-                  );
-                }
-              }()),
-            ),
-          ),
+        return AnimatedSwitcher(
+          //layoutBuilder: fadeOverLayoutBuilder,
+          duration: const Duration(milliseconds: 600),
+          child: (() {
+            if (loginProvider.state == LoginState.disconnected) {
+              return const ConnectionButton();
+            } else if (loginProvider.state == LoginState.email) {
+              return EmailTextField(
+                knownEmail: loginProvider.email,
+                callback: (email) => loginProvider.verifyEmail(
+                    email,
+                    (e) => _errorCallback(
+                        context, e, "Une erreur s'est produite.")),
+              );
+            } else if (loginProvider.state == LoginState.register) {
+              return UnknownAccountLoginForm(
+                  callback: (lastname, firstname, password) =>
+                      loginProvider.registerAccount(
+                          loginProvider.email!,
+                          lastname,
+                          firstname,
+                          password,
+                          (e) => _errorCallback(
+                              context, e, "Erreur lors de l'enregistrement.")));
+            } else if (loginProvider.state == LoginState.password) {
+              return KnownAccountLoginForm(
+                  callback: (password) =>
+                      loginProvider.signInWithEmailAndPassword(
+                          loginProvider.email!,
+                          password,
+                          (e) => _errorCallback(
+                              context, e, "Mot de passe invalide.")));
+            } else if (loginProvider.state == LoginState.connected) {
+              return const DisconnectionButton();
+            }
+          }()),
         );
       });
     });

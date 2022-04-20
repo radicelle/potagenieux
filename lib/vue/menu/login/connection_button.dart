@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:potagenieux/globals.dart' as globals;
+import 'package:potagenieux/providers/illuminable.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/login_provider.dart';
@@ -11,19 +12,25 @@ class ConnectionButton extends StatelessWidget {
     return Consumer<LoginProvider>(builder: (_, stateProvider, __) {
       return AnimatedOpacity(
         duration: const Duration(milliseconds: 100),
-        opacity: stateProvider.opacity(Item.connection),
+        opacity: stateProvider.opacity(ShadingItem.connection),
         child: GestureDetector(
           onTap: () => stateProvider.state = LoginState.email,
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Se connecter",
-                    style: globals.loginTextStyle(context),
-                  ),
-                ],
+              MouseRegion(
+                onEnter: (event) =>
+                    stateProvider.illuminate(event, ShadingItem.connection),
+                onExit: (event) =>
+                    stateProvider.shade(event, ShadingItem.connection),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Se connecter",
+                      style: globals.loginTextStyle(context),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

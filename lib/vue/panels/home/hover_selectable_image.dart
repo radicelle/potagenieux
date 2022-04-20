@@ -28,7 +28,6 @@ class _HoverSelectableImageState extends State<HoverSelectableImage>
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Consumer<ImagePanelChangeNotifier>(
       builder: (_, imgCons, __) {
         var isSelected = imgCons.selected == widget.index;

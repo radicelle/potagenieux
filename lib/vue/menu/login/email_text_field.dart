@@ -29,15 +29,23 @@ class _EmailTextFieldState extends State<EmailTextField> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Consumer<LoginProvider>(builder: (_, loginProvider, __) {
-      return Form(
+    return Consumer<LoginProvider>(
+      builder: (_, loginProvider, __) {
+        return Form(
           key: _formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: [
               Row(children: [
-                Expanded(
+                Flexible(
+                  flex: 3,
                   child: PlatformTextFormField(
                     controller: _controller,
                     textAlign: TextAlign.left,
@@ -61,16 +69,22 @@ class _EmailTextFieldState extends State<EmailTextField> {
                     onPressed: () => loginProvider.cancelRegistration(),
                     icon: const Icon(Icons.arrow_left)),
               ]),
-              PlatformTextButton(
+              Flexible(
+                flex: 2,
+                child: PlatformTextButton(
                   onPressed: () async {
                     widget.callback(_controller.text);
                   },
                   child: Text(
                     "Suivant",
                     style: globals.loginTextStyle(context),
-                  ))
+                  ),
+                ),
+              ),
             ],
-          ));
-    });
+          ),
+        );
+      },
+    );
   }
 }

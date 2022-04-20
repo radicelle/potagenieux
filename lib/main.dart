@@ -6,8 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/providers/gdpr_provider.dart';
+import 'package:potagenieux/providers/illuminable.dart';
 import 'package:potagenieux/providers/image_panel_change_notifier.dart';
 import 'package:potagenieux/providers/login_provider.dart';
+import 'package:potagenieux/providers/menu_item_provider.dart';
 import 'package:potagenieux/vue/menu/login/fire_loggin.dart';
 import 'package:potagenieux/vue/panels/home/home_list_view.dart';
 import 'package:provider/provider.dart';
@@ -21,15 +23,15 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseAuth.instance.signInAnonymously();
+  FirebaseAuth.instance.signInAnonymously();
   if (kDebugMode) {
     FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5000);
   }
-  runApp(const MyApp());
+  runApp(const Potagenieux());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Potagenieux extends StatelessWidget {
+  const Potagenieux({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -129,32 +131,130 @@ class MyHomePage extends StatelessWidget {
           ChangeNotifierProvider(
               create: (_) => ImagePanelChangeNotifier.fromIndex(0)),
           ChangeNotifierProvider(create: (_) => GDPRProvider()),
+          ChangeNotifierProvider(create: (_) => Illuminable()),
+          ChangeNotifierProvider(create: (_) => MenuItemProvider()),
         ],
         child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ResponsiveVisibility(
-                visible: globals.displayMenu(context),
-                child: Flexible(
-                  flex: loginProvider.needsLargeMenu() ? 4 : 2,
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    return SizedBox(
-                        width: constraints.maxWidth,
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: FireLogin(),
-                        ));
-                  }),
+          return Consumer<MenuItemProvider>(builder: (_, menuItemProvider, __) {
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ResponsiveVisibility(
+                  visible: globals.displayMenu(context),
+                  child: Flexible(
+                    flex: loginProvider.needsLargeMenu() ? 4 : 3,
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: constraints.maxWidth,
+                              height: constraints.maxHeight / 4,
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: FireLogin(),
+                              ),
+                            ),
+                            SizedBox(
+                              width: constraints.maxWidth,
+                              height: constraints.maxHeight / 3,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    MenuItem(
+                                      item: ShadingItem.home,
+                                      menuItemProvider: menuItemProvider,
+                                      text: "Home",
+                                      icon: Icons.home,
+                                    ),
+                                    MenuItem(
+                                      item: ShadingItem.products,
+                                      menuItemProvider: menuItemProvider,
+                                      text: "Products",
+                                      icon: Icons.shopping_basket,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    ),
+                  ),
                 ),
-              ),
-              const Flexible(
-                flex: 10,
-                child: HomeListView(),
-              ),
-            ],
-          );
+                if (menuItemProvider.selectedItem == ShadingItem.home)
+                  const Flexible(
+                    flex: 10,
+                    child: HomeListView(),
+                  )
+                else if (menuItemProvider.selectedItem == ShadingItem.products)
+                  Flexible(
+                    flex: 10,
+                    child: ListView(children: [
+                      LayoutBuilder(builder: (context, constraints) {
+                        return SizedBox(
+                          width: constraints.maxWidth,
+                          child: Row(
+                            children: [Text("coucou")],
+                          ),
+                        );
+                      })
+                    ]),
+                  ),
+              ],
+            );
+          });
         }),
+      ),
+    );
+  }
+}
+
+class MenuItem extends StatelessWidget {
+  const MenuItem({
+    Key? key,
+    required this.item,
+    required this.menuItemProvider,
+    required this.text,
+    required this.icon,
+  }) : super(key: key);
+
+  final ShadingItem item;
+  final MenuItemProvider menuItemProvider;
+  final String text;
+  final IconData icon;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => menuItemProvider.select(item),
+      child: MouseRegion(
+        onEnter: (e) => menuItemProvider.illuminate(e, item),
+        onExit: (e) => menuItemProvider.shade(e, item),
+        child: Opacity(
+          opacity: menuItemProvider.opacity(item),
+          child: Row(
+            children: [
+              if (menuItemProvider.selectedItem == item)
+                Icon(
+                  Icons.arrow_right,
+                  color: globals.menuColor,
+                ),
+              Text(
+                text,
+                style: globals.menuTextStyle(context),
+              ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Icon(icon, color: globals.menuColor),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

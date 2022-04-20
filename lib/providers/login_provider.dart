@@ -1,18 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:potagenieux/globals.dart' as globals;
-import 'package:potagenieux/providers/enlightable.dart';
+import 'package:potagenieux/providers/illuminable.dart';
 
-class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
+class LoginProvider extends Illuminable {
   ///map of possible states
-  late Map<Item, double> _opacities;
   late LoginState _state;
   String? _email;
 
   LoginProvider() {
     init();
-    _opacities = {for (var i in Item.values) i: globals.defaultOpacity};
     _state = LoginState.disconnected;
   }
 
@@ -24,15 +19,6 @@ class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
     }
   }
 
-  double menuItemsStart(double panelHeight) {
-    if (_state == LoginState.register) {
-      return panelHeight / 3;
-    } else {
-      return panelHeight / 5;
-    }
-  }
-
-  double opacity(Item item) => _opacities[item]!;
   LoginState get state => _state;
   String? get email => _email;
 
@@ -41,20 +27,7 @@ class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
     notifyListeners();
   }
 
-  @override
-  void illuminate(event, Item? item) {
-    _opacities[item!] = 1;
-    notifyListeners();
-  }
-
-  @override
-  void shade(event, Item? item) {
-    _opacities[item!] = globals.defaultOpacity;
-    notifyListeners();
-  }
-
   Future<void> init() async {
-    await Firebase.initializeApp();
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user == null || user.isAnonymous == false) {
         _state = LoginState.connected;
@@ -136,16 +109,11 @@ class LoginProvider extends ChangeNotifier implements Illuminable<Item> {
   bool isConnected() => _state == LoginState.connected;
 
   bool needsLargeMenu() {
-    print(
-        "needs large menu ? ${_state == LoginState.email || _state == LoginState.password}");
     return _state == LoginState.email ||
         _state == LoginState.password ||
         _state == LoginState.register;
   }
 }
-
-/// Items that can be illuminated by hoover
-enum Item { connection, connect }
 
 /// Possible states when login
 enum LoginState {
