@@ -42,8 +42,7 @@ class _FireLoginState extends State<FireLogin> {
               heightFactor: 1 / 3,
               child: (() {
                 if (loginProvider.state == LoginState.disconnected) {
-                  return Container(
-                      color: Colors.blue, child: const ConnectionButton());
+                  return const ConnectionButton();
                 } else if (loginProvider.state == LoginState.email) {
                   return EmailTextField(
                     knownEmail: loginProvider.email,

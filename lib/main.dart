@@ -47,15 +47,25 @@ class MyApp extends StatelessWidget {
           theme:
               const CupertinoThemeData(primaryColor: globals.backgroundColor)),
       title: 'Potagenieux',
-      home: PlatformScaffold(
-          backgroundColor: const Color(globals.menuBackgroundColor),
-          appBar: PlatformAppBar(
-            title: PlatformText(
-              'Potagenieux',
-              style: const TextStyle(color: Color(globals.menuBackgroundColor)),
+      home: ChangeNotifierProvider(
+        create: (_) => LoginProvider(),
+        child: Consumer<LoginProvider>(builder: (context, loginProvider, __) {
+          return Scaffold(
+            drawer: globals.displayDrawer(context)
+                ? const NavigationDrawer()
+                : null,
+            backgroundColor: const Color(globals.menuBackgroundColor),
+            appBar: AppBar(
+              title: PlatformText(
+                'Potagenieux',
+                style:
+                    const TextStyle(color: Color(globals.menuBackgroundColor)),
+              ),
             ),
-          ),
-          body: const MyHomePage()),
+            body: const MyHomePage(),
+          );
+        }),
+      ),
       debugShowCheckedModeBanner: false,
       builder: (context, widget) {
         return ResponsiveWrapper.builder(
@@ -78,6 +88,36 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class NavigationDrawer extends StatelessWidget {
+  const NavigationDrawer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Drawer(
+        backgroundColor: const Color(globals.menuBackgroundColor),
+        child: LayoutBuilder(builder: (context, constraints) {
+          return Column(
+            children: [
+              Flexible(
+                flex: 1,
+                child: DrawerHeader(
+                  child: Text(
+                    "Menu",
+                    style: globals.menuTextStyle(context),
+                  ),
+                ),
+              ),
+              const Flexible(
+                  flex: 3,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: FireLogin(),
+                  ))
+            ],
+          );
+        }),
+      );
+}
+
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -88,7 +128,6 @@ class MyHomePage extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(
               create: (_) => ImagePanelChangeNotifier.fromIndex(0)),
-          ChangeNotifierProvider(create: (_) => LoginProvider()),
           ChangeNotifierProvider(create: (_) => GDPRProvider()),
         ],
         child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
@@ -96,16 +135,15 @@ class MyHomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ResponsiveVisibility(
-                visible: ResponsiveWrapper.of(context)
-                    .isLargerThan(globals.largeMobile),
+                visible: globals.displayMenu(context),
                 child: Flexible(
                   flex: loginProvider.needsLargeMenu() ? 4 : 2,
                   child: LayoutBuilder(builder: (context, constraints) {
                     return SizedBox(
                         width: constraints.maxWidth,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: const FireLogin(),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: FireLogin(),
                         ));
                   }),
                 ),

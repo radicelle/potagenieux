@@ -4,6 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 
 extension GlobalStringExtensions on String {
   String getAsset() => 'assets/$this';
@@ -141,4 +142,12 @@ String? notEmptyValidator(String? value) {
   } else {
     return "Saississez quelque chose";
   }
+}
+
+bool displayMenu(BuildContext c) {
+  return ResponsiveWrapper.of(c).isLargerThan(largeMobile);
+}
+
+bool displayDrawer(BuildContext c) {
+  return !ResponsiveWrapper.of(c).isLargerThan(largeMobile);
 }
