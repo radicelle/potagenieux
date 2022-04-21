@@ -15,19 +15,20 @@ dependencies:
   cupertino_icons: ^1.0.4
   provider: ^6.0.2
   google_fonts: ^2.3.1
-  cloud_firestore: ^3.1.10
-  firebase_auth: ^3.3.11
-  firebase_storage: ^10.2.9
-  firebase_core: ^1.13.1
+  cloud_firestore: ^3.1.12
+  firebase_auth: ^3.3.14
+  firebase_storage: ^10.2.12
+  firebase_core: ^1.14.1
   email_validator: ^2.0.1
   flutter_email_sender: ^5.1.0
   cached_network_image: ^3.2.0
   loading_animations: ^2.2.0
-  cloud_functions: ^3.2.10
-  flutter_markdown: ^0.6.9
+  cloud_functions: ^3.2.12
+  flutter_markdown: ^0.6.10
   flutter_platform_widgets: ^1.20.0
   responsive_framework: ^0.1.7
   responsive_grid: ^2.0.0
+  google_nav_bar: ^5.0.6
 
 dev_dependencies:
   flutter_test:
