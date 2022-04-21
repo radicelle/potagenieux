@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:potagenieux/providers/illuminable.dart';
 import 'package:potagenieux/providers/menu_item_provider.dart';
 import 'package:potagenieux/vue/menu/login/fire_login.dart';
+import 'package:potagenieux/vue/menu/menu_info.dart';
 import 'package:potagenieux/vue/menu/menu_section_item.dart';
 
 class MenuItems extends StatelessWidget {
@@ -61,6 +62,11 @@ class MenuItems extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            SizedBox(
+              width: constraints.maxWidth,
+              height: constraints.maxHeight / 3,
+              child: const MenuInfo(),
             )
           ],
         );

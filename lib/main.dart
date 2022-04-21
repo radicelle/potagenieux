@@ -20,6 +20,7 @@ import 'package:potagenieux/providers/menu_item_provider.dart';
 import 'package:potagenieux/providers/news_provider.dart';
 import 'package:potagenieux/providers/products_provider.dart';
 import 'package:potagenieux/vue/menu/login/fire_login.dart';
+import 'package:potagenieux/vue/menu/menu_info.dart';
 import 'package:potagenieux/vue/panels/home/home_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -125,11 +126,13 @@ class NavigationDrawer extends StatelessWidget {
                 ),
               ),
               const Flexible(
-                  flex: 4,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: FireLogin(),
-                  ))
+                flex: 4,
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: FireLogin(),
+                ),
+              ),
+              const Flexible(flex: 3, child: MenuInfo())
             ],
           );
         }),
