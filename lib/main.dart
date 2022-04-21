@@ -13,7 +13,7 @@ import 'package:potagenieux/providers/image_panel_change_notifier.dart';
 import 'package:potagenieux/providers/login_provider.dart';
 import 'package:potagenieux/providers/menu_item_provider.dart';
 import 'package:potagenieux/providers/products_provider.dart';
-import 'package:potagenieux/vue/menu/login/fire_loggin.dart';
+import 'package:potagenieux/vue/menu/login/fire_login.dart';
 import 'package:potagenieux/vue/panels/home/home_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
