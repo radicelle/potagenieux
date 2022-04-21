@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:potagenieux/custom_nav_bar.dart';
 import 'package:potagenieux/menu_items.dart';
 import 'package:potagenieux/products_list_view.dart';
 import 'package:potagenieux/providers/gdpr_provider.dart';
@@ -52,10 +53,15 @@ class Potagenieux extends StatelessWidget {
           theme:
               const CupertinoThemeData(primaryColor: globals.backgroundColor)),
       title: 'Potagenieux',
-      home: ChangeNotifierProvider(
-        create: (_) => LoginProvider(),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => LoginProvider()),
+          ChangeNotifierProvider(create: (_) => MenuItemProvider()),
+        ],
         child: Consumer<LoginProvider>(builder: (context, loginProvider, __) {
           return Scaffold(
+            bottomNavigationBar:
+                globals.displayDrawer(context) ? const CustomNavBar() : null,
             drawer: globals.displayDrawer(context)
                 ? const NavigationDrawer()
                 : null,
@@ -135,7 +141,6 @@ class MyHomePage extends StatelessWidget {
               create: (_) => ImagePanelChangeNotifier.fromIndex(0)),
           ChangeNotifierProvider(create: (_) => GDPRProvider()),
           ChangeNotifierProvider(create: (_) => Illuminable()),
-          ChangeNotifierProvider(create: (_) => MenuItemProvider()),
           ChangeNotifierProvider(create: (_) => ProductsProvider()),
         ],
         child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {

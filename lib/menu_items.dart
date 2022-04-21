@@ -37,13 +37,13 @@ class MenuItems extends StatelessWidget {
                     MenuSectionItem(
                       item: ShadingItem.home,
                       menuItemProvider: itemsProvider,
-                      text: "Home",
+                      text: "Accueil",
                       icon: Icons.home,
                     ),
                     MenuSectionItem(
                       item: ShadingItem.products,
                       menuItemProvider: itemsProvider,
-                      text: "Products",
+                      text: "Produits",
                       icon: Icons.shopping_basket,
                     ),
                   ],

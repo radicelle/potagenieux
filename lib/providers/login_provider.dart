@@ -132,8 +132,10 @@ class LoginProvider extends Illuminable {
   }
 
   void disposeResetMailMessage() {
-    _resettingEmail = false;
-    notifyListeners();
+    Future.delayed(const Duration(seconds: 3)).whenComplete(() {
+      _resettingEmail = false;
+      notifyListeners();
+    });
   }
 }
 

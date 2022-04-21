@@ -21,7 +21,8 @@ class ProductsListView extends StatelessWidget {
         itemCount: productsProvider.nbProducts,
         itemBuilder: (buildContext, index) => Center(
           child: SizedBox(
-            width: constraints.maxWidth / 3,
+            width:
+                constraints.maxWidth / (globals.displayMenu(context) ? 2 : 1.1),
             child: Column(
               children: [
                 Flexible(
