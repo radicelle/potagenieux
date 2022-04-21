@@ -33,6 +33,16 @@ class CustomNavBar extends StatelessWidget {
                 onPressed: () => menuItemProvider.select(ShadingItem.home),
               ),
               GButton(
+                icon: Icons.portrait,
+                text: "Blog",
+                onPressed: () => menuItemProvider.select(ShadingItem.blog),
+              ),
+              GButton(
+                icon: Icons.fiber_new_sharp,
+                text: "News",
+                onPressed: () => menuItemProvider.select(ShadingItem.news),
+              ),
+              GButton(
                 icon: Icons.shopping_basket,
                 text: "Produits",
                 onPressed: () => menuItemProvider.select(ShadingItem.products),

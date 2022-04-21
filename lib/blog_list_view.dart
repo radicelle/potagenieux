@@ -18,7 +18,7 @@ class BlogListView extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       return ListView.builder(
         itemExtent: constraints.maxHeight *
-            (globals.displayDrawer(context) ? 0.7 : 1.2),
+            (globals.displayDrawer(context) ? 0.9 : 1.2),
         itemCount: articleProvider.nbArticles,
         itemBuilder: (buildContext, index) => Padding(
           padding: const EdgeInsets.all(10.0),
