@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:potagenieux/providers/illuminable.dart';
 import 'package:potagenieux/providers/menu_item_provider.dart';
 import 'package:potagenieux/vue/menu/login/fire_login.dart';
-import 'package:potagenieux/vue/menu/menu_item.dart';
+import 'package:potagenieux/vue/menu/menu_section_item.dart';
 
 class MenuItems extends StatelessWidget {
   const MenuItems({
@@ -34,13 +34,13 @@ class MenuItems extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    MenuItem(
+                    MenuSectionItem(
                       item: ShadingItem.home,
                       menuItemProvider: itemsProvider,
                       text: "Home",
                       icon: Icons.home,
                     ),
-                    MenuItem(
+                    MenuSectionItem(
                       item: ShadingItem.products,
                       menuItemProvider: itemsProvider,
                       text: "Products",

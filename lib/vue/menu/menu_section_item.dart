@@ -4,8 +4,8 @@ import 'package:potagenieux/globals.dart' as globals;
 import '../../providers/illuminable.dart';
 import '../../providers/menu_item_provider.dart';
 
-class MenuItem extends StatelessWidget {
-  const MenuItem({
+class MenuSectionItem extends StatelessWidget {
+  const MenuSectionItem({
     Key? key,
     required this.item,
     required this.menuItemProvider,
