@@ -78,18 +78,4 @@ class _FireLoginState extends State<FireLogin> {
     return globals.showErrorDialog(context, 'Erreur de connexion',
         FirebaseAuthException(code: 'e.code', message: message));
   }
-
-  static Widget fadeOverLayoutBuilder(
-      Widget? currentChild, List<Widget> previousChildren) {
-    return Stack(
-      children: <Widget>[
-        ...previousChildren.map((w) => Positioned(
-              child: w,
-              top: 0,
-              left: 0,
-            )),
-        if (currentChild != null) currentChild,
-      ],
-    );
-  }
 }
