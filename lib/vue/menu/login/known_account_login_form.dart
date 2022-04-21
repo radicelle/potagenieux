@@ -7,10 +7,12 @@ import 'package:provider/provider.dart';
 class KnownAccountLoginForm extends StatefulWidget {
   const KnownAccountLoginForm({
     Key? key,
-    required this.callback,
+    required this.loginCallback,
+    required this.forgottenCallback,
   }) : super(key: key);
 
-  final void Function(String password) callback;
+  final void Function(String password) loginCallback;
+  final void Function(String email) forgottenCallback;
 
   @override
   State<KnownAccountLoginForm> createState() => _KnownAccountLoginFormState();
@@ -49,7 +51,7 @@ class _KnownAccountLoginFormState extends State<KnownAccountLoginForm> {
                     obscureText: true,
                     validator: passwordValidator,
                     onFieldSubmitted: (value) async {
-                      widget.callback(_passwordController.text);
+                      widget.loginCallback(_passwordController.text);
                     },
                   ),
                 ),
@@ -61,14 +63,27 @@ class _KnownAccountLoginFormState extends State<KnownAccountLoginForm> {
                     onPressed: () => loginProvider.returnToEmail(),
                     icon: const Icon(Icons.arrow_left)),
               ]),
-              PlatformTextButton(
-                onPressed: () async {
-                  widget.callback(_passwordController.text);
-                },
-                child: Text(
-                  "Se connected",
-                  style: globals.loginTextStyle(context),
-                ),
+              Column(
+                children: [
+                  PlatformTextButton(
+                    onPressed: () async {
+                      widget.loginCallback(_passwordController.text);
+                    },
+                    child: Text(
+                      "Se connected",
+                      style: globals.loginTextStyle(context),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      widget.forgottenCallback(loginProvider.email!);
+                    },
+                    child: const Text(
+                      "Mot de passe oublié",
+                      style: TextStyle(color: globals.backgroundColor),
+                    ),
+                  )
+                ],
               ),
             ],
           ),

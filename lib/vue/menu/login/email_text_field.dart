@@ -71,14 +71,26 @@ class _EmailTextFieldState extends State<EmailTextField> {
               ]),
               Flexible(
                 flex: 2,
-                child: PlatformTextButton(
-                  onPressed: () async {
-                    widget.callback(_controller.text);
-                  },
-                  child: Text(
-                    "Suivant",
-                    style: globals.loginTextStyle(context),
-                  ),
+                child: Column(
+                  children: [
+                    PlatformTextButton(
+                      onPressed: () async {
+                        widget.callback(_controller.text);
+                      },
+                      child: Text(
+                        "Suivant",
+                        style: globals.loginTextStyle(context),
+                      ),
+                    ),
+                    if (loginProvider.resettingEmail)
+                      Builder(builder: (context) {
+                        loginProvider.disposeResetMailMessage();
+                        return const Text(
+                          "email de réinitialisation envoyé",
+                          style: TextStyle(color: globals.backgroundColor),
+                        );
+                      })
+                  ],
                 ),
               ),
             ],

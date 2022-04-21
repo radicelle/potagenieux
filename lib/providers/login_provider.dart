@@ -4,11 +4,13 @@ import 'package:potagenieux/providers/illuminable.dart';
 class LoginProvider extends Illuminable {
   ///map of possible states
   late LoginState _state;
+  late bool _resettingEmail;
   String? _email;
 
   LoginProvider() {
     init();
     _state = LoginState.disconnected;
+    _resettingEmail = false;
   }
 
   double get menuWidth {
@@ -19,6 +21,7 @@ class LoginProvider extends Illuminable {
     }
   }
 
+  bool get resettingEmail => _resettingEmail;
   LoginState get state => _state;
   String? get email => _email;
 
@@ -77,6 +80,20 @@ class LoginProvider extends Illuminable {
     }
   }
 
+  Future<void> askForPassword(
+    String email,
+    void Function(FirebaseAuthException e) errorCallback,
+  ) async {
+    try {
+      FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      _state = LoginState.email;
+      _resettingEmail = true;
+      notifyListeners();
+    } on FirebaseAuthException catch (e) {
+      errorCallback(e);
+    }
+  }
+
   void cancelRegistration() {
     _state = LoginState.disconnected;
     notifyListeners();
@@ -112,6 +129,11 @@ class LoginProvider extends Illuminable {
     return _state == LoginState.email ||
         _state == LoginState.password ||
         _state == LoginState.register;
+  }
+
+  void disposeResetMailMessage() {
+    _resettingEmail = false;
+    notifyListeners();
   }
 }
 

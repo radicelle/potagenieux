@@ -21,7 +21,7 @@ class MenuItems extends StatelessWidget {
           children: [
             SizedBox(
               width: constraints.maxWidth,
-              height: constraints.maxHeight / 4,
+              height: constraints.maxHeight / 3,
               child: const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: FireLogin(),

@@ -58,12 +58,17 @@ class _FireLoginState extends State<FireLogin> {
                               context, e, "Erreur lors de l'enregistrement.")));
             } else if (loginProvider.state == LoginState.password) {
               return KnownAccountLoginForm(
-                  callback: (password) =>
-                      loginProvider.signInWithEmailAndPassword(
-                          loginProvider.email!,
-                          password,
-                          (e) => _errorCallback(
-                              context, e, "Mot de passe invalide.")));
+                loginCallback: (password) =>
+                    loginProvider.signInWithEmailAndPassword(
+                  loginProvider.email!,
+                  password,
+                  (e) => _errorCallback(context, e, "Mot de passe invalide."),
+                ),
+                forgottenCallback: (email) => loginProvider.askForPassword(
+                  email,
+                  (e) => _errorCallback(context, e, "Problème de connexion"),
+                ),
+              );
             } else if (loginProvider.state == LoginState.connected) {
               return const DisconnectionButton();
             }

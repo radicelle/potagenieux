@@ -112,7 +112,7 @@ class NavigationDrawer extends StatelessWidget {
                 ),
               ),
               const Flexible(
-                  flex: 3,
+                  flex: 4,
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: FireLogin(),
