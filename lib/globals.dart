@@ -11,6 +11,8 @@ extension GlobalStringExtensions on String {
   String getAssetImage() => 'assets/images/$this.jpg';
   String getAssetMiniImage() => 'assets/images/${this}_mini.jpg';
   String getProductImage() => 'products/${this}';
+  String getNewsImage() => 'news/${this}';
+  String getBlogImage() => 'blog/${this}';
 }
 
 const defaultOpacity = 0.7;
@@ -71,6 +73,11 @@ headerTextStyle(context) {
       textStyle: Theme.of(context).textTheme.headline4, color: headerTextColor);
 }
 
+newsHeaderTextStyle(context) {
+  return GoogleFonts.aBeeZee(
+      textStyle: Theme.of(context).textTheme.headline6, color: headerTextColor);
+}
+
 loginTextStyle(context) {
   return GoogleFonts.aBeeZee(
       textStyle: Theme.of(context).textTheme.headline6, color: headerTextColor);
@@ -101,12 +108,33 @@ const productsList = [
   Product("tomate.jpg", "Tomates coeur de boeuf", false),
   Product("tomateCerises.png", "Tomates cerises", false)
 ];
+List<News> newsList = [
+  News(
+      "tomateCerises.png",
+      "Cette année la météo est clémente pour les tomates, on les attend avec impatience.",
+      DateTime(2022, 04, 21)),
+  News(
+      "bioreacteur.jpg",
+      "Et voilà le premier bioreacteur Johson-Su est prêt à être chargé. Les merveilles du compostage à découvrir dans l'onglet \"Blog\" du site.",
+      DateTime(2022, 04, 22)),
+  News(
+      "harictos.jpg",
+      "Les haricots c'est pour bientôt ! La production est en court, ils seront en stock d'ici un mois alors, soyez prêts.",
+      DateTime(2022, 04, 18)),
+];
 
 class Product {
   const Product(this.name, this.desc, this.inStock);
   final String name;
   final String desc;
   final bool inStock;
+}
+
+class News {
+  const News(this.name, this.desc, this.date);
+  final String name;
+  final String desc;
+  final DateTime date;
 }
 
 void showErrorDialog(BuildContext context, String title, Exception e) {

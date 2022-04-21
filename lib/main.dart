@@ -7,17 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/custom_nav_bar.dart';
 import 'package:potagenieux/menu_items.dart';
+import 'package:potagenieux/news_list_view.dart';
 import 'package:potagenieux/products_list_view.dart';
 import 'package:potagenieux/providers/gdpr_provider.dart';
 import 'package:potagenieux/providers/illuminable.dart';
 import 'package:potagenieux/providers/image_panel_change_notifier.dart';
 import 'package:potagenieux/providers/login_provider.dart';
 import 'package:potagenieux/providers/menu_item_provider.dart';
+import 'package:potagenieux/providers/news_provider.dart';
 import 'package:potagenieux/providers/products_provider.dart';
 import 'package:potagenieux/vue/menu/login/fire_login.dart';
 import 'package:potagenieux/vue/panels/home/home_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'firebase_options.dart';
 import 'globals.dart' as globals;
@@ -27,6 +30,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  initializeDateFormatting('fr_FR', null);
+
   FirebaseAuth.instance.signInAnonymously();
   if (kDebugMode) {
     FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5000);
@@ -142,6 +147,7 @@ class MyHomePage extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => GDPRProvider()),
           ChangeNotifierProvider(create: (_) => Illuminable()),
           ChangeNotifierProvider(create: (_) => ProductsProvider()),
+          ChangeNotifierProvider(create: (_) => NewsProvider()),
         ],
         child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
           return Consumer<MenuItemProvider>(builder: (_, menuItemProvider, __) {
@@ -161,6 +167,23 @@ class MyHomePage extends StatelessWidget {
                     child: HomeListView(),
                   )
                 else if (menuItemProvider.selectedItem == ShadingItem.products)
+                  Consumer<ProductsProvider>(builder: (_, productProvider, __) {
+                    return Flexible(
+                      flex: 10,
+                      child:
+                          ProductsListView(productsProvider: productProvider),
+                    );
+                  })
+                else if (menuItemProvider.selectedItem == ShadingItem.news)
+                  Consumer<NewsProvider>(builder: (_, newsProvider, __) {
+                    return Flexible(
+                      flex: 10,
+                      child: NewsListView(
+                        newsProvider: newsProvider,
+                      ),
+                    );
+                  })
+                else if (menuItemProvider.selectedItem == ShadingItem.blog)
                   Consumer<ProductsProvider>(builder: (_, productProvider, __) {
                     return Flexible(
                       flex: 10,

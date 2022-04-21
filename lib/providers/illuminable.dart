@@ -22,4 +22,4 @@ class Illuminable extends ChangeNotifier {
   }
 }
 
-enum ShadingItem { home, products, connection, connect }
+enum ShadingItem { home, products, blog, news, connection, connect }

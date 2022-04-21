@@ -41,6 +41,18 @@ class MenuItems extends StatelessWidget {
                       icon: Icons.home,
                     ),
                     MenuSectionItem(
+                      item: ShadingItem.blog,
+                      menuItemProvider: itemsProvider,
+                      text: "Blog",
+                      icon: Icons.portrait,
+                    ),
+                    MenuSectionItem(
+                      item: ShadingItem.news,
+                      menuItemProvider: itemsProvider,
+                      text: "News",
+                      icon: Icons.fiber_new_sharp,
+                    ),
+                    MenuSectionItem(
                       item: ShadingItem.products,
                       menuItemProvider: itemsProvider,
                       text: "Produits",
