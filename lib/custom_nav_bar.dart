@@ -16,24 +16,25 @@ class CustomNavBar extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.all(4.0),
         child: GNav(
-            rippleColor: globals.backgroundColor,
-            tabActiveBorder:
-                Border.all(color: globals.backgroundColor, width: 1),
+            color: globals.headerTextColor,
+            gap: 8,
+            tabBorderRadius: 30,
+            activeColor: globals.headerTextColor,
+            tabBackgroundGradient: LinearGradient(colors: [
+              globals.backgroundColor,
+              globals.backgroundColor.withOpacity(0.5)
+            ]),
+            curve: Curves.easeInExpo, // tab animation curves
+            duration: const Duration(milliseconds: 600),
             tabs: [
               GButton(
                 icon: Icons.home,
-                text: " Accueil",
-                iconColor: globals.headerTextColor,
-                textColor: globals.headerTextColor,
-                iconActiveColor: globals.headerTextColor,
+                text: "Accueil",
                 onPressed: () => menuItemProvider.select(ShadingItem.home),
               ),
               GButton(
                 icon: Icons.shopping_basket,
-                text: " Produits",
-                iconActiveColor: globals.headerTextColor,
-                iconColor: globals.headerTextColor,
-                textColor: globals.headerTextColor,
+                text: "Produits",
                 onPressed: () => menuItemProvider.select(ShadingItem.products),
               ),
             ]),
