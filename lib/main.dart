@@ -5,10 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:potagenieux/blog_list_view.dart';
 import 'package:potagenieux/custom_nav_bar.dart';
 import 'package:potagenieux/menu_items.dart';
 import 'package:potagenieux/news_list_view.dart';
 import 'package:potagenieux/products_list_view.dart';
+import 'package:potagenieux/providers/article_provider.dart';
 import 'package:potagenieux/providers/gdpr_provider.dart';
 import 'package:potagenieux/providers/illuminable.dart';
 import 'package:potagenieux/providers/image_panel_change_notifier.dart';
@@ -20,7 +23,6 @@ import 'package:potagenieux/vue/menu/login/fire_login.dart';
 import 'package:potagenieux/vue/panels/home/home_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 import 'firebase_options.dart';
 import 'globals.dart' as globals;
@@ -148,6 +150,7 @@ class MyHomePage extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => Illuminable()),
           ChangeNotifierProvider(create: (_) => ProductsProvider()),
           ChangeNotifierProvider(create: (_) => NewsProvider()),
+          ChangeNotifierProvider(create: (_) => ArticleProvider()),
         ],
         child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
           return Consumer<MenuItemProvider>(builder: (_, menuItemProvider, __) {
@@ -184,11 +187,10 @@ class MyHomePage extends StatelessWidget {
                     );
                   })
                 else if (menuItemProvider.selectedItem == ShadingItem.blog)
-                  Consumer<ProductsProvider>(builder: (_, productProvider, __) {
+                  Consumer<ArticleProvider>(builder: (_, articleProvider, __) {
                     return Flexible(
                       flex: 10,
-                      child:
-                          ProductsListView(productsProvider: productProvider),
+                      child: BlogListView(articleProvider: articleProvider),
                     );
                   }),
               ],

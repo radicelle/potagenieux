@@ -12,7 +12,7 @@ extension GlobalStringExtensions on String {
   String getAssetMiniImage() => 'assets/images/${this}_mini.jpg';
   String getProductImage() => 'products/${this}';
   String getNewsImage() => 'news/${this}';
-  String getBlogImage() => 'blog/${this}';
+  String getArticleImage() => 'blog/${this}';
 }
 
 const defaultOpacity = 0.7;
@@ -123,6 +123,34 @@ List<News> newsList = [
       DateTime(2022, 04, 18)),
 ];
 
+List<Article> blogList = [
+  Article(
+      "bioclimatic.jpg",
+      "L'effet bioclimatique",
+      "Tirer profit de l'énergie solaire est essentiel pour réduire notre dépendance aux énergies fossile. Depuis bien longtemps l'homme connais divers techniques qui permettent de concenter et homogénéiser cette énergie. L'effet bioclimatique en fait partie.\nEn effet avec un matériaux transparant et isolant au sud et un isolant épais face nord ainsi qu'une conduction de l'air on obtient un habitat qui se réchauffe rapidement. Aussi l'aération abaisse la température quand il fait trop chaud.",
+      DateTime(2022, 04, 01)),
+  Article(
+      "bioreacteur.jpg",
+      "Le bio réacteur Johnson-Su",
+      "Les docteurs Johnson et Su sont un couple de scientifiques américains s'appuyants sur les recherches de Elaine Ingham. Elle aussi scientifique de renom dans le milieu de la chaîne alimentaire du sol. Grâce à des années de recherches ils ont mis au point un composteur très efficace et qui favorise la présence de champignon grâce a des flux d'air qui oxygène l'intérieur du composteur. Un procédé certe long, mais naturel et qui produit un engrai de choix pour fertiliser les sol et les semis.",
+      DateTime(2022, 04, 6)),
+  Article(
+      "carbon-sol.png",
+      "Capacité de rétention du carbon dans le sol",
+      "La séquestration du carbon dans le sol se fait de 3 manières. Les plantes produisent des exsudats racinaire sous forme de sucre. C'est la séquestration la plus rapide mais elle est limité à une année. Ensuite il y a l'humus, ce sont des acides qui sont contenus dans la partie supérieure du sol. Cette fois la durée de stockage est beaucoup plus longue donc augmenter le stock d'humus augmente régulièrement le stockage de carbon. Enfin il y a toutes les parties aériennes. C'est pour cela que passer d'une prairie à une forêt est intéressant en terme de séquestration de carbone.",
+      DateTime(2022, 04, 10)),
+  Article(
+      "climate-change.jpg",
+      "L'effet de serre",
+      "L'effet de serre dont nous parlons aujourd'hui a été mis en évidence par des scientifiques à la moitié du 19ème siècle, mais ce n'est que beaucoup plus tard que des problèmes de changement climatique sont arrivés. L'effet de serre est due à la répercussion des rayons solaire aux sein de l'atmoshpère ce qui a pour effet de réchauffer la planète. Bien entendu il existe des solution, comme consommer moins d'énergie fossiles ou changer les pratiques agricoles pour stocker plus de carbon.",
+      DateTime(2022, 04, 18)),
+  Article(
+      "syntropic.jpg",
+      "L'argriculture syntropique",
+      "L'agriculture syntropique est une partique agricole qui nous vient du Brésil. Elle permet de profiter de la différence de hauteur de chaque plante pour optimiser la production. Sous nos latitude, certains appelerons plutôt cela, de l'agroforesterie. Encore peut répondu, ce modèle agricole à déjà quelques adeptes concquis en Europe et ne manque pas de points fort pour séduire.",
+      DateTime(2022, 04, 22)),
+];
+
 class Product {
   const Product(this.name, this.desc, this.inStock);
   final String name;
@@ -133,6 +161,14 @@ class Product {
 class News {
   const News(this.name, this.desc, this.date);
   final String name;
+  final String desc;
+  final DateTime date;
+}
+
+class Article {
+  const Article(this.name, this.title, this.desc, this.date);
+  final String name;
+  final String title;
   final String desc;
   final DateTime date;
 }
