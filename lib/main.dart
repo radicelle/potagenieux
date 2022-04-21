@@ -10,6 +10,7 @@ import 'package:potagenieux/providers/illuminable.dart';
 import 'package:potagenieux/providers/image_panel_change_notifier.dart';
 import 'package:potagenieux/providers/login_provider.dart';
 import 'package:potagenieux/providers/menu_item_provider.dart';
+import 'package:potagenieux/providers/products_provider.dart';
 import 'package:potagenieux/vue/menu/login/fire_loggin.dart';
 import 'package:potagenieux/vue/panels/home/home_list_view.dart';
 import 'package:provider/provider.dart';
@@ -133,6 +134,7 @@ class MyHomePage extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => GDPRProvider()),
           ChangeNotifierProvider(create: (_) => Illuminable()),
           ChangeNotifierProvider(create: (_) => MenuItemProvider()),
+          ChangeNotifierProvider(create: (_) => ProductsProvider()),
         ],
         child: Consumer<LoginProvider>(builder: (_, loginProvider, __) {
           return Consumer<MenuItemProvider>(builder: (_, menuItemProvider, __) {
@@ -192,19 +194,60 @@ class MyHomePage extends StatelessWidget {
                     child: HomeListView(),
                   )
                 else if (menuItemProvider.selectedItem == ShadingItem.products)
-                  Flexible(
-                    flex: 10,
-                    child: ListView(children: [
-                      LayoutBuilder(builder: (context, constraints) {
-                        return SizedBox(
-                          width: constraints.maxWidth,
-                          child: Row(
-                            children: [Text("coucou")],
+                  Consumer<ProductsProvider>(builder: (_, productProvider, __) {
+                    return Flexible(
+                      flex: 10,
+                      child: LayoutBuilder(builder: (context, constraints) {
+                        return ListView.builder(
+                          itemExtent: constraints.maxHeight / 2,
+                          itemCount: productProvider.nbProducts,
+                          itemBuilder: (buildContext, index) => Center(
+                            child: SizedBox(
+                              width: constraints.maxWidth / 3,
+                              child: Column(
+                                children: [
+                                  Flexible(
+                                      flex: 3,
+                                      child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          child: productProvider
+                                              .productImage(index))),
+                                  Flexible(
+                                    flex: 1,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          globals.productsList[index].desc,
+                                          style: globals.bodyTextStyle(context),
+                                        ),
+                                        const Spacer(),
+                                        Row(
+                                          children: [
+                                            const Text("Stock: "),
+                                            globals.productsList[index].inStock
+                                                ? Icon(
+                                                    Icons.check_box,
+                                                    color:
+                                                        Colors.green.shade700,
+                                                  )
+                                                : Icon(
+                                                    Icons.close,
+                                                    color: Colors.red.shade900,
+                                                  )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
                         );
-                      })
-                    ]),
-                  ),
+                      }),
+                    );
+                  }),
               ],
             );
           });

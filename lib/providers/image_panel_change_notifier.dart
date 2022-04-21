@@ -1,58 +1,26 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_animations/loading_animations.dart';
+import 'package:potagenieux/providers/ProviderWidgets/cached_firebase_image.dart';
 
 import '../globals.dart' as globals;
 
 class ImagePanelChangeNotifier extends ChangeNotifier {
   late int _selectedIndex;
 
-  late final List<FutureBuilder<dynamic>> _images = [
-    ...globals.imagesNamesMap.values.map((name) => FutureBuilder<dynamic>(
-          key: ValueKey(name),
-          future: FirebaseStorage.instance
-              .ref(name.getAssetImage())
-              .getDownloadURL(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.connectionState != ConnectionState.waiting) {
-              return Image(
-                fit: BoxFit.cover,
-                image: CachedNetworkImageProvider(
-                  snapshot.data.toString(),
-                ),
-              );
-            } else {
-              return LoadingJumpingLine.circle(
-                backgroundColor: globals.menuColor,
-                borderColor: Colors.grey,
-              );
-            }
-          },
-        ))
+  late final List<CachedFirebaseImage> _images = [
+    ...globals.imagesNamesMap.values.map(
+      (name) => CachedFirebaseImage(
+        name: name,
+        boxFit: BoxFit.cover,
+        locationFunction: (name) => name.getAssetImage(),
+      ),
+    )
   ];
-  final List<FutureBuilder<dynamic>> _miniatures = [
-    ...globals.imagesNamesMap.values.map((name) => FutureBuilder<dynamic>(
-          key: ValueKey(name),
-          future: FirebaseStorage.instance
-              .ref(name.getAssetMiniImage())
-              .getDownloadURL(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.connectionState != ConnectionState.waiting) {
-              return Image(
-                height: 70,
-                fit: BoxFit.fill,
-                image: CachedNetworkImageProvider(
-                  snapshot.data.toString(),
-                ),
-              );
-            } else {
-              return LoadingJumpingLine.circle(
-                backgroundColor: globals.menuColor,
-                borderColor: Colors.grey,
-              );
-            }
-          },
+  final List<CachedFirebaseImage> _miniatures = [
+    ...globals.imagesNamesMap.values.map((name) => CachedFirebaseImage(
+          name: name,
+          boxFit: BoxFit.fill,
+          locationFunction: (name) => name.getAssetMiniImage(),
+          height: 70,
         ))
   ];
 

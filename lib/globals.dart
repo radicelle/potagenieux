@@ -10,6 +10,7 @@ extension GlobalStringExtensions on String {
   String getAsset() => 'assets/$this';
   String getAssetImage() => 'assets/images/$this.jpg';
   String getAssetMiniImage() => 'assets/images/${this}_mini.jpg';
+  String getProductImage() => 'products/${this}';
 }
 
 const defaultOpacity = 0.7;
@@ -90,6 +91,23 @@ const imagesNamesMap = {
   7: "MSV8",
   0: "MSV9",
 };
+
+const productsList = [
+  Product("batavia.jpg", "Salade batavia", true),
+  Product("epinard.jpg", "Epinards", true),
+  Product("harictos.jpg", "Haricots verts", false),
+  Product("mesclunCretois.jpeg", "Mesclun cretois", true),
+  Product("poireaux.jpg", "Poireaux d'hiver", true),
+  Product("tomate.jpg", "Tomates coeur de boeuf", false),
+  Product("tomateCerises.png", "Tomates cerises", false)
+];
+
+class Product {
+  const Product(this.name, this.desc, this.inStock);
+  final String name;
+  final String desc;
+  final bool inStock;
+}
 
 void showErrorDialog(BuildContext context, String title, Exception e) {
   showPlatformDialog<void>(
