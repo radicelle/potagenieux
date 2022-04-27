@@ -7,16 +7,24 @@ class MenuInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        Text(
-          "Potagénieux",
-          style: TextStyle(color: Colors.white),
-        ),
-        Text("2 impasse des Roquerets", style: TextStyle(color: Colors.white)),
-        Text("14500 Vire", style: TextStyle(color: Colors.white)),
-        Text("Tel : 0679122243", style: TextStyle(color: Colors.white))
-      ],
+    const textColor = Colors.white60;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: const [
+          Text(
+            "Potagénieux",
+            style: TextStyle(
+              color: textColor,
+            ),
+          ),
+          Text("2 impasse des Roquerets", style: TextStyle(color: textColor)),
+          Text("14500 Vire", style: TextStyle(color: textColor)),
+          Text("Tel : 0679122243", style: TextStyle(color: textColor))
+        ],
+      ),
     );
   }
 }

@@ -66,8 +66,8 @@ modalBodyTextStyle(context) {
   );
 }
 
-final headerTextColor = Colors.white.withOpacity(0.6);
-final menuColor = Colors.white.withOpacity(0.7);
+const headerTextColor = Colors.white60;
+const menuColor = Colors.white70;
 
 headerTextStyle(context) {
   return GoogleFonts.aBeeZee(
@@ -205,7 +205,7 @@ void showErrorDialog(BuildContext context, String title, Exception e) {
             },
             child: PlatformText(
               'OK',
-              style: TextStyle(color: Colors.deepPurple),
+              style: const TextStyle(color: Colors.deepPurple),
             ),
           ),
         ],
