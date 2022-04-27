@@ -8,7 +8,7 @@ class ProductsProvider extends ChangeNotifier {
     ...globals.productsList.map(
       (name) => CachedFirebaseImage(
         name: name.name,
-        boxFit: BoxFit.cover,
+        boxFit: BoxFit.fill,
         locationFunction: (name) => name.getProductImage(),
       ),
     )
