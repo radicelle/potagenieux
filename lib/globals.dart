@@ -16,7 +16,8 @@ extension GlobalStringExtensions on String {
 }
 
 const defaultOpacity = 0.7;
-const menuBackgroundColor = 0xff9AA644;
+const menuBackgroundHexa = 0xff9AA644;
+const menuBackgroundColor = Color(0xff9AA644);
 const appBarHeight = 30.0;
 const largeMobile = "LARGE_MOBILE";
 const smallDesktop = "SMALL_DESKTOR";
@@ -71,6 +72,11 @@ final menuColor = Colors.white.withOpacity(0.7);
 headerTextStyle(context) {
   return GoogleFonts.aBeeZee(
       textStyle: Theme.of(context).textTheme.headline4, color: headerTextColor);
+}
+
+productHeaderTextStyle(context) {
+  return GoogleFonts.aBeeZee(
+      textStyle: Theme.of(context).textTheme.headline6, color: Colors.black);
 }
 
 newsHeaderTextStyle(context) {

@@ -55,12 +55,12 @@ class Potagenieux extends StatelessWidget {
             drawer: globals.displayDrawer(context)
                 ? const NavigationDrawer()
                 : null,
-            backgroundColor: const Color(globals.menuBackgroundColor),
+            backgroundColor: const Color(globals.menuBackgroundHexa),
             appBar: AppBar(
               title: PlatformText(
                 'Potagenieux',
                 style:
-                    const TextStyle(color: Color(globals.menuBackgroundColor)),
+                    const TextStyle(color: Color(globals.menuBackgroundHexa)),
               ),
             ),
             body: const MyHomePage(),
@@ -94,7 +94,7 @@ class NavigationDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Drawer(
-        backgroundColor: const Color(globals.menuBackgroundColor),
+        backgroundColor: const Color(globals.menuBackgroundHexa),
         child: LayoutBuilder(builder: (context, constraints) {
           return Column(
             children: [

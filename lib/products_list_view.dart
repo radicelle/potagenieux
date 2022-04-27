@@ -23,32 +23,38 @@ class ProductsListView extends StatelessWidget {
             itemCount: productsProvider.nbProducts,
             itemBuilder: (buildContext, index) {
               var glassEffectContainerWidth = constraints.maxWidth /
-                  (globals.displayMenu(context) ? 1.8 : 1.1);
+                  (globals.displayMenu(context)
+                      ? constraints.maxWidth / constraints.maxHeight
+                      : 1.1);
+              var glassEffectContainerHeight = glassEffectContainerWidth / 1.25;
               return Center(
                 child: GlassContainer(
-                  height: constraints.maxHeight / 1.25,
+                  height: glassEffectContainerHeight,
                   width: glassEffectContainerWidth,
                   content: Column(
                     children: [
-                      const Spacer(
-                        flex: 1,
+                      Flexible(
+                        flex: 3,
+                        child: Center(
+                          child: Text(
+                            globals.productsList[index].desc,
+                            style: globals.productHeaderTextStyle(context),
+                          ),
+                        ),
                       ),
                       Flexible(
-                          flex: 10,
+                          flex: 30,
                           child: SizedBox(
                               width: glassEffectContainerWidth * 0.95,
                               child: productsProvider.productImage(index))),
+                      const Spacer(flex: 3),
                       Flexible(
                         flex: 3,
                         child: SizedBox(
                           width: glassEffectContainerWidth * 0.95,
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                globals.productsList[index].desc,
-                                style: globals.bodyTextStyle(context),
-                              ),
-                              const Spacer(),
                               Row(
                                 children: [
                                   const Text("Stock: "),
@@ -62,11 +68,12 @@ class ProductsListView extends StatelessWidget {
                                           color: Colors.red.shade900,
                                         )
                                 ],
-                              )
+                              ),
                             ],
                           ),
                         ),
-                      )
+                      ),
+                      const Spacer(flex: 3),
                     ],
                   ),
                 ),
