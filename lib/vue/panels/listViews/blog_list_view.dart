@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:potagenieux/providers/article_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'globals.dart' as globals;
+import '../../../globals.dart' as globals;
 
 class BlogListView extends StatelessWidget {
   const BlogListView({

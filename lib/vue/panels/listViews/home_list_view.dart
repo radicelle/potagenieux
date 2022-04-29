@@ -5,9 +5,9 @@ import 'package:potagenieux/providers/gdpr_provider.dart';
 import 'package:potagenieux/vue/panels/home/info_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
-import 'feedback_section.dart';
-import 'home_list_view_texts.dart';
-import 'image_switcher.dart';
+import '../home/feedback_section.dart';
+import '../home/home_list_view_texts.dart';
+import '../home/image_switcher.dart';
 
 class HomeListView extends StatefulWidget {
   const HomeListView({

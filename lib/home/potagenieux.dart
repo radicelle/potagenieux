@@ -7,9 +7,7 @@ import 'package:responsive_framework/responsive_value.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 
-import '../blog_list_view.dart';
 import '../custom_nav_bar.dart';
-import '../products_list_view.dart';
 import '../providers/article_provider.dart';
 import '../providers/gdpr_provider.dart';
 import '../providers/illuminable.dart';
@@ -21,8 +19,10 @@ import '../providers/products_provider.dart';
 import '../vue/menu/login/fire_login.dart';
 import '../vue/menu/menu_info.dart';
 import '../vue/menu/menu_items.dart';
-import '../vue/menu/news_list_view.dart';
-import '../vue/panels/home/home_list_view.dart';
+import '../vue/panels/listViews/blog_list_view.dart';
+import '../vue/panels/listViews/home_list_view.dart';
+import '../vue/panels/listViews/news_list_view.dart';
+import '../vue/panels/listViews/products_list_view.dart';
 
 class Potagenieux extends StatelessWidget {
   const Potagenieux({Key? key}) : super(key: key);

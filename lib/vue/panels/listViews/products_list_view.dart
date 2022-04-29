@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:potagenieux/providers/products_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'globals.dart' as globals;
+import '../../../globals.dart' as globals;
 
 class ProductsListView extends StatelessWidget {
   const ProductsListView({

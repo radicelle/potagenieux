@@ -31,7 +31,7 @@ class NewsListView extends StatelessWidget {
                         child: newsProvider.newsImage(index))),
                 const Spacer(flex: 1),
                 Expanded(
-                  flex: 6,
+                  flex: 12,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
