@@ -15,65 +15,79 @@ class BlogListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ArticleProvider>(builder: (_, articleProvider, __) {
       return LayoutBuilder(builder: (_, constraints) {
-        var size = MediaQuery.of(context).size;
-        var pixelRatio = size.height / size.width;
-        return ListView.builder(
-          itemExtent: constraints.maxHeight * (pixelRatio < 1.20 ? 0.8 : 0.9),
-          itemCount: articleProvider.nbArticles,
-          itemBuilder: (buildContext, index) => Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        globals.blogList[index].title,
-                        style: globals.newsHeaderTextStyle(context),
-                        textAlign: TextAlign.left,
-                      ),
+        var articles = globals.blogList.map(
+          (article) => [
+            Padding(
+              padding: EdgeInsets.only(
+                  left: constraints.maxWidth / 10,
+                  right: constraints.maxWidth / 10,
+                  top: constraints.maxHeight / 10,
+                  bottom: constraints.maxHeight / 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      article.title,
+                      style: globals.newsHeaderTextStyle(context),
+                      textAlign: TextAlign.left,
                     ),
-                    Expanded(
-                      child: Text(
-                        DateFormat.yMMMd('fr_FR')
-                            .format(globals.blogList[index].date),
-                        maxLines: 6,
-                        style: globals.newsHeaderTextStyle(context),
-                        textAlign: TextAlign.right,
-                      ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      DateFormat.yMMMd('fr_FR').format(article.date),
+                      maxLines: 6,
+                      style: globals.newsHeaderTextStyle(context),
+                      textAlign: TextAlign.right,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              ClipRRect(
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: constraints.maxWidth / 10,
+                  right: constraints.maxWidth / 10),
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: ConstrainedBox(
                     constraints:
                         BoxConstraints(maxHeight: constraints.maxHeight * 0.4),
-                    child: articleProvider.articleImage(index)),
+                    child: articleProvider.articleImage(article.name)),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: constraints.maxHeight / 20,
-                    bottom: constraints.maxHeight / 20),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    globals.blogList[index].desc,
-                    maxLines: 10,
-                    style: globals.bodyTextStyle(context),
-                  ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: constraints.maxWidth / 10,
+                  right: constraints.maxWidth / 10,
+                  top: constraints.maxHeight / 10,
+                  bottom: constraints.maxHeight / 10),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  article.desc,
+                  maxLines: 10,
+                  style: globals.bodyTextStyle(context),
                 ),
               ),
-              Divider(
-                color: globals.menuColor,
-                thickness: 3,
-                indent: constraints.maxWidth / 10,
-                endIndent: constraints.maxWidth / 10,
-              ),
-            ],
+            ),
+            Divider(
+              color: globals.menuColor,
+              thickness: 3,
+              indent: constraints.maxWidth / 10,
+              endIndent: constraints.maxWidth / 10,
+            ),
+          ],
+        );
+
+        return SizedBox(
+          height: constraints.maxHeight,
+          width: constraints.maxWidth,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [...articles.flatten()],
+            ),
           ),
         );
       });

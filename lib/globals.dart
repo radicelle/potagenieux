@@ -15,6 +15,15 @@ extension GlobalStringExtensions on String {
   String getArticleImage() => 'blog/${this}';
 }
 
+extension GlobalTableExtensions on Iterable {
+  List<T> flatten<T>() => [for (var sublist in this) ...sublist];
+
+  List<T> flattenDeep<T>() => [
+        for (var element in this)
+          if (element is! Iterable) element else ...element.flattenDeep(),
+      ];
+}
+
 const defaultOpacity = 0.7;
 const menuBackgroundHexa = 0xff9AA644;
 const menuBackgroundColor = Color(0xff9AA644);
