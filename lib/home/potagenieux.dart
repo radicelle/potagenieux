@@ -76,7 +76,7 @@ class Potagenieux extends StatelessWidget {
           backgroundColor: globals.backgroundColor,
           defaultScale: true,
           breakpoints: [
-            const ResponsiveBreakpoint.resize(350, name: MOBILE),
+            const ResponsiveBreakpoint.resize(400, name: MOBILE),
             const ResponsiveBreakpoint.autoScale(600,
                 name: globals.largeMobile),
             const ResponsiveBreakpoint.resize(800, name: TABLET),
