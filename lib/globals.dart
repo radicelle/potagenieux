@@ -30,6 +30,7 @@ const menuBackgroundColor = Color(0xff9AA644);
 const appBarHeight = 30.0;
 const largeMobile = "LARGE_MOBILE";
 const smallDesktop = "SMALL_DESKTOR";
+const productFormRoute = '/addProductForm';
 
 Map<int, Color> menuBackgroundColorMap = {
   50: const Color.fromRGBO(0, 120, 120, .1),

@@ -17,7 +17,9 @@ class ImageSwitcher extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       double width = constraints.maxWidth;
-      double height = constraints.maxHeight;
+      double height = globals.displayDrawer(context)
+          ? constraints.maxHeight / 1.2
+          : constraints.maxHeight;
       var bottomShiftHorizontal = width / 10;
       var bottomShiftUp = bottomShiftHorizontal / 5;
       return Stack(children: [
@@ -47,7 +49,9 @@ class ImageSwitcher extends StatelessWidget {
           }),
         ),
         Positioned(
-            bottom: 0,
+            bottom: globals.displayDrawer(context)
+                ? constraints.maxHeight * 0.1
+                : 0,
             left: 0,
             child: SizedBox(
               width: width,

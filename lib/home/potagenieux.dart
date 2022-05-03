@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:potagenieux/globals.dart' as globals;
+import 'package:potagenieux/vue/panels/forms/product_form_page_route.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_value.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
@@ -31,6 +32,10 @@ class Potagenieux extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PlatformApp(
+      routes: <String, WidgetBuilder>{
+        globals.productFormRoute: (BuildContext c) =>
+            const ProductFormPageRoute()
+      },
       material: (_, __) => MaterialAppData(
           theme: ThemeData(
               buttonTheme: Theme.of(context).buttonTheme.copyWith(
