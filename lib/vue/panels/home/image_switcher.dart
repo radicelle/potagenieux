@@ -92,7 +92,6 @@ class BackgroundClipper extends CustomClipper<Path> {
     var borderHeight = bottomHeight + 10;
 
     //top left
-    //path.moveTo(0, borderHeight);
     var midBorderHeight = borderHeight / 2;
     var midBorderWidth = borderWidth / 2;
     path.lineTo(0, size.height - midBorderHeight); //bottom left
