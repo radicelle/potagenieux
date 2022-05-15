@@ -94,7 +94,8 @@ class ProductsListView extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(25.0),
                   child: PlatformElevatedButton(
-                    onPressed: () => {},
+                    onPressed: () => Navigator.of(context)
+                        .pushNamed(globals.productFormRoute),
                     child: const Icon(
                       Icons.add,
                       color: Colors.white70,
