@@ -1,3 +1,4 @@
+import 'package:camera_platform_interface/src/types/camera_description.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -26,15 +27,15 @@ import '../vue/panels/listViews/news_list_view.dart';
 import '../vue/panels/listViews/products_list_view.dart';
 
 class Potagenieux extends StatelessWidget {
-  const Potagenieux({Key? key}) : super(key: key);
-
+  const Potagenieux(this.cameras, {Key? key}) : super(key: key);
+  final List<CameraDescription> cameras;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return PlatformApp(
       routes: <String, WidgetBuilder>{
         globals.productFormRoute: (BuildContext c) =>
-            const ProductFormPageRoute()
+            ProductFormPageRoute(cameras)
       },
       material: (_, __) => MaterialAppData(
           theme: ThemeData(

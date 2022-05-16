@@ -23,7 +23,7 @@ class HomeListViewTexts extends StatelessWidget {
       ],
       [
         "Des idées novatrices",
-        "Maraîchage syntropique\n\nCompostage Johnson-Su\n\nThé de composte"
+        "Maraîchage syntropique\n\nCompostage Johnson-Su\n\nThé de compost"
       ],
       [
         "Des pratiques exemplaires",
