@@ -58,7 +58,7 @@ class _AddProductFormState extends State<AddProductForm> {
             var width = constraints.maxWidth / 1.1;
             var height = width / 1.25;
             return ProductTile(
-              desc: "descritpion",
+              desc: "description",
               width: width,
               height: height,
               cameraPreview: CameraPreview(_controller),
