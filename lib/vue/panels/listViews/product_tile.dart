@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:potagenieux/providers/ProviderWidgets/cached_firebase_image.dart';
 
@@ -13,13 +12,14 @@ class ProductTile extends StatelessWidget {
     this.cameraPreview,
     required this.height,
     required this.width,
-  })  : assert(image != null || cameraPreview != null),
+  })  : assert((image != null || cameraPreview != null) &&
+            !(image != null && cameraPreview != null)),
         super(key: key);
 
   final double height;
   final double width;
   final CachedFirebaseImage? image;
-  final CameraPreview? cameraPreview;
+  final Widget? cameraPreview;
   final String desc;
   final bool inStock;
 
