@@ -1,4 +1,4 @@
-import 'package:camera_platform_interface/src/types/camera_description.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';

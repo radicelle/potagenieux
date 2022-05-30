@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -35,14 +33,12 @@ class _AddProductFormState extends State<AddProductForm> {
   late Future<void> _initializeControllerFuture;
   var _zoom = 1.0;
   late var _camera;
-  File? _imageFile;
 
   @override
   void initState() {
     super.initState();
     _camera = widget.cameras.first;
     _controller = CameraController(_camera, ResolutionPreset.max);
-
     _initializeControllerFuture = _controller.initialize();
   }
 
@@ -50,6 +46,27 @@ class _AddProductFormState extends State<AddProductForm> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void onNewCameraSelected(
+    CameraDescription cameraDescription,
+  ) {
+    final previousCameraController = _controller;
+
+    final CameraController cameraController = CameraController(
+      cameraDescription,
+      ResolutionPreset.high,
+      imageFormatGroup: ImageFormatGroup.jpeg,
+      enableAudio: false,
+    );
+
+    previousCameraController.dispose();
+    if (mounted) {
+      setState(() {
+        _controller = cameraController;
+      });
+    }
+    _initializeControllerFuture = cameraController.initialize();
   }
 
   @override
@@ -65,43 +82,45 @@ class _AddProductFormState extends State<AddProductForm> {
               var height = width / 1.25;
               return Column(
                 children: [
-                  ProductTile(
-                    desc: "description",
-                    width: width,
-                    height: height,
-                    cameraPreview: CamPreviewCondensed(
-                        width: width,
-                        height: height,
-                        preview: _controller.buildPreview(),
-                        aspectRatio: _controller.value.aspectRatio),
-                    inStock: true,
+                  Spacer(
+                    flex: 1,
                   ),
-                  PlatformSlider(
-                    value: _zoom,
-                    min: 1.0,
-                    max: 4.0,
-                    onChanged: (value) => {
-                      setState(
-                        () {
-                          _zoom = value;
-                          _controller.setZoomLevel(_zoom);
-                        },
-                      )
-                    },
+                  Flexible(
+                    flex: 6,
+                    child: ProductTile(
+                      desc: "description",
+                      width: width,
+                      height: height,
+                      cameraPreview: CamPreviewCondensed(
+                          width: width,
+                          height: height,
+                          preview: CameraPreview(_controller),
+                          aspectRatio: _controller.value.aspectRatio),
+                      inStock: true,
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: PlatformSlider(
+                      value: _zoom,
+                      min: 1.0,
+                      max: 4.0,
+                      onChanged: (value) => {
+                        setState(
+                          () {
+                            _zoom = value;
+                            _controller.setZoomLevel(_zoom);
+                          },
+                        )
+                      },
+                    ),
                   ),
                   Row(
                     children: [
                       ...widget.cameras.map((e) => Flexible(
                           flex: 1,
                           child: ElevatedButton(
-                            onPressed: () => {
-                              setState(
-                                () {
-                                  _camera = e;
-                                  //_controller = CameraController(e, ResolutionPreset.max);
-                                },
-                              )
-                            },
+                            onPressed: () => onNewCameraSelected(e),
                             child: Column(children: [
                               const Icon(Icons.camera),
                               Text(e.name)

@@ -15,17 +15,19 @@ class CamPreviewCondensed extends StatelessWidget {
   final Widget preview;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width,
       height: height,
-      child: ClipRect(
+      child: ClipRRect(
         child: OverflowBox(
           alignment: Alignment.center,
           child: FittedBox(
             fit: BoxFit.fitWidth,
-            child: Container(
+            child: SizedBox(
               width: width,
-              height: height / aspectRatio,
+              height: _isPortrait(context)
+                  ? height / (1 / aspectRatio)
+                  : height / aspectRatio,
               child: preview, // this is my CameraPreview
             ),
           ),
@@ -33,4 +35,7 @@ class CamPreviewCondensed extends StatelessWidget {
       ),
     );
   }
+
+  _isPortrait(BuildContext context) =>
+      MediaQuery.of(context).orientation == Orientation.portrait;
 }
