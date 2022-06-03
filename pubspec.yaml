@@ -12,7 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  camera:
+  camera: ^0.9.7+1
   cupertino_icons: ^1.0.4
   provider: ^6.0.3
   google_fonts: ^3.0.1
@@ -25,14 +25,14 @@ dependencies:
   cached_network_image: ^3.2.1
   loading_animations: ^2.2.0
   cloud_functions: ^3.2.16
-  flutter_markdown: ^0.6.10+1
+  flutter_markdown: ^0.6.10+2
   flutter_platform_widgets: ^1.20.0
   responsive_framework: ^0.2.0
   responsive_grid: ^2.1.0
   google_nav_bar: ^5.0.6
   intl: ^0.17.0
   image_picker: ^0.8.5+3
-  camera_web: ^0.3.0
+  camera_web: ^0.2.1
 
 dev_dependencies:
   flutter_test:

@@ -48,95 +48,105 @@ class _AddProductFormState extends State<AddProductForm> {
     super.dispose();
   }
 
-  void onNewCameraSelected(
-    CameraDescription cameraDescription,
-  ) {
+  Future<void> onNewCameraSelected(CameraDescription cameraDescription) async {
     final previousCameraController = _controller;
-
+    // Instantiating the camera controller
     final CameraController cameraController = CameraController(
       cameraDescription,
       ResolutionPreset.high,
       imageFormatGroup: ImageFormatGroup.jpeg,
-      enableAudio: false,
     );
 
-    previousCameraController.dispose();
+    // Dispose the previous controller
+    await previousCameraController.dispose();
+
+    // Replace with the new controller
     if (mounted) {
       setState(() {
         _controller = cameraController;
       });
     }
-    _initializeControllerFuture = cameraController.initialize();
+
+    // Update UI if controller updated
+    cameraController.addListener(() {
+      if (mounted) setState(() {});
+    });
+
+    // Initialize controller
+    try {
+      await cameraController.initialize();
+    } on CameraException catch (e) {
+      print('Error initializing camera: $e');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<void>(
-      future: _initializeControllerFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          // If the Future is complete, display the preview.
-          return Scaffold(
-            body: LayoutBuilder(builder: (context, constraints) {
-              var width = constraints.maxWidth / 1.1;
-              var height = width / 1.25;
-              return Column(
-                children: [
-                  Spacer(
-                    flex: 1,
-                  ),
-                  Flexible(
-                    flex: 6,
-                    child: ProductTile(
-                      desc: "description",
-                      width: width,
-                      height: height,
-                      cameraPreview: CamPreviewCondensed(
-                          width: width,
-                          height: height,
-                          preview: CameraPreview(_controller),
-                          aspectRatio: _controller.value.aspectRatio),
-                      inStock: true,
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: PlatformSlider(
-                      value: _zoom,
-                      min: 1.0,
-                      max: 4.0,
-                      onChanged: (value) => {
-                        setState(
-                          () {
-                            _zoom = value;
-                            _controller.setZoomLevel(_zoom);
-                          },
-                        )
-                      },
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      ...widget.cameras.map((e) => Flexible(
-                          flex: 1,
-                          child: ElevatedButton(
-                            onPressed: () => onNewCameraSelected(e),
-                            child: Column(children: [
-                              const Icon(Icons.camera),
-                              Text(e.name)
-                            ]),
-                          )))
-                    ],
+    return Scaffold(
+      body: LayoutBuilder(builder: (context, constraints) {
+        var width = constraints.maxWidth / 1.1;
+        var height = width / 1.25;
+        return Column(
+          children: [
+            Spacer(
+              flex: 1,
+            ),
+            Flexible(
+              flex: 6,
+              child: ProductTile(
+                desc: "description",
+                width: width,
+                height: height,
+                cameraPreview: FutureBuilder(
+                    future: _initializeControllerFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return CamPreviewCondensed(
+                            width: width,
+                            height: height,
+                            preview: CameraPreview(_controller),
+                            aspectRatio: _controller.value.aspectRatio);
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    }),
+                inStock: true,
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: PlatformSlider(
+                value: _zoom,
+                min: 1.0,
+                max: 4.0,
+                onChanged: (value) => {
+                  setState(
+                    () {
+                      _zoom = value;
+                      _controller.setZoomLevel(_zoom);
+                    },
                   )
-                ],
-              );
-            }),
-          );
-        } else {
-          // Otherwise, display a loading indicator.
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
+                },
+              ),
+            ),
+            Row(
+              children: [
+                ...widget.cameras.map((e) => Flexible(
+                    flex: 1,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _initializeControllerFuture = onNewCameraSelected(e);
+                        });
+                      },
+                      child: Column(
+                          children: [const Icon(Icons.camera), Text(e.name)]),
+                    )))
+              ],
+            )
+          ],
+        );
+      }),
     );
   }
 }
