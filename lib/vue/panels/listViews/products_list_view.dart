@@ -36,7 +36,7 @@ class ProductsListView extends StatelessWidget {
                     return ProductTile(
                         inStock: globals.productsList[index].inStock,
                         desc: globals.productsList[index].desc,
-                        image: productsProvider.productImage(index),
+                        firebaseImage: productsProvider.productImage(index),
                         height: glassEffectContainerHeight,
                         width: glassEffectContainerWidth);
                   },

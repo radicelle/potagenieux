@@ -8,17 +8,17 @@ class ProductTile extends StatelessWidget {
     Key? key,
     required this.desc,
     required this.inStock,
-    this.image,
+    this.firebaseImage,
     this.cameraPreview,
     required this.height,
     required this.width,
-  })  : assert((image != null || cameraPreview != null) &&
-            !(image != null && cameraPreview != null)),
+  })  : assert((firebaseImage != null || cameraPreview != null) &&
+            !(firebaseImage != null && cameraPreview != null)),
         super(key: key);
 
   final double height;
   final double width;
-  final CachedFirebaseImage? image;
+  final CachedFirebaseImage? firebaseImage;
   final Widget? cameraPreview;
   final String desc;
   final bool inStock;
@@ -43,7 +43,7 @@ class ProductTile extends StatelessWidget {
             Flexible(
                 flex: 30,
                 child: SizedBox(
-                    width: width * 0.95, child: image ?? cameraPreview)),
+                    width: width * 0.95, child: firebaseImage ?? cameraPreview)),
             const Spacer(flex: 3),
             Flexible(
               flex: 3,

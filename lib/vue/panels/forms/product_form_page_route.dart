@@ -1,4 +1,4 @@
-import 'dart:ffi';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +34,7 @@ class AddProductForm extends StatefulWidget {
 class _AddProductFormState extends State<AddProductForm> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
+  late XFile? imageFile = null;
   var _zoom = 1.0;
   late var _camera;
 
@@ -48,6 +49,7 @@ class _AddProductFormState extends State<AddProductForm> {
   @override
   void dispose() {
     _controller.dispose();
+    imageFile = null;
     super.dispose();
   }
 
@@ -98,25 +100,21 @@ class _AddProductFormState extends State<AddProductForm> {
             ),
             Flexible(
               flex: 10,
-              child: ProductTile(
-                desc: "description",
-                width: width,
-                height: height,
-                cameraPreview: FutureBuilder(
-                    future: _initializeControllerFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return CamPreviewCondensed(
-                            width: width,
-                            height: height,
-                            preview: CameraPreview(_controller),
-                            aspectRatio: _controller.value.aspectRatio);
-                      } else {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                    }),
-                inStock: true,
-              ),
+              child: imageFile != null
+                  ? ProductTile(
+                      desc: "description",
+                      width: width,
+                      height: height,
+                      cameraPreview: Image.file(File(imageFile!.path), fit: BoxFit.cover),
+                      inStock: true,
+                    )
+                  : ProductTile(
+                      desc: "description",
+                      width: width,
+                      height: height,
+                      cameraPreview: FutureCameraPreview(initializeControllerFuture: _initializeControllerFuture, width: width, height: height, controller: _controller),
+                      inStock: true,
+                    ),
             ),
             Flexible(
               flex: 2,
@@ -127,7 +125,8 @@ class _AddProductFormState extends State<AddProductForm> {
                     const Center(child: Text("Zoom")),
                     Center(
                       child: PlatformSlider(
-                        material: (_, __) => MaterialSliderData(activeColor: globals.headerTextColor),
+                        material: (_, __) => MaterialSliderData(
+                            activeColor: globals.headerTextColor),
                         value: _zoom,
                         min: 1.0,
                         max: 4.0,
@@ -156,7 +155,8 @@ class _AddProductFormState extends State<AddProductForm> {
                       flex: 1,
                       child: Center(
                         child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: primaryButtonColor),
+                          style: ElevatedButton.styleFrom(
+                              primary: primaryButtonColor),
                           onPressed: () {
                             setState(() {
                               _initializeControllerFuture =
@@ -182,10 +182,22 @@ class _AddProductFormState extends State<AddProductForm> {
               flex: 3,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
+                    shape: const CircleBorder(),
                     primary: primaryButtonColor,
                     surfaceTintColor: Colors.transparent),
-                onPressed: () {},
+                onPressed: () async {
+                  print(imageFile?.path ?? "null");
+                  try {
+                    await _initializeControllerFuture;
+                    var image = await _controller.takePicture();
+                    setState(() => {
+                      imageFile = image,
+                      print(imageFile!.path)
+                    });
+                  } catch (e) {
+                    print(e);
+                  }
+                },
                 child: Icon(
                   Icons.camera,
                   size: constraints.maxWidth / 5,
@@ -199,6 +211,40 @@ class _AddProductFormState extends State<AddProductForm> {
         );
       }),
     );
+  }
+}
+
+class FutureCameraPreview extends StatelessWidget {
+  const FutureCameraPreview({
+    Key? key,
+    required Future<void> initializeControllerFuture,
+    required this.width,
+    required this.height,
+    required CameraController controller,
+  }) : _initializeControllerFuture = initializeControllerFuture, _controller = controller, super(key: key);
+
+  final Future<void> _initializeControllerFuture;
+  final double width;
+  final double height;
+  final CameraController _controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: _initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState ==
+              ConnectionState.done) {
+            return CamPreviewCondensed(
+                width: width,
+                height: height,
+                preview: CameraPreview(_controller),
+                aspectRatio: _controller.value.aspectRatio);
+          } else {
+            return const Center(
+                child: CircularProgressIndicator());
+          }
+        });
   }
 }
 
